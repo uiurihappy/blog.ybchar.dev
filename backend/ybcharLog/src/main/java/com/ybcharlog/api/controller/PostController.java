@@ -1,4 +1,4 @@
-package com.ybcharlog.api;
+package com.ybcharlog.api.controller;
 
 import com.ybcharlog.api.RequestDto.PostCreateDto;
 import lombok.extern.slf4j.Slf4j;

@@ -1,22 +1,11 @@
 package com.ybcharlog.api.ResponseDto;
-
-/*
-{
-	"code": "400",
-	"message": "잘못된 요청입니다.",
-	"valida†ion": {
-		"title": "값을 입력해주세요",
-	}
-}
- */
-
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@RequiredArgsConstructor
 @Getter
 public class ErrorResponse {
 
@@ -31,6 +20,22 @@ public class ErrorResponse {
 		- 응답 필드에 뭐가 들어가는지 알 수 없는 문제
 		- 불변성문제
 	 */
+	/*
+		{
+			"code": "400",
+			"message": "잘못된 요청입니다.",
+			"valida†ion": {
+				"title": "값을 입력해주세요",
+			}
+		}
+	 */
+
+	@Builder
+	public ErrorResponse(String code, String message) {
+		this.code = code;
+		this.message = message;
+	}
+
 	private final Map<String, String> validation = new HashMap<>();
 
 	public void addValidation(String fieldName, String errorMessage) {

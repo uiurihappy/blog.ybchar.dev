@@ -1,6 +1,7 @@
 package com.ybcharlog.api.controller;
 
 import com.ybcharlog.api.RequestDto.PostCreateDto;
+import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,8 +48,8 @@ public class PostController {
 //            throw new Exception("title is null or null string");
 //        }
 //        String content = params.getContent();
-
-    //        if (result.hasErrors()) {
+//            BindingResult result        // 에러와 관련된 내용이 다 result에 담긴다
+//            if (result.hasErrors()) {
 //            // google에 데이터 검증을 위해 "Junit5 jsonPath" 만 검색해도 나온다.
 //            List<FieldError> fieldErrors = result.getFieldErrors();
 //            FieldError firstFieldError = fieldErrors.get(0);
@@ -64,12 +65,18 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/posts")
-    public Map<String, String> post(
+    public void post(
             @RequestBody @Valid PostCreateDto request
-//            ,BindingResult result        // 에러와 관련된 내용이 다 result에 담긴다
             )  {
+        /* response case
+            1. 저장한 데이터 Entity 통째로 response
+            2. 저장한 데이터의 primary_id만 response
+                - Client는 받은 id를 post 조회 시 API를 통해서 데이터를 수신
+            3. 응답 필요없음 (return Type x, void) -> Client에서 모든 POST 데이터 context를 관리함
+            개발하면서 당연히 "반드시 fix"라는 것이 없기에 유연하게 반응할 수 있도록 대응하는 것이 좋다.
+                - 즉, 잘 관리하는 형태로 구현하는 것이 좋다.
+         */
         postService.write(request);
-        return Map.of();
     }
 
 }

@@ -16,8 +16,12 @@ public class PostService {
 
 	public void write(PostCreateDto postCreateDto) {
 		// repository.save(postCreate)
-		// postCreateDto ->
-		Post post = new Post(postCreateDto.getTitle(), postCreateDto.getContent());
+		// postCreateDto -> Post
+//		Post post = new Post(postCreateDto.getTitle(), postCreateDto.getContent());
+		Post post = Post.builder()
+				.title(postCreateDto.getTitle())
+				.content(postCreateDto.getContent())
+				.build();
 
 		postRepository.save(post);
 	}

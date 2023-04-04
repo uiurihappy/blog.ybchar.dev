@@ -58,7 +58,7 @@ class PostControllerTest {
                                 .content(json)
                 )
                 .andExpect(status().isOk())
-                .andExpect(content().string("{}"))
+                .andExpect(content().string(""))
                 .andDo(print());
 
         // DB에 1개 저장

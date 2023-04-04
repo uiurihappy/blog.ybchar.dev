@@ -1,6 +1,8 @@
 package com.ybcharlog.api.controller;
 
 import com.ybcharlog.api.RequestDto.PostCreateDto;
+import com.ybcharlog.api.service.PostService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -13,6 +15,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class PostController {
 
     /* HTTP methods
@@ -33,12 +36,6 @@ public class PostController {
                 // 코드 && 개발에 관해 모든 것이 필요
                     // 세 번 이상이면 적어도 자동화를 고려해볼 것
     */
-    @PostMapping("/posts")
-    public Map<String, String> post(
-            @RequestBody @Valid PostCreateDto params
-//            ,BindingResult result        // 에러와 관련된 내용이 다 result에 담긴다
-            ) throws Exception {
-
 //        String title = params.getTitle();
 //        if (title == null || title.equals("")) {
 //            // error
@@ -51,7 +48,7 @@ public class PostController {
 //        }
 //        String content = params.getContent();
 
-//        if (result.hasErrors()) {
+    //        if (result.hasErrors()) {
 //            // google에 데이터 검증을 위해 "Junit5 jsonPath" 만 검색해도 나온다.
 //            List<FieldError> fieldErrors = result.getFieldErrors();
 //            FieldError firstFieldError = fieldErrors.get(0);
@@ -63,6 +60,15 @@ public class PostController {
 //            errorMap.put(fieldName, errorMessage);
 //            return errorMap;
 //        }
+
+    private final PostService postService;
+
+    @PostMapping("/posts")
+    public Map<String, String> post(
+            @RequestBody @Valid PostCreateDto request
+//            ,BindingResult result        // 에러와 관련된 내용이 다 result에 담긴다
+            )  {
+        postService.write(request);
         return Map.of();
     }
 

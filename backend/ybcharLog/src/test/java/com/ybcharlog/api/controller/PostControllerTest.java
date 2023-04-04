@@ -1,23 +1,32 @@
 package com.ybcharlog.api.controller;
 
+import com.ybcharlog.api.repository.PostRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@AutoConfigureMockMvc
+@SpringBootTest
 class PostControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private PostRepository postRepository;
 
     /*
       * 글 제목
@@ -36,7 +45,7 @@ class PostControllerTest {
 //                        .param("content", "글 내용입니다 하하!")
                 )
                 .andExpect(status().isOk())
-                .andExpect(content().string("Hello world!"))
+                .andExpect(content().string("{}"))
                 .andDo(print());
 
     }
@@ -56,6 +65,21 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.validation.title").value("title input please"))
                 .andDo(print());
 
+    }
+
+    @Test
+    @DisplayName("/posts 요청 시 DB 값 저장 테스트")
+    void postWriteTest() throws Exception {
+        // when
+        mockMvc.perform(post("/posts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"title\": \"글 제목 test\", \"content\": \"글 내용 test\"}")
+                )
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        // then
+        assertEquals(1L, postRepository.count());
     }
 
 }

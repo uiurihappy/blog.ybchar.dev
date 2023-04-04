@@ -1,7 +1,9 @@
 package com.ybcharlog.api.controller;
 
+import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.repository.PostRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,11 @@ class PostControllerTest {
     @Autowired
     private PostRepository postRepository;
 
-    /*
-      * 글 제목
-      * 글 내용
-     */
+    // 다른 테스트에 영향이 가지 않도록 사전에 deleteAll한다.
+    @BeforeEach
+    void clean() {
+        postRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("/posts 호출 시 hello world 출력")
@@ -48,6 +51,7 @@ class PostControllerTest {
                 .andExpect(content().string("{}"))
                 .andDo(print());
 
+        // DB에 1개 저장
     }
 
     @Test
@@ -70,6 +74,7 @@ class PostControllerTest {
     @Test
     @DisplayName("/posts 요청 시 DB 값 저장 테스트")
     void postWriteTest() throws Exception {
+
         // when
         mockMvc.perform(post("/posts")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -80,6 +85,13 @@ class PostControllerTest {
 
         // then
         assertEquals(1L, postRepository.count());
+
+        // 전체 테스트 시에 첫 테스트에서 insert 했기 때문에 2개로 뜬다.
+        // 그래서 다른 테스트에 영향이 가지 않도록 짜야 한다.
+
+        Post post = postRepository.findAll().get(0);
+        assertEquals("글 제목 test", post.getTitle());
+        assertEquals("글 내용 test", post.getContent());
     }
 
 }

@@ -21,4 +21,16 @@ public class PostCreateDto {
 //    @NotNull
     private String content;
 
+    public PostCreateDto changeTitle(String title) {
+        return PostCreateDto.builder()
+                .title(title)
+                .content(content)
+                .build();
+        /* builder의 장점
+            - 가독성에 좋다. (값 생성에 대한 유연함)
+            - 필요한 값만 받을 수 있다. (막 생성자 오버로딩하고 지저분하게 할 필요가 없음, 오버로딩 가능한 조건을 찾아볼 것!)
+            - 객체의 불변성
+         */
+    }
+
 }

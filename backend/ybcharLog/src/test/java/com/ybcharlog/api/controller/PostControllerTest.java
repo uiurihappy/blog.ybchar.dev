@@ -27,6 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PostControllerTest {
 
     @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
@@ -42,10 +44,12 @@ class PostControllerTest {
     @DisplayName("/posts 호출 시 hello world 출력")
     void test() throws Exception {
         // given
-        PostCreateDto request = new PostCreateDto("글 제목입니다", "글 내용입니다");
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(request);
+//        PostCreateDto request = new PostCreateDto("글 제목입니다", "글 내용입니다");
+        PostCreateDto request = PostCreateDto.builder()
+                .title("글 제목입니다.")
+                .content("글 내용입니다.")
+                .build();
+        String json = objectMapper.writeValueAsString(request);     // Javascript의 JSON.stringfy(object) 느낌
 //        System.out.println(json);
 
         // expected
@@ -63,10 +67,16 @@ class PostControllerTest {
     @Test
     @DisplayName("/posts 요청 시 title값은 필수다.")
     void test2() throws Exception {
+        // given
+        PostCreateDto request = PostCreateDto.builder()
+                .content("글 내용입니다.")
+                .build();
+        String json = objectMapper.writeValueAsString(request);
+
         // expected
         mockMvc.perform(post("/posts")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\"title\": null, \"content\": \"글 내용입니다\"}")
+                                .content(json)
                 )
                 .andExpect(status().isBadRequest())
 //                .andExpect(content().string("{}"))
@@ -80,11 +90,17 @@ class PostControllerTest {
     @Test
     @DisplayName("/posts 요청 시 DB 값 저장 테스트")
     void postWriteTest() throws Exception {
+        // given
+        PostCreateDto request = PostCreateDto.builder()
+                .title("글 제목 test")
+                .content("글 내용 test")
+                .build();
+        String json = objectMapper.writeValueAsString(request);
 
         // when
         mockMvc.perform(post("/posts")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\": \"글 제목 test\", \"content\": \"글 내용 test\"}")
+                        .content(json)
                 )
                 .andExpect(status().isOk())
                 .andDo(print());

@@ -116,4 +116,25 @@ class PostControllerTest {
         assertEquals("글 내용 test", post.getContent());
     }
 
+    @Test
+    @DisplayName("글 단건 조회")
+    void getOneTest1() throws Exception {
+        // given
+        Post post = Post.builder()
+                .title("foo")
+                .content("bar")
+                .build();
+        postRepository.save(post);
+
+        // expected
+        mockMvc.perform(get("/posts/{postId}", post.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.title").value("foo"))
+                .andExpect(jsonPath("$.content").value("bar"))
+                .andDo(print());
+    }
+
 }

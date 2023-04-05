@@ -79,4 +79,14 @@ public class PostController {
         postService.write(request);
     }
 
+    /*
+        /posts -> 글 전체 조회 (검색 + 페이징)
+        /posts/{postId} -> 글 한개만 조회
+     */
+    @GetMapping("/posts/{postId}")
+    public Post getOne(@PathVariable(name = "postId") Long id) {
+        return postService.getOne(id);
+    }
+
+
 }

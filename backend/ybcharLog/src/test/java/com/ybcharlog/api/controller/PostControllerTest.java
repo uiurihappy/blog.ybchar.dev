@@ -16,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -141,6 +143,33 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.content").value("bar"))
                 .andExpect(jsonPath("$.viewCount").value(0))
                 .andDo(print());
+    }
+
+    @Test
+    @DisplayName("사용자 글 리스트 조회")
+    void getListTest2() throws Exception {
+        // given
+        for (int i = 0; i < 5; i++) {
+            Post savePost = Post.builder()
+                    .title("foo" + i)
+                    .content("bar" + i)
+                    .viewCount(0)
+                    .build();
+            postRepository.save(savePost);
+        }
+
+        List<Post> posts = postRepository.findAll();
+
+        // expected
+        mockMvc.perform(get("/posts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                /**
+                 * [{""}, {""}]
+                 */
+                .andDo(print());
+
     }
 
 }

@@ -86,7 +86,7 @@ public class PostController {
      */
 
     @GetMapping("/posts")
-    public List<Post> getPostList() {
+    public List<PostResponse> getPostList() {
         return postService.getList();
     }
 

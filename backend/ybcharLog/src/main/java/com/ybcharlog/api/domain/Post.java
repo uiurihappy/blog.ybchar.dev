@@ -23,7 +23,7 @@ public class Post {
 	@Lob
 	private String content;
 
-	@Column(columnDefinition = "int unsigned default 0 COMMENT '게시글 조회 수'")
+	@Column(columnDefinition = "int unsigned not null default 0 COMMENT '게시글 조회 수'")
 	private Integer viewCount;
 
 	public static Post initPost(String title, String content) {

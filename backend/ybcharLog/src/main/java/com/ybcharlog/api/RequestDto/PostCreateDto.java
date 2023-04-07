@@ -1,6 +1,5 @@
 package com.ybcharlog.api.RequestDto;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

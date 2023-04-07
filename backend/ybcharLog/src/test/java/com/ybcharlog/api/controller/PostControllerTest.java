@@ -40,6 +40,7 @@ class PostControllerTest {
         postRepository.deleteAll();
     }
 
+    @Deprecated
     @Test
     @DisplayName("/posts 호출 시 hello world 출력")
     void test() throws Exception {
@@ -48,6 +49,7 @@ class PostControllerTest {
         PostCreateDto request = PostCreateDto.builder()
                 .title("글 제목입니다.")
                 .content("글 내용입니다.")
+                .viewCount(0)
                 .build();
         String json = objectMapper.writeValueAsString(request);     // Javascript의 JSON.stringfy(object) 느낌
 //        System.out.println(json);
@@ -94,6 +96,7 @@ class PostControllerTest {
         PostCreateDto request = PostCreateDto.builder()
                 .title("글 제목 test")
                 .content("글 내용 test")
+                .viewCount(0)
                 .build();
         String json = objectMapper.writeValueAsString(request);
 
@@ -114,6 +117,7 @@ class PostControllerTest {
         Post post = postRepository.findAll().get(0);
         assertEquals("글 제목 test", post.getTitle());
         assertEquals("글 내용 test", post.getContent());
+        assertEquals(0, post.getViewCount());
     }
 
     @Test
@@ -123,9 +127,10 @@ class PostControllerTest {
         Post post = Post.builder()
                 .title("foofoofoofoofoo")
                 .content("bar")
+                .viewCount(0)
                 .build();
         postRepository.save(post);
-
+        System.out.println("postId = " + post.getId());
         // expected
         mockMvc.perform(get("/posts/{postId}", post.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -134,6 +139,7 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.title").value("foofoofoof"))
                 .andExpect(jsonPath("$.content").value("bar"))
+                .andExpect(jsonPath("$.viewCount").value(0))
                 .andDo(print());
     }
 

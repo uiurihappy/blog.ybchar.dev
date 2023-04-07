@@ -84,11 +84,16 @@ public class PostController {
         /posts -> 글 전체 조회 (검색 + 페이징)
         /posts/{postId} -> 글 한개만 조회
      */
+
+    @GetMapping("/posts")
+    public List<Post> getPostList() {
+        return postService.getList();
+    }
+
     @GetMapping("/posts/{postId}")
-    public PostResponse getOne(@PathVariable(name = "postId") Long id) {
+    public PostResponse getOne(@PathVariable Long postId) {
         // 서비스 정책에 맞는 응답 클래스를 분리하는 것이 옳다.
-        PostResponse response = postService.getOne(id);
-        return response;
+        return postService.getOne(postId);
     }
 
 }

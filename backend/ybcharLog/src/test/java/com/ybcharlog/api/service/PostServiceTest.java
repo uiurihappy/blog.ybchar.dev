@@ -1,6 +1,7 @@
 package com.ybcharlog.api.service;
 
 import com.ybcharlog.api.RequestDto.PostCreateDto;
+import com.ybcharlog.api.ResponseDto.PostResponse;
 import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.repository.PostRepository;
 import org.junit.jupiter.api.Assertions;
@@ -55,7 +56,7 @@ class PostServiceTest {
 		postRepository.save(savePost);
 
 		// when
-		Post post = postService.getOne(savePost.getId());
+		PostResponse post = postService.getOne(savePost.getId());
 
 		// then
 		assertNotNull(post);

@@ -21,10 +21,11 @@ public class PostCreateDto {
 //    @NotNull
     private String content;
 
+    private Integer viewCount;
+
     public PostCreateDto changeTitle(String title) {
         return PostCreateDto.builder()
                 .title(title)
-                .content(content)
                 .build();
         /* builder의 장점
             - 가독성에 좋다. (값 생성에 대한 유연함)

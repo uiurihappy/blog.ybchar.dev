@@ -1,6 +1,7 @@
 package com.ybcharlog.api.controller;
 
 import com.ybcharlog.api.RequestDto.PostCreateDto;
+import com.ybcharlog.api.ResponseDto.PostResponse;
 import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +66,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/posts")
-    public void post(
+    public Post post(
             @RequestBody @Valid PostCreateDto request
             )  {
         /* response case
@@ -76,7 +77,7 @@ public class PostController {
             개발하면서 당연히 "반드시 fix"라는 것이 없기에 유연하게 반응할 수 있도록 대응하는 것이 좋다.
                 - 즉, 잘 관리하는 형태로 구현하는 것이 좋다.
          */
-        postService.write(request);
+        return postService.write(request);
     }
 
     /*
@@ -84,9 +85,10 @@ public class PostController {
         /posts/{postId} -> 글 한개만 조회
      */
     @GetMapping("/posts/{postId}")
-    public Post getOne(@PathVariable(name = "postId") Long id) {
-        return postService.getOne(id);
+    public PostResponse getOne(@PathVariable(name = "postId") Long id) {
+        // 서비스 정책에 맞는 응답 클래스를 분리하는 것이 옳다.
+        PostResponse response = postService.getOne(id);
+        return response;
     }
-
 
 }

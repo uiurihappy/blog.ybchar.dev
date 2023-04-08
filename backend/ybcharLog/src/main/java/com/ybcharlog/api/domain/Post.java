@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,14 +29,21 @@ public class Post extends BaseEntity {
 	@Column(columnDefinition = "int unsigned not null default 0 COMMENT '게시글 조회 수'")
 	private Integer viewCount;
 
+	@Column(columnDefinition = "int unsigned not null default 0 COMMENT '게시글 좋아요 수'")
+	private Integer likeCount;
+
+	@OneToMany(mappedBy = "post")
+	private List<Comment> comments = new ArrayList<>();
+
 	public static Post initPost(String title, String content) {
-		return Post.builder().title(title).content(content).viewCount(0).build();
+		return Post.builder().title(title).content(content).viewCount(0).likeCount(0).build();
 	}
 
 	@Builder
-	public Post(String title, String content, Integer viewCount) {
+	public Post(String title, String content, Integer viewCount, Integer likeCount) {
 		this.title = title;
 		this.content = content;
 		this.viewCount = viewCount;
+		this.likeCount = likeCount;
 	}
 }

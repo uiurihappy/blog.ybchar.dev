@@ -29,6 +29,10 @@ public class Comment extends BaseEntity {
     @Column(columnDefinition = "tinyint(3) not null default 0 COMMENT '비밀 댓글 상태'")
     private Integer secretStatus;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
+
     public static Comment initComment(String username, String password, String comment, Integer secretStatus) {
         return Comment.builder().username(username).password(password).comment(comment).secretStatus(0).build();
     }

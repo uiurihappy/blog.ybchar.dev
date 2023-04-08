@@ -21,6 +21,7 @@ public class PostCreateDto {
     private String content;
 
     private Integer viewCount;
+    private Integer likeCount;
 
     public PostCreateDto changeTitle(String title) {
         return PostCreateDto.builder()

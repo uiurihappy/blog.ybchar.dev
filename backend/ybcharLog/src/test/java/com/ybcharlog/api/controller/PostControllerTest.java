@@ -54,6 +54,7 @@ class PostControllerTest {
                 .title("글 제목입니다.")
                 .content("글 내용입니다.")
                 .viewCount(0)
+                .likeCount(0)
                 .build();
         String json = objectMapper.writeValueAsString(request);     // Javascript의 JSON.stringfy(object) 느낌
 //        System.out.println(json);
@@ -101,6 +102,7 @@ class PostControllerTest {
                 .title("글 제목 test")
                 .content("글 내용 test")
                 .viewCount(0)
+                .likeCount(0)
                 .build();
         String json = objectMapper.writeValueAsString(request);
 
@@ -132,6 +134,7 @@ class PostControllerTest {
                 .title("foofoofoofoofoo")
                 .content("bar")
                 .viewCount(0)
+                .likeCount(0)
                 .build();
         postRepository.save(post);
         System.out.println("postId = " + post.getId());
@@ -156,6 +159,7 @@ class PostControllerTest {
                     .title("foo" + i)
                     .content("bar" + i)
                     .viewCount(0)
+                    .likeCount(0)
                     .build();
             postRepository.save(savePost);
         }

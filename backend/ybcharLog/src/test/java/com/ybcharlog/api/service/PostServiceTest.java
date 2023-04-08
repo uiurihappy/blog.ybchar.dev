@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -68,22 +70,28 @@ class PostServiceTest {
 	}
 
 	@Test
-	@DisplayName("글 리스트 조회")
+	@DisplayName("글 1페이지 조회")
 	void getListTest1() {
 		// given
-		for (int i = 0; i < 5; i++) {
-			Post savePost = Post.builder()
-					.title("foo" + i)
-					.content("bar" + i)
-					.viewCount(0)
-					.build();
-			postRepository.save(savePost);
-		}
+		List<Post> requestPosts = IntStream.range(1, 31)
+				.mapToObj(i -> Post.builder()
+						.title("ybchar title " + i)
+						.content("ybchar content " + i)
+						.viewCount(0)
+						.likeCount(0)
+						.build())
+				.collect(Collectors.toList());
+		postRepository.saveAll(requestPosts);
+
+		// sql -> select ... limit, offset
+
 		// when
-		List<PostResponse> posts = postService.getList();
+		List<PostResponse> posts = postService.getList(0);
 
 		// then
 		assertEquals(5L, posts.size());
+		assertEquals("ybchar title 30", posts.get(0).getTitle());
+		assertEquals("ybchar title 26", posts.get(4).getTitle());
 
 	}
 

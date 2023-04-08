@@ -6,6 +6,9 @@ import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,8 +41,10 @@ public class PostService {
 				.build();
 	}
 
-	public List<PostResponse> getList() {
-		return postRepository.findAll().stream()
+	public List<PostResponse> getList(int page) {
+		// Pageable 한번 까서 볼것!
+		Pageable pageable = PageRequest.of(page, 5, Sort.by("id").descending());
+		return postRepository.findAll(pageable).stream()
 				.map(PostResponse::new
 				)
 				.collect(Collectors.toList());

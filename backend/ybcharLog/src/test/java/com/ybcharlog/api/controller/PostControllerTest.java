@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ybcharlog.api.RequestDto.PostCreateDto;
 import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.repository.PostRepository;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -147,9 +149,9 @@ class PostControllerTest {
 
     @Test
     @DisplayName("사용자 글 리스트 조회")
-    void getListTest2() throws Exception {
+    void getListTest() throws Exception {
         // given
-        for (int i = 0; i < 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             Post savePost = Post.builder()
                     .title("foo" + i)
                     .content("bar" + i)
@@ -168,6 +170,11 @@ class PostControllerTest {
                 /**
                  * [{""}, {""}]
                  */
+                // Matchers 사용
+                .andExpect(jsonPath("$.length()", is(5)))
+                .andExpect(jsonPath("$.[0].id").value(posts.get(0).getId()))
+                .andExpect(jsonPath("$.[0].title").value("foo1"))
+                .andExpect(jsonPath("$.[0].content").value("bar1"))
                 .andDo(print());
 
     }

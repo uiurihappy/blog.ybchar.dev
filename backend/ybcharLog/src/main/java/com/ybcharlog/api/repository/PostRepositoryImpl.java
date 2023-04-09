@@ -2,6 +2,7 @@ package com.ybcharlog.api.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ybcharlog.api.domain.Post;
+import com.ybcharlog.api.domain.QPost;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

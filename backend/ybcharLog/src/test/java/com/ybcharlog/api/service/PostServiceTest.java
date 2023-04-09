@@ -10,6 +10,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,6 +59,8 @@ class PostServiceTest {
 		Post savePost = Post.builder()
 				.title("foo")
 				.content("bar")
+				.viewCount(0)
+				.likeCount(0)
 				.build();
 		postRepository.save(savePost);
 
@@ -86,7 +91,8 @@ class PostServiceTest {
 		// sql -> select ... limit, offset
 
 		// when
-		List<PostResponse> posts = postService.getList(0);
+		Pageable pageable = PageRequest.of(0, 5, Sort.by("id").descending());
+		List<PostResponse> posts = postService.getList(pageable);
 
 		// then
 		assertEquals(5L, posts.size());

@@ -6,6 +6,8 @@ import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -86,10 +88,10 @@ public class PostController {
      */
 
     @GetMapping("/posts")
-    public List<PostResponse> getPostList() {
+    public List<PostResponse> getPostList(@PageableDefault(size = 5) Pageable pageable) {
         // 페이징 처리가 필요 -> response 비용이 많이 들기 때문이다.
         // -> 통신, 트래픽 비용이 많아지면 응답 속도 시간뿐만 아니라 직접 겪어봐서 아는데 DB까지 터진다.
-        return postService.getList(1);
+        return postService.getList(pageable);
     }
 
     @GetMapping("/posts/{postId}")

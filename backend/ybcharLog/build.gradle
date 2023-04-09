@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.10'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'com.ybcharLog'
@@ -19,7 +19,12 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
-    querydsl.extendsFrom compileClasspath
+    asciidoctorExt
+}
+
+ext {
+    asciidocVersion = "2.0.6.RELEASE"
+    snippetsDir = file('build/generated-snippets')
 }
 
 repositories {
@@ -32,8 +37,21 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+//    implementation 'org.springframework.security:spring-security-crypto'
+
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+
+//    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+//    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+//    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    implementation "com.querydsl:querydsl-core"
+    implementation "com.querydsl:querydsl-jpa"
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jpa"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -41,18 +59,50 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}
+//test {
+//    useJUnitPlatform()
+//}
+
+//def querydslDir = "$buildDir/generated/querydsl"
+//querydsl {
+//    jpa = true
+//    querydslSourcesDir = querydslDir
+//}
+//sourceSets {
+//    main.java.srcDir querydslDir
+//}
+//compileQuerydsl {
+//    options.annotationProcessorPath = configurations.querydsl
+//}
+
+test {
+    outputs.dir snippetsDir
 }
 
-def querydslDir = "$buildDir/generated/querydsl"
-querydsl {
-    jpa = true
-    querydslSourcesDir = querydslDir
+asciidoctor {
+    inputs.dir snippetsDir
+    configurations 'asciidoctorExt'
+    dependsOn test
 }
-sourceSets {
-    main.java.srcDir querydslDir
+
+asciidoctor.doFirst {
+    delete file("src/main/resources/static/docs")
 }
-compileQuerydsl {
-    options.annotationProcessorPath = configurations.querydsl
+
+bootJar {
+    enabled = true
+
+    dependsOn asciidoctor
+
+    copy {
+        from asciidoctor.outputDir
+        into "src/main/resources/static/docs"
+    }
+}
+
+jar {
+    enabled = false
 }

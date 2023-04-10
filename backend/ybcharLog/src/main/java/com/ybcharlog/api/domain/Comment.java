@@ -1,5 +1,6 @@
 package com.ybcharlog.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ybcharlog.api.Common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,8 +30,9 @@ public class Comment extends BaseEntity {
     @Column(columnDefinition = "tinyint(3) not null default 0 COMMENT '비밀 댓글 상태'")
     private Integer secretStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
+    @JsonIgnore
     private Post post;
 
     public static Comment initComment(String username, String password, String comment, Integer secretStatus) {

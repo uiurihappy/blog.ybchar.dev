@@ -2,6 +2,7 @@ package com.ybcharlog.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ybcharlog.api.RequestDto.PostCreateDto;
+import com.ybcharlog.api.RequestDto.PostEditDto;
 import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.repository.PostRepository;
 import org.hamcrest.Matchers;
@@ -23,6 +24,7 @@ import java.util.stream.IntStream;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -63,7 +65,7 @@ class PostControllerTest {
 
         // expected
         mockMvc.perform(post("/posts")
-                                .contentType(MediaType.APPLICATION_JSON)
+                                .contentType(APPLICATION_JSON)
                                 .content(json)
                 )
                 .andExpect(status().isOk())
@@ -84,7 +86,7 @@ class PostControllerTest {
 
         // expected
         mockMvc.perform(post("/posts")
-                                .contentType(MediaType.APPLICATION_JSON)
+                                .contentType(APPLICATION_JSON)
                                 .content(json)
                 )
                 .andExpect(status().isBadRequest())
@@ -110,7 +112,7 @@ class PostControllerTest {
 
         // when
         mockMvc.perform(post("/posts")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
                         .content(json)
                 )
                 .andExpect(status().isOk())
@@ -142,7 +144,7 @@ class PostControllerTest {
         System.out.println("postId = " + post.getId());
         // expected
         mockMvc.perform(get("/posts/{postId}", post.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
@@ -170,7 +172,7 @@ class PostControllerTest {
 
         // expected
         mockMvc.perform(get("/posts")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 /**
@@ -201,7 +203,7 @@ class PostControllerTest {
 
         // expected
         mockMvc.perform(get("/posts?page=1&size=10")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()", Matchers.is(10)))
@@ -228,7 +230,7 @@ class PostControllerTest {
 
         // expected
         mockMvc.perform(get("/posts?page=0&size=10")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()", Matchers.is(10)))
@@ -238,5 +240,34 @@ class PostControllerTest {
                 .andDo(print());
 
     }
+
+    @Test
+    @DisplayName("글 제목 수정")
+    void editPostTest1() throws Exception {
+        // given
+        Post post = Post.builder()
+                .title("ybchar title 1")
+                .content("ybchar content 1")
+                .viewCount(0)
+                .likeCount(0)
+                .build();
+        postRepository.save(post);
+
+        PostEditDto postEditDto = PostEditDto.builder()
+                .title("ybchar edit title test1")
+                .content("ybchar edit content test1")
+                .build();
+
+//        System.out.println(objectMapper.writeValueAsString(postEditDto));
+        // expected
+        mockMvc.perform(patch("/posts/{postId}", post.getId())  // PATCH /posts/{postId|
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(postEditDto))
+                )
+                .andExpect(status().isOk())
+                .andDo(print());
+
+    }
+
 
 }

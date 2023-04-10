@@ -46,4 +46,28 @@ public class Post extends BaseEntity {
 		this.viewCount = viewCount;
 		this.likeCount = likeCount;
 	}
+
+	public void changeTitle(String title) {
+		this.title = title;
+	}
+
+	public void changeContent(String content) {
+		this.content = content;
+	}
+
+	public void changePost(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
+
+	public PostEditor.PostEditorBuilder toEditor() {
+		return PostEditor.builder()
+				.title(title)
+				.content(content);
+	}
+
+	public void edit(PostEditor postEditor) {
+		title = postEditor.getTitle();
+		content = postEditor.getContent();
+	}
 }

@@ -1,6 +1,7 @@
 package com.ybcharlog.api.service;
 
 import com.ybcharlog.api.RequestDto.PostCreateDto;
+import com.ybcharlog.api.RequestDto.PostEditDto;
 import com.ybcharlog.api.RequestDto.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.PostResponse;
 import com.ybcharlog.api.domain.Post;
@@ -102,6 +103,32 @@ class PostServiceTest {
 		assertEquals(10L, posts.size());
 		assertEquals("ybchar title 19", posts.get(0).getTitle());
 		assertEquals("ybchar title 15", posts.get(4).getTitle());
+
+	}
+
+	@Test
+	@DisplayName("글 제목 수정")
+	void editTitlePost1() {
+		// given
+		Post post = Post.builder()
+				.title("ybchar title 1")
+				.content("ybchar content 1")
+				.viewCount(0)
+				.likeCount(0)
+				.build();
+		postRepository.save(post);
+
+		PostEditDto postEditDto = PostEditDto.builder()
+				.title("ybchar edit title test1")
+				.content("ybchar edit content test1")
+				.build();
+		// when
+		postService.editPost(post.getId(), postEditDto);
+
+		// then
+		Post changedPost = postRepository.findById(post.getId())
+				.orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id = " + post.getId()));
+		assertEquals("ybchar edit title test1", changedPost.getTitle());
 
 	}
 

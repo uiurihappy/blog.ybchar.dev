@@ -62,12 +62,12 @@ public class PostService {
 	public void editPost(Long postId, PostEditDto postEditDto) {
 		Post post = postRepository.findById(postId)
 				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
-		PostEditorBuilder editorBuilder = post.toEditor();
-
-		PostEditor postEditor = editorBuilder.title(postEditDto.getTitle())
-				.content(postEditDto.getContent())
-				.build();
-		post.edit(postEditor);
+//		PostEditorBuilder editorBuilder = post.toEditor();
+//
+//		PostEditor postEditor = editorBuilder.title(postEditDto.getTitle())
+//				.content(postEditDto.getContent())
+//				.build();
+		post.edit(postEditDto, post);
 //		postRepository.editPost(postId, postEditDto);
 	}
 }

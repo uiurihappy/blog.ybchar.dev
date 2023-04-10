@@ -132,4 +132,30 @@ class PostServiceTest {
 
 	}
 
+	@Test
+	@DisplayName("글 제목 수정")
+	void editTitlePost2() {
+		// given
+		Post post = Post.builder()
+				.title("ybchar title 1")
+				.content("ybchar content 1")
+				.viewCount(0)
+				.likeCount(0)
+				.build();
+		postRepository.save(post);
+
+		PostEditDto postEditDto = PostEditDto.builder()
+				.title(null)
+				.content("ybchar edit content test1")
+				.build();
+		// when
+		postService.editPost(post.getId(), postEditDto);
+
+		// then
+		Post changedPost = postRepository.findById(post.getId())
+				.orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id = " + post.getId()));
+		assertEquals("ybchar title 1", changedPost.getTitle());
+
+	}
+
 }

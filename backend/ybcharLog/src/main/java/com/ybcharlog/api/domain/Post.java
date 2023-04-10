@@ -1,6 +1,7 @@
 package com.ybcharlog.api.domain;
 
 import com.ybcharlog.api.Common.BaseEntity;
+import com.ybcharlog.api.RequestDto.PostEditDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ybcharlog.api.domain.PostEditor.*;
 
 @Entity
 @Getter
@@ -60,14 +63,14 @@ public class Post extends BaseEntity {
 		this.content = content;
 	}
 
-	public PostEditor.PostEditorBuilder toEditor() {
+	public PostEditorBuilder toEditor() {
 		return PostEditor.builder()
 				.title(title)
 				.content(content);
 	}
 
-	public void edit(PostEditor postEditor) {
-		title = postEditor.getTitle();
-		content = postEditor.getContent();
+	public void edit(PostEditDto postEditDto, Post post) {
+		this.title = postEditDto.getTitle() != null ? postEditDto.getTitle() : post.getTitle();
+		this.content = postEditDto.getContent() != null ? postEditDto.getContent() : post.getContent();
 	}
 }

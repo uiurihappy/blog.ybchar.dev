@@ -70,4 +70,8 @@ public class PostService {
 		post.edit(postEditDto, post);
 //		postRepository.editPost(postId, postEditDto);
 	}
+
+	public void deletePost(Long postId) {
+		postRepository.deleteById(postId);
+	}
 }

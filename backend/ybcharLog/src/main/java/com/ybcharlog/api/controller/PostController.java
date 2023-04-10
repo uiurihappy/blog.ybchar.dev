@@ -1,6 +1,7 @@
 package com.ybcharlog.api.controller;
 
 import com.ybcharlog.api.RequestDto.PostCreateDto;
+import com.ybcharlog.api.RequestDto.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.PostResponse;
 import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.service.PostService;
@@ -88,10 +89,10 @@ public class PostController {
      */
 
     @GetMapping("/posts")
-    public List<PostResponse> getPostList(@PageableDefault(size = 5) Pageable pageable) {
+    public List<PostResponse> getPostList(@RequestParam PostSearchDto postSearchDto) {
         // 페이징 처리가 필요 -> response 비용이 많이 들기 때문이다.
         // -> 통신, 트래픽 비용이 많아지면 응답 속도 시간뿐만 아니라 직접 겪어봐서 아는데 DB까지 터진다.
-        return postService.getList(pageable);
+        return postService.getList(postSearchDto);
     }
 
     @GetMapping("/posts/{postId}")

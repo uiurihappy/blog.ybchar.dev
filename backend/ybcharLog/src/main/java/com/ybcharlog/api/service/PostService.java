@@ -1,6 +1,7 @@
 package com.ybcharlog.api.service;
 
 import com.ybcharlog.api.RequestDto.PostCreateDto;
+import com.ybcharlog.api.RequestDto.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.PostResponse;
 import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.repository.PostRepository;
@@ -41,12 +42,19 @@ public class PostService {
 				.build();
 	}
 
-	public List<PostResponse> getList(Pageable pageable) {
+	public List<PostResponse> getList(PostSearchDto postSearchDto) {
 		// Pageable 한번 까서 볼것!
 //		Pageable pageable = PageRequest.of(page, 5, Sort.by("id").descending());
-		return postRepository.findAll(pageable).stream()
-				.map(PostResponse::new
-				)
+
+		// 순수 JPA
+//		return postRepository.findAll(pageable).stream()
+//				.map(PostResponse::new
+//				)
+//				.collect(Collectors.toList());
+		// Querydsl
+		return postRepository.getList(postSearchDto).stream()
+				.map(PostResponse::new)
 				.collect(Collectors.toList());
+
 	}
 }

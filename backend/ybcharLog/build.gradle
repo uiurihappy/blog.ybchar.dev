@@ -54,17 +54,9 @@ test {
     outputs.dir snippetsDir
 }
 
-//clean {
-//    delete file(generated)
-//}
 
 def querydslDir = "$buildDir/generated/sources/annotationProcessor/java/main"
-//def querydslDir = "$buildDir/generated/querydsl"
-//
-//querydsl {
-//    jpa = true
-//    querydslSourcesDir = querydslDir
-//}
+
 tasks.withType(JavaCompile) {
     options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
 }
@@ -75,11 +67,6 @@ sourceSets {
 clean {
     delete file(querydslDir)
 }
-//
-//compileQuerydsl {
-//    options.annotationProcessorPath = configurations.querydsl
-//}
-
 
 
 

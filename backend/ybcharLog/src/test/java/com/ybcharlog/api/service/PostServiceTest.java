@@ -1,6 +1,7 @@
 package com.ybcharlog.api.service;
 
 import com.ybcharlog.api.RequestDto.PostCreateDto;
+import com.ybcharlog.api.RequestDto.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.PostResponse;
 import com.ybcharlog.api.domain.Post;
 import com.ybcharlog.api.repository.PostRepository;
@@ -78,7 +79,7 @@ class PostServiceTest {
 	@DisplayName("글 1페이지 조회")
 	void getListTest1() {
 		// given
-		List<Post> requestPosts = IntStream.range(1, 31)
+		List<Post> requestPosts = IntStream.range(0, 20)
 				.mapToObj(i -> Post.builder()
 						.title("ybchar title " + i)
 						.content("ybchar content " + i)
@@ -91,13 +92,17 @@ class PostServiceTest {
 		// sql -> select ... limit, offset
 
 		// when
-		Pageable pageable = PageRequest.of(0, 5, Sort.by("id").descending());
-		List<PostResponse> posts = postService.getList(pageable);
+		PostSearchDto postSearchDto = PostSearchDto.builder()
+				.page(1)
+				.size(10)
+				.build();
+
+		List<PostResponse> posts = postService.getList(postSearchDto);
 
 		// then
-		assertEquals(5L, posts.size());
-		assertEquals("ybchar title 30", posts.get(0).getTitle());
-		assertEquals("ybchar title 26", posts.get(4).getTitle());
+		assertEquals(10L, posts.size());
+		assertEquals("ybchar title 19", posts.get(0).getTitle());
+		assertEquals("ybchar title 15", posts.get(4).getTitle());
 
 	}
 

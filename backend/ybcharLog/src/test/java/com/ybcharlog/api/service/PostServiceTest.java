@@ -94,7 +94,6 @@ class PostServiceTest {
 		// when
 		PostSearchDto postSearchDto = PostSearchDto.builder()
 				.page(1)
-				.size(10)
 				.build();
 
 		List<PostResponse> posts = postService.getList(postSearchDto);

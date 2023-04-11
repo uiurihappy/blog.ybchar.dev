@@ -8,6 +8,8 @@ import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
+import com.ybcharlog.api.domain.comment.Comment;
+import com.ybcharlog.api.domain.post.Post;
 
 
 /**

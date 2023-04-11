@@ -1,6 +1,6 @@
-package com.ybcharlog.api.ResponseDto;
+package com.ybcharlog.api.ResponseDto.post;
 
-import com.ybcharlog.api.domain.Post;
+import com.ybcharlog.api.domain.post.Post;
 import lombok.Builder;
 import lombok.Getter;
 

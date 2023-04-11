@@ -1,4 +1,4 @@
-package com.ybcharlog.api.ResponseDto;
+package com.ybcharlog.api.ResponseDto.common;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

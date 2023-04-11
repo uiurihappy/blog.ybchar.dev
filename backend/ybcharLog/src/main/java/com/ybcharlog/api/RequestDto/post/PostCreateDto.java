@@ -1,4 +1,4 @@
-package com.ybcharlog.api.RequestDto;
+package com.ybcharlog.api.RequestDto.post;
 
 import lombok.*;
 

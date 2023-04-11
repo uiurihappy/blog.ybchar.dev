@@ -1,4 +1,4 @@
-package com.ybcharlog.api.domain;
+package com.ybcharlog.api.domain.post;
 
 import lombok.Builder;
 import lombok.Getter;

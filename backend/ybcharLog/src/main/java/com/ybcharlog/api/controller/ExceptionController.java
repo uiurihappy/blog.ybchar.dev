@@ -1,7 +1,7 @@
 package com.ybcharlog.api.controller;
 
 
-import com.ybcharlog.api.ResponseDto.ErrorResponse;
+import com.ybcharlog.api.ResponseDto.common.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

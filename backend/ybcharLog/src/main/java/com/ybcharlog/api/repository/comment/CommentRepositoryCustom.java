@@ -1,6 +1,6 @@
-package com.ybcharlog.api.repository;
+package com.ybcharlog.api.repository.comment;
 
-import com.ybcharlog.api.domain.Comment;
+import com.ybcharlog.api.domain.comment.Comment;
 
 import java.util.List;
 

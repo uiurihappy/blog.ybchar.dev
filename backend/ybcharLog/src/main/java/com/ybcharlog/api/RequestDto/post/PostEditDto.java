@@ -1,7 +1,5 @@
-package com.ybcharlog.api.RequestDto;
+package com.ybcharlog.api.RequestDto.post;
 
-import com.ybcharlog.api.domain.PostEditor;
-import com.ybcharlog.api.domain.PostEditor.PostEditorBuilder;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

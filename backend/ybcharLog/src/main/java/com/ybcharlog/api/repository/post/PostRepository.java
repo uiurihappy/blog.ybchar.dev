@@ -1,6 +1,6 @@
-package com.ybcharlog.api.repository;
+package com.ybcharlog.api.repository.post;
 
-import com.ybcharlog.api.domain.Post;
+import com.ybcharlog.api.domain.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostRepository extends JpaRepository<Post, Long>, PostRepositoryCustom {

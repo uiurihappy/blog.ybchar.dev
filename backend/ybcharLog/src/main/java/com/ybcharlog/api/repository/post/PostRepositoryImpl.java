@@ -1,9 +1,9 @@
-package com.ybcharlog.api.repository;
+package com.ybcharlog.api.repository.post;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ybcharlog.api.RequestDto.PostEditDto;
-import com.ybcharlog.api.RequestDto.PostSearchDto;
-import com.ybcharlog.api.domain.Post;
+import com.ybcharlog.api.RequestDto.post.PostEditDto;
+import com.ybcharlog.api.RequestDto.post.PostSearchDto;
+import com.ybcharlog.api.domain.post.Post;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

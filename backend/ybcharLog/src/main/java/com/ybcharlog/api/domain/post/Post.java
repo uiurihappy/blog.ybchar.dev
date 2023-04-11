@@ -1,7 +1,8 @@
-package com.ybcharlog.api.domain;
+package com.ybcharlog.api.domain.post;
 
 import com.ybcharlog.api.Common.BaseEntity;
-import com.ybcharlog.api.RequestDto.PostEditDto;
+import com.ybcharlog.api.RequestDto.post.PostEditDto;
+import com.ybcharlog.api.domain.comment.Comment;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ybcharlog.api.domain.PostEditor.*;
+import static com.ybcharlog.api.domain.post.PostEditor.*;
 
 @Entity
 @Getter

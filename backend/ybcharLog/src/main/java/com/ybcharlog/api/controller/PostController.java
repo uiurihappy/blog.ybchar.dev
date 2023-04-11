@@ -1,23 +1,17 @@
 package com.ybcharlog.api.controller;
 
-import com.ybcharlog.api.RequestDto.PostCreateDto;
-import com.ybcharlog.api.RequestDto.PostEditDto;
-import com.ybcharlog.api.RequestDto.PostSearchDto;
-import com.ybcharlog.api.ResponseDto.PostResponse;
-import com.ybcharlog.api.domain.Post;
-import com.ybcharlog.api.service.PostService;
+import com.ybcharlog.api.RequestDto.post.PostCreateDto;
+import com.ybcharlog.api.RequestDto.post.PostEditDto;
+import com.ybcharlog.api.RequestDto.post.PostSearchDto;
+import com.ybcharlog.api.ResponseDto.post.PostResponse;
+import com.ybcharlog.api.domain.post.Post;
+import com.ybcharlog.api.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController

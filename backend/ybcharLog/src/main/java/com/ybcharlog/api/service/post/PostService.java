@@ -1,24 +1,18 @@
-package com.ybcharlog.api.service;
+package com.ybcharlog.api.service.post;
 
-import com.ybcharlog.api.RequestDto.PostCreateDto;
-import com.ybcharlog.api.RequestDto.PostEditDto;
-import com.ybcharlog.api.RequestDto.PostSearchDto;
-import com.ybcharlog.api.ResponseDto.PostResponse;
-import com.ybcharlog.api.domain.Post;
-import com.ybcharlog.api.domain.PostEditor;
-import com.ybcharlog.api.repository.PostRepository;
+import com.ybcharlog.api.RequestDto.post.PostCreateDto;
+import com.ybcharlog.api.RequestDto.post.PostEditDto;
+import com.ybcharlog.api.RequestDto.post.PostSearchDto;
+import com.ybcharlog.api.ResponseDto.post.PostResponse;
+import com.ybcharlog.api.domain.post.Post;
+import com.ybcharlog.api.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.ybcharlog.api.domain.PostEditor.*;
 
 @Slf4j
 @Service

@@ -1,20 +1,17 @@
 package com.ybcharlog.api.service;
 
-import com.ybcharlog.api.RequestDto.PostCreateDto;
-import com.ybcharlog.api.RequestDto.PostEditDto;
-import com.ybcharlog.api.RequestDto.PostSearchDto;
-import com.ybcharlog.api.ResponseDto.PostResponse;
-import com.ybcharlog.api.domain.Post;
-import com.ybcharlog.api.repository.PostRepository;
-import org.junit.jupiter.api.Assertions;
+import com.ybcharlog.api.RequestDto.post.PostCreateDto;
+import com.ybcharlog.api.RequestDto.post.PostEditDto;
+import com.ybcharlog.api.RequestDto.post.PostSearchDto;
+import com.ybcharlog.api.ResponseDto.post.PostResponse;
+import com.ybcharlog.api.domain.post.Post;
+import com.ybcharlog.api.repository.post.PostRepository;
+import com.ybcharlog.api.service.post.PostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.stream.Collectors;

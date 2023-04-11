@@ -1,6 +1,6 @@
-package com.ybcharlog.api.repository;
+package com.ybcharlog.api.repository.comment;
 
-import com.ybcharlog.api.domain.Comment;
+import com.ybcharlog.api.domain.comment.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {

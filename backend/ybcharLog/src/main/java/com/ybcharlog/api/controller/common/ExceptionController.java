@@ -1,4 +1,4 @@
-package com.ybcharlog.api.controller;
+package com.ybcharlog.api.controller.common;
 
 
 import com.ybcharlog.api.ResponseDto.common.ErrorResponse;

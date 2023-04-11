@@ -1,4 +1,4 @@
-package com.ybcharlog.api.controller;
+package com.ybcharlog.api.controller.post;
 
 import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;

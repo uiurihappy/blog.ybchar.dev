@@ -13,7 +13,7 @@ import static java.lang.Math.*;
 @Data
 public class PostSearchDto {
 
-	private static final int MAX_SIZE = 2000;
+	private static final int MAX_SIZE = 1;
 
 	@Builder.Default
 	private Integer page = 1;

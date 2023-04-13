@@ -8,7 +8,6 @@ import lombok.Setter;
 import static java.lang.Math.max;
 
 @Getter
-@Setter
 @Builder
 @Data
 public class CommentSearchDto {

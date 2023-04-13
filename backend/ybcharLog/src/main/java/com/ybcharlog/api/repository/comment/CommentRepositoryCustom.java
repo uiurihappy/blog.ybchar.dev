@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface CommentRepositoryCustom {
 
-    List<Comment> getList(CommentSearchDto commentSearchDto);
+    List<Comment> getList(Long postId, CommentSearchDto commentSearchDto);
     void editComment(Long commentId, CommentEditDto commentEditDto);
 }

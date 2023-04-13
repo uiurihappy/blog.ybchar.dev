@@ -22,7 +22,7 @@ public class Comment extends BaseEntity {
     @Column(columnDefinition = "varchar(20) not null COMMENT '댓글 사용자 이름'")
     private String username;
 
-    @Column(columnDefinition = "varchar(15) COMMENT '댓글 비밀글'")
+    @Column(columnDefinition = "varchar(15) COMMENT '댓글 비밀번호'")
     private String password;
 
     @Column(columnDefinition = "text not null COMMENT '댓글 내용'")
@@ -32,7 +32,7 @@ public class Comment extends BaseEntity {
     private Integer secretStatus;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "postId")
     @JsonIgnore
     private Post post;
 

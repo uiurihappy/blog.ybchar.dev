@@ -1,5 +1,6 @@
 package com.ybcharlog.api.controller.post;
 
+import com.querydsl.core.Tuple;
 import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;
@@ -62,7 +63,7 @@ public class PostController {
         return postService.getList(postSearchDto);
     }
     @GetMapping("/posts/{postId}")
-    public PostResponse getOne(@PathVariable Long postId) {
+    public Post getOne(@PathVariable Long postId) {
         // 서비스 정책에 맞는 응답 클래스를 분리하는 것이 옳다.
         return postService.getOne(postId);
     }

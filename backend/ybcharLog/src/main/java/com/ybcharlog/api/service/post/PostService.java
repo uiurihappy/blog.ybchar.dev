@@ -1,10 +1,13 @@
 package com.ybcharlog.api.service.post;
 
+import com.querydsl.core.Tuple;
+import com.ybcharlog.api.RequestDto.comment.CommentSearchDto;
 import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.domain.post.Post;
+import com.ybcharlog.api.repository.comment.CommentRepository;
 import com.ybcharlog.api.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,21 +23,15 @@ import java.util.stream.Collectors;
 public class PostService {
 
 	private final PostRepository postRepository;
+	private final CommentRepository commentRepository;
 
 	public Post write(PostCreateDto postCreateDto) {
 		return postRepository.save(Post.initPost(postCreateDto.getTitle(), postCreateDto.getContent()));
 	}
 
-	public PostResponse getOne(Long id) {
-		Post post = postRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+	public Post getOne(Long postId) {
 
-		return PostResponse.builder()
-				.id(post.getId())
-				.title(post.getTitle())
-				.content(post.getContent())
-				.viewCount(post.getViewCount())
-				.build();
+		return postRepository.getPostOne(postId);
 	}
 
 	public List<PostResponse> getList(PostSearchDto postSearchDto) {
@@ -47,10 +44,9 @@ public class PostService {
 //				)
 //				.collect(Collectors.toList());
 		// Querydsl
-//		return postRepository.getList(postSearchDto).stream()
-//				.map(PostResponse::new)
-//				.collect(Collectors.toList());
-		return List.of();
+		return postRepository.getList(postSearchDto).stream()
+				.map(PostResponse::new)
+				.collect(Collectors.toList());
 	}
 
 	@Transactional

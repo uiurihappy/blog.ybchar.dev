@@ -1,8 +1,14 @@
 package com.ybcharlog.api.ResponseDto.post;
 
+import com.querydsl.core.annotations.QueryProjection;
+import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.domain.post.Post;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * 서비스 정책에 따른 응답 클래스
@@ -10,6 +16,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
+@Data
 public class PostResponse {
 
 	private final Long id;
@@ -17,6 +24,7 @@ public class PostResponse {
 	private final String content;
 	private final Integer viewCount;
 	private final Integer likeCount;
+	private final List<Comment> comments;
 
 	// 생성자 오버로딩
 	public PostResponse(Post post) {
@@ -25,14 +33,17 @@ public class PostResponse {
 		this.content = post.getContent();
 		this.viewCount = post.getViewCount();
 		this.likeCount = post.getLikeCount();
+		this.comments = getComments();
 	}
 
 	@Builder
-	public PostResponse(Long id, String title, String content, Integer viewCount, Integer likeCount) {
+	@QueryProjection
+	public PostResponse(Long id, String title, String content, Integer viewCount, Integer likeCount, List<Comment> comments) {
 		this.id = id;
 		this.title = title.substring(0, Math.min(title.length(), 10));
 		this.content = content;
 		this.viewCount = viewCount;
 		this.likeCount = likeCount;
+		this.comments = comments;
 	}
 }

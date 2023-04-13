@@ -1,5 +1,6 @@
 package com.ybcharlog.api.service.comment;
 
+import com.ybcharlog.api.RequestDto.comment.CommentCreateDto;
 import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
 import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.repository.comment.CommentRepository;
@@ -25,5 +26,9 @@ public class CommentService {
                 .commentContent(comment.getCommentContent())
                 .secretStatus(comment.getSecretStatus())
                 .build();
+    }
+
+    public Comment write(CommentCreateDto commentCreateDto) {
+        return commentRepository.save(Comment.initComment(commentCreateDto.getUsername(), commentCreateDto.getPassword(), commentCreateDto.getCommentContent(), commentCreateDto.getSecretStatus()));
     }
 }

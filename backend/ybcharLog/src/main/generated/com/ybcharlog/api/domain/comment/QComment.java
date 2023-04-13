@@ -1,4 +1,4 @@
-package com.ybcharlog.api.domain;
+package com.ybcharlog.api.domain.comment;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -8,7 +8,6 @@ import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
-import com.ybcharlog.api.domain.comment.Comment;
 
 
 /**
@@ -17,15 +16,15 @@ import com.ybcharlog.api.domain.comment.Comment;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QComment extends EntityPathBase<Comment> {
 
-    private static final long serialVersionUID = 2022615615L;
+    private static final long serialVersionUID = 2061359536L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QComment comment1 = new QComment("comment1");
+    public static final QComment comment = new QComment("comment");
 
     public final com.ybcharlog.api.Common.QBaseEntity _super = new com.ybcharlog.api.Common.QBaseEntity(this);
 
-    public final StringPath comment = createString("comment");
+    public final StringPath commentContent = createString("commentContent");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
@@ -43,7 +42,7 @@ public class QComment extends EntityPathBase<Comment> {
 
     public final StringPath password = createString("password");
 
-    public final QPost post;
+    public final com.ybcharlog.api.domain.post.QPost post;
 
     public final NumberPath<Integer> secretStatus = createNumber("secretStatus", Integer.class);
 
@@ -67,7 +66,7 @@ public class QComment extends EntityPathBase<Comment> {
 
     public QComment(Class<? extends Comment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.post = inits.isInitialized("post") ? new QPost(forProperty("post")) : null;
+        this.post = inits.isInitialized("post") ? new com.ybcharlog.api.domain.post.QPost(forProperty("post")) : null;
     }
 
 }

@@ -22,7 +22,7 @@ public class CommentService {
                 .id(comment.getId())
                 .username(comment.getUsername())
                 .password(comment.getPassword())
-                .comment(comment.getComment())
+                .commentContent(comment.getCommentContent())
                 .secretStatus(comment.getSecretStatus())
                 .build();
     }

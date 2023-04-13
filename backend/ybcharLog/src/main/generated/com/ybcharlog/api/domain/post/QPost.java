@@ -1,4 +1,4 @@
-package com.ybcharlog.api.domain;
+package com.ybcharlog.api.domain.post;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -8,8 +8,6 @@ import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
-import com.ybcharlog.api.domain.comment.Comment;
-import com.ybcharlog.api.domain.post.Post;
 
 
 /**
@@ -18,13 +16,13 @@ import com.ybcharlog.api.domain.post.Post;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QPost extends EntityPathBase<Post> {
 
-    private static final long serialVersionUID = 1778936000L;
+    private static final long serialVersionUID = -438880946L;
 
     public static final QPost post = new QPost("post");
 
     public final com.ybcharlog.api.Common.QBaseEntity _super = new com.ybcharlog.api.Common.QBaseEntity(this);
 
-    public final ListPath<Comment, QComment> comments = this.<Comment, QComment>createList("comments", Comment.class, QComment.class, PathInits.DIRECT2);
+    public final ListPath<com.ybcharlog.api.domain.comment.Comment, com.ybcharlog.api.domain.comment.QComment> comments = this.<com.ybcharlog.api.domain.comment.Comment, com.ybcharlog.api.domain.comment.QComment>createList("comments", com.ybcharlog.api.domain.comment.Comment.class, com.ybcharlog.api.domain.comment.QComment.class, PathInits.DIRECT2);
 
     public final StringPath content = createString("content");
 

@@ -11,7 +11,7 @@ public class CommentResponse {
     private final Long id;
     private final String username;
     private final String password;
-    private final String comment;
+    private final String commentContent;
     private final Integer secretStatus;
 
     // 생성자 오버로딩
@@ -19,16 +19,16 @@ public class CommentResponse {
         this.id = comment.getId();
         this.username = comment.getUsername();
         this.password = comment.getPassword();
-        this.comment = comment.getComment();
+        this.commentContent = comment.getCommentContent();
         this.secretStatus = comment.getSecretStatus();
     }
 
     @Builder
-    public CommentResponse(Long id, String username, String password, String comment, Integer secretStatus) {
+    public CommentResponse(Long id, String username, String password, String commentContent, Integer secretStatus) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.comment = comment;
+        this.commentContent = commentContent;
         this.secretStatus = secretStatus == null ? 0 : secretStatus;
     }
 }

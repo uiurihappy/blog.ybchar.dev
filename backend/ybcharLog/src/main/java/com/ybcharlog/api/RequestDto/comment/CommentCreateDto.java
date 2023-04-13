@@ -19,7 +19,7 @@ public class CommentCreateDto {
     private String password;
 
     @NotBlank(message = "comment input please")
-    private String comment;
+    private String commentContent;
 
     @NotBlank(message = "Require secretStatus")
     private Integer secretStatus;

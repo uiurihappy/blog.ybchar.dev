@@ -4,11 +4,13 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.domain.post.Post;
+import com.ybcharlog.api.domain.post.QPost;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.ybcharlog.api.domain.QPost.post;
+import static com.ybcharlog.api.domain.post.QPost.*;
+
 
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepositoryCustom {

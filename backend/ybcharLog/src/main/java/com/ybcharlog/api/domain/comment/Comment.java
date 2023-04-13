@@ -26,7 +26,7 @@ public class Comment extends BaseEntity {
     private String password;
 
     @Column(columnDefinition = "text not null COMMENT '댓글 내용'")
-    private String comment;
+    private String commentContent;
 
     @Column(columnDefinition = "tinyint(3) not null default 0 COMMENT '비밀 댓글 상태'")
     private Integer secretStatus;
@@ -36,15 +36,15 @@ public class Comment extends BaseEntity {
     @JsonIgnore
     private Post post;
 
-    public static Comment initComment(String username, String password, String comment, Integer secretStatus) {
-        return Comment.builder().username(username).password(password).comment(comment).secretStatus(0).build();
+    public static Comment initComment(String username, String password, String commentContent, Integer secretStatus) {
+        return Comment.builder().username(username).password(password).commentContent(commentContent).secretStatus(0).build();
     }
 
     @Builder
-    public Comment(String username, String password, String comment, Integer secretStatus) {
+    public Comment(String username, String password, String commentContent, Integer secretStatus) {
         this.username = username;
         this.password = password;
-        this.comment = comment;
+        this.commentContent = commentContent;
         this.secretStatus = secretStatus;
     }
 }

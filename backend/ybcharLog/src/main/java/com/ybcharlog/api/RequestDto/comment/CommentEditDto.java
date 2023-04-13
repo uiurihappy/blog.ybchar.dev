@@ -14,12 +14,12 @@ public class CommentEditDto {
     private String username;
 
     @NotBlank(message = "Blanked comment")
-    private String comment;
+    private String commentContent;
 
     @Builder
-    public CommentEditDto(String username, String comment) {
+    public CommentEditDto(String username, String commentContent) {
         this.username = username;
-        this.comment = comment;
+        this.commentContent = commentContent;
     }
 
 }

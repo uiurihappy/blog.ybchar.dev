@@ -47,9 +47,10 @@ public class PostService {
 //				)
 //				.collect(Collectors.toList());
 		// Querydsl
-		return postRepository.getList(postSearchDto).stream()
-				.map(PostResponse::new)
-				.collect(Collectors.toList());
+//		return postRepository.getList(postSearchDto).stream()
+//				.map(PostResponse::new)
+//				.collect(Collectors.toList());
+		return List.of();
 	}
 
 	@Transactional

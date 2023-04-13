@@ -238,7 +238,7 @@ class PostControllerTest {
     }
 
     @Test
-    @DisplayName("글 제목 수정")
+    @DisplayName("글 수정")
     void editPostTest1() throws Exception {
         // given
         Post post = Post.builder()
@@ -259,6 +259,27 @@ class PostControllerTest {
         mockMvc.perform(patch("/posts/{postId}", post.getId())  // PATCH /posts/{postId|
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(postEditDto))
+                )
+                .andExpect(status().isOk())
+                .andDo(print());
+
+    }
+
+    @Test
+    @DisplayName("게시글 삭제")
+    void deletePost() throws Exception {
+        // given
+        Post post = Post.builder()
+                .title("ybchar title 1")
+                .content("ybchar content 1")
+                .viewCount(0)
+                .likeCount(0)
+                .build();
+        postRepository.save(post);
+
+        // expected
+        mockMvc.perform(delete("/posts/{postId}", post.getId())
+                    .contentType(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andDo(print());

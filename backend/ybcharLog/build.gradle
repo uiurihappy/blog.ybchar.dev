@@ -64,9 +64,9 @@ sourceSets {
     main.java.srcDir querydslDir
 }
 //gradle clean 시, Q Class 디렉토리까지 삭제하도록 설정
-//clean {
-//    delete file(querydslDir)
-//}
+clean {
+    delete file(querydslDir)
+}
 
 
 

@@ -7,6 +7,7 @@ import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.repository.post.PostRepository;
 import com.ybcharlog.api.service.post.PostService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -130,7 +131,7 @@ class PostServiceTest {
 	}
 
 	@Test
-	@DisplayName("글 제목 수정")
+	@DisplayName("글 내용 수정")
 	void editTitlePost2() {
 		// given
 		Post post = Post.builder()
@@ -142,16 +143,40 @@ class PostServiceTest {
 		postRepository.save(post);
 
 		PostEditDto postEditDto = PostEditDto.builder()
-				.title(null)
 				.content("ybchar edit content test1")
 				.build();
+
+
 		// when
 		postService.editPost(post.getId(), postEditDto);
+//		PostResponse post1 = postService.getOne(1L);
+//		System.out.println(post1.getTitle());
+//		System.out.println(post1.getContent());
 
 		// then
 		Post changedPost = postRepository.findById(post.getId())
 				.orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id = " + post.getId()));
 		assertEquals("ybchar title 1", changedPost.getTitle());
+
+	}
+
+	@Test
+	@DisplayName("글 단건 삭제")
+	void deletePostTest1() {
+		// given
+		Post post = Post.builder()
+				.title("ybchar title 1")
+				.content("ybchar content 1")
+				.viewCount(0)
+				.likeCount(0)
+				.build();
+		postRepository.save(post);
+
+		// when
+		postService.deletePost(post.getId());
+
+		// then
+		Assertions.assertEquals(0, postRepository.count());
 
 	}
 

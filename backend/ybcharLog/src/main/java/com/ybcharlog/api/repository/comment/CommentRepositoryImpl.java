@@ -7,6 +7,7 @@ import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.domain.comment.QComment;
 import com.ybcharlog.api.domain.post.QPost;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import static com.ybcharlog.api.domain.comment.QComment.*;
 
 
 @RequiredArgsConstructor
-public class CommentRepositoryImpl implements CommentRepositoryCustom {
+public class CommentRepositoryImpl implements CommentRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override

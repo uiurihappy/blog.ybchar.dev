@@ -62,10 +62,11 @@ public class PostService {
 //		postRepository.editPost(postId, postEditDto);
 	}
 
+	@Transactional
 	public void deletePost(Long postId) {
-		Post post = postRepository.findById(postId)
-						.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
-
-		postRepository.deleteById(post.getId());
+		List<Long> commentIds = postRepository.getPostOne(postId).getComments().stream().map(item -> item.getId()).collect(Collectors.toList());
+		System.out.println(commentIds);
+		commentRepository.deleteAllByCommentInQuery(commentIds);
+		postRepository.deleteByPostId(postId);
 	}
 }

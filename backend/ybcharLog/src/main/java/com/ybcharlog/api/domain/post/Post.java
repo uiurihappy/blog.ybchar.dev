@@ -36,7 +36,7 @@ public class Post extends BaseEntity {
 	@Column(columnDefinition = "int unsigned not null default 0 COMMENT '게시글 좋아요 수'")
 	private Integer likeCount;
 
-	@OneToMany(mappedBy = "post")
+	@OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.REMOVE)
 	private List<Comment> comments = new ArrayList<>();
 
 	public static Post initPost(String title, String content) {
@@ -44,7 +44,7 @@ public class Post extends BaseEntity {
 	}
 
 	@Builder
-	public Post(String title, String content, Integer viewCount, Integer likeCount) {
+	public Post(String title, String content, Integer viewCount, Integer likeCount, List<Comment> comments) {
 		this.title = title;
 		this.content = content;
 		this.viewCount = viewCount;

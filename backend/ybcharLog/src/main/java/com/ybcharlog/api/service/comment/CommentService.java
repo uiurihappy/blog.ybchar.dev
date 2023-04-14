@@ -31,4 +31,8 @@ public class CommentService {
     public Comment write(CommentCreateDto commentCreateDto) {
         return commentRepository.save(Comment.initComment(commentCreateDto.getUsername(), commentCreateDto.getPassword(), commentCreateDto.getCommentContent(), commentCreateDto.getSecretStatus()));
     }
+
+	public void deleteOneComment(Long commentId) {
+		commentRepository.deleteById(commentId);
+	}
 }

@@ -40,7 +40,21 @@ public class PostService {
 		return postRepository.getPostOne(postId);
 	}
 
-	public CustomPage<PostResponse> getList(GetPostPageReq req, Pageable pageable) {
+	public List<PostResponse> getList(PostSearchDto postSearchDto) {
+		// Pageable 한번 까서 볼것!
+//		Pageable pageable = PageRequest.of(page, 5, Sort.by("id").descending());
+
+		// 순수 JPA
+//		return postRepository.findAll(pageable).stream()
+//				.map(PostResponse::new
+//				)
+//				.collect(Collectors.toList());
+		// Querydsl
+		return postRepository.getList(postSearchDto).stream()
+				.map(PostResponse::new)
+				.collect(Collectors.toList());
+	}
+	public CustomPage<PostResponse> getListByPage(GetPostPageReq req, Pageable pageable) {
 		Page<Post> noticePage = postRepository.getPostListByPage(req, pageable);
 		// Querydsl
 		List<PostResponse> dtoList = GetPostResDtoMapper.INSTANCE.toDtoList(noticePage.getContent());

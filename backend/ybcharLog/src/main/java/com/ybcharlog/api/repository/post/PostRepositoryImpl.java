@@ -35,11 +35,14 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
 
     @Override
     public Post getPostOne(Long postId) {
-        return jpaQueryFactory
-                .selectFrom(post)
-                .innerJoin(post.comments).fetchJoin()
-                .where(post.id.eq(postId))
+        Post post = jpaQueryFactory
+                .selectFrom(QPost.post)
+                .innerJoin(QPost.post.comments).fetchJoin()
+                .where(QPost.post.id.eq(postId))
                 .fetchOne();
+        if (post == null)
+            throw new IllegalArgumentException("존재하지 않는 글입니다.");
+        return post;
     }
 
     @Override

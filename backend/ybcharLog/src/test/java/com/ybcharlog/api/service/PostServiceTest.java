@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -176,8 +177,27 @@ class PostServiceTest {
 		postService.deletePost(post.getId());
 
 		// then
-		Assertions.assertEquals(0, postRepository.count());
+		assertEquals(0, postRepository.count());
+	}
 
+	@Test
+	@DisplayName("글 단건 조회 실패 케이스")
+	void getOneFailTest() {
+		// given
+		Post savePost = Post.builder()
+				.title("foo")
+				.content("bar")
+				.viewCount(0)
+				.likeCount(0)
+				.build();
+		postRepository.save(savePost);
+
+		// expected
+		InvalidDataAccessApiUsageException e = assertThrows(InvalidDataAccessApiUsageException.class, () -> {
+			postService.getOne(savePost.getId() + 1L);
+		});
+
+		assertEquals("존재하지 않는 글입니다.", e.getMessage());
 	}
 
 }

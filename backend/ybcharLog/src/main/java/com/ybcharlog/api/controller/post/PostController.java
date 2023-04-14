@@ -22,6 +22,7 @@ import static com.ybcharlog.api.RequestDto.post.PostSearchDto.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/posts")
 public class PostController {
 
     /* HTTP methods
@@ -52,7 +53,7 @@ public class PostController {
 		개발하면서 당연히 "반드시 fix"라는 것이 없기에 유연하게 반응할 수 있도록 대응하는 것이 좋다.
 			- 즉, 잘 관리하는 형태로 구현하는 것이 좋다.
 	*/
-    @PostMapping("/posts")
+    @PostMapping("/save")
     public Post post(@RequestBody @Valid PostCreateDto request)  {
         return postService.write(request);
     }
@@ -61,25 +62,25 @@ public class PostController {
         /posts -> 글 전체 조회 (검색 + 페이징)
         /posts/{postId} -> 글 한개만 조회
      */
-    @GetMapping("/posts")
+    @GetMapping("/list")
     public ResponseEntity<CustomPage<PostResponse>> getPostList(GetPostPageReq req, Pageable pageable) {
         // 페이징 처리가 필요 -> response 비용이 많이 들기 때문이다.
         // -> 통신, 트래픽 비용이 많아지면 응답 속도 시간뿐만 아니라 직접 겪어봐서 아는데 DB까지 터진다.
         return ResponseEntity.ok(postService.getListByPage(req, pageable));
     }
 
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/{postId}")
     public Post getOne(@PathVariable Long postId) {
         // 서비스 정책에 맞는 응답 클래스를 분리하는 것이 옳다.
         return postService.getOne(postId);
     }
 
-    @PatchMapping("/posts/{postId}")
+    @PatchMapping("/update/{postId}")
     public void editPost(@PathVariable Long postId, @RequestBody @Valid PostEditDto postEditDto) {
         postService.editPost(postId, postEditDto);
     }
 
-    @DeleteMapping("/posts/{postId}")
+    @DeleteMapping("/delete/{postId}")
     public void deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
     }

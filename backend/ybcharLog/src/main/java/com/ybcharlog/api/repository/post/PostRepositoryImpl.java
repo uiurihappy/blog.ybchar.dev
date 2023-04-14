@@ -1,7 +1,9 @@
 package com.ybcharlog.api.repository.post;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ybcharlog.api.Common.repository.BasicRepoSupport;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
@@ -9,18 +11,27 @@ import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.domain.post.QPost;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static com.ybcharlog.api.RequestDto.post.PostSearchDto.*;
 import static com.ybcharlog.api.domain.comment.QComment.*;
 import static com.ybcharlog.api.domain.post.QPost.*;
 
 
-@RequiredArgsConstructor
-public class PostRepositoryImpl implements PostRepositoryCustom {
+@Repository
+public class PostRepositoryImpl extends BasicRepoSupport implements PostRepositoryCustom {
 
-    private final JPAQueryFactory jpaQueryFactory;
+    private static final QPost post = QPost.post;
+
+    protected PostRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
+        super(jpaQueryFactory);
+    }
 
     @Override
     public Post getPostOne(Long postId) {
@@ -47,5 +58,22 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .set(post.content, postEditDto.getContent())
                 .where(post.id.eq(postId))
                 .execute();
+    }
+
+    @Override
+    public Page<Post> getPostListByPage(GetPostPageReq req, Pageable pageable) {
+        JPAQuery<Post> query = jpaQueryFactory.selectFrom(post).join(post.comments).fetchJoin();
+//		this.setWhereQueryForFindAllNotice(query, req);
+        super.setPageQuery(query, pageable, post);
+        List<Post> result = query.fetch();
+
+        JPAQuery<Long> countQuery = jpaQueryFactory
+                .select(post.id.count())
+                .from(post);
+        Long count = countQuery.fetchOne();
+        count = count == null ? 0 : count;
+
+        return new PageImpl<>(result, super.getValidPageable(pageable), count);
+
     }
 }

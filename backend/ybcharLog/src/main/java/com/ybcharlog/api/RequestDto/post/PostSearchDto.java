@@ -1,5 +1,6 @@
 package com.ybcharlog.api.RequestDto.post;
 
+import com.ybcharlog.api.Common.dto.BasicConditionRequest;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -28,5 +29,9 @@ public class PostSearchDto {
 
 	public long getOffset(Integer page, Integer size) {
 		return (long) (max(1, page) - 1) * max(size, MAX_SIZE);
+	}
+
+	@Data
+	public static class GetPostPageReq extends BasicConditionRequest {
 	}
 }

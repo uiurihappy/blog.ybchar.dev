@@ -31,6 +31,12 @@ dependencies {
 
     implementation 'com.querydsl:querydsl-core'
     implementation 'com.querydsl:querydsl-jpa'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
 //    asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor:${asciidocVersion}"
 //    testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${asciidocVersion}"

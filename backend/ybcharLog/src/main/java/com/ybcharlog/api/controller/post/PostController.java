@@ -1,6 +1,7 @@
 package com.ybcharlog.api.controller.post;
 
 import com.querydsl.core.Tuple;
+import com.ybcharlog.api.Common.dto.CustomPage;
 import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;
@@ -9,10 +10,14 @@ import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static com.ybcharlog.api.RequestDto.post.PostSearchDto.*;
 
 @Slf4j
 @RestController
@@ -57,10 +62,10 @@ public class PostController {
         /posts/{postId} -> 글 한개만 조회
      */
     @GetMapping("/posts")
-    public List<PostResponse> getPostList(@ModelAttribute PostSearchDto postSearchDto) {
+    public ResponseEntity<CustomPage<PostResponse>> getPostList(GetPostPageReq req, Pageable pageable) {
         // 페이징 처리가 필요 -> response 비용이 많이 들기 때문이다.
         // -> 통신, 트래픽 비용이 많아지면 응답 속도 시간뿐만 아니라 직접 겪어봐서 아는데 DB까지 터진다.
-        return postService.getList(postSearchDto);
+        return ResponseEntity.ok(postService.getList(req, pageable));
     }
     @GetMapping("/posts/{postId}")
     public Post getOne(@PathVariable Long postId) {

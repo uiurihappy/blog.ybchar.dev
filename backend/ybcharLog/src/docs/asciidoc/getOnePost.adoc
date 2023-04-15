@@ -5,6 +5,7 @@
 :toc: left
 :toclevels: 2
 :sectlinks:
+:attribute: JSON
 
 == 요청
 include::{snippets}/getOnePost/curl-request.adoc[]

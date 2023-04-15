@@ -30,6 +30,7 @@ import javax.transaction.Transactional;
 
 import static org.springframework.http.MediaType.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -76,6 +77,8 @@ public class PostControllerDocTest {
                 .accept(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("getOnePost",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
                         pathParameters(
                                 parameterWithName("postId").description("게시글 Id")
                         ),
@@ -99,8 +102,9 @@ public class PostControllerDocTest {
                                 fieldWithPath("lastModifiedDate").description("수정 일자"),
                                 fieldWithPath("createdBy").description("생성한 유저 ID"),
                                 fieldWithPath("lastModifiedBy").description("수정한 유저 ID")
-                        )
-                ));
+                        ))
+                );
+
     }
 
     @Test
@@ -122,6 +126,8 @@ public class PostControllerDocTest {
                         .content(json))
                 .andExpect(status().isOk())
                 .andDo(document("savePost",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
                         requestFields(
                                 fieldWithPath("title").description("게시글 제목")
                                         .attributes(Attributes.key("constraint").value("좋은 제목 입력해주세요")),

@@ -8,11 +8,10 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Mapper(componentModel = "spring",
-		nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+		nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface GetPostResDtoMapper extends GenericMapper<PostResponse, Post> {
 
 	GetPostResDtoMapper INSTANCE = Mappers.getMapper(GetPostResDtoMapper.class);

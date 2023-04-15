@@ -1,0 +1,13 @@
+= 블로그 API
+:toc:
+
+== 글 단건 조회
+
+== 요청
+include::{snippets}/getOnePost/curl-request.adoc[]
+
+== 응답
+include::{snippets}/getOnePost/http-request.adoc[]
+
+== cUrl
+include::{snippets}/getOnePost/http-response.adoc[]

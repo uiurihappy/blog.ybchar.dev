@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
+@SuppressWarnings("unchecked")
 public abstract class BasicRepoSupport extends QuerydslRepositorySupport {
 
 	protected final JPAQueryFactory jpaQueryFactory;

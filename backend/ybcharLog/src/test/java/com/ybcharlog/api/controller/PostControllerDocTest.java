@@ -17,11 +17,16 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.request.RequestDocumentation;
+import org.springframework.restdocs.snippet.Attributes;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import static org.springframework.http.MediaType.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -42,8 +47,12 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 @ExtendWith(RestDocumentationExtension.class)
 public class PostControllerDocTest {
 
+
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private EntityManager em;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -67,13 +76,29 @@ public class PostControllerDocTest {
                 .accept(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("getOnePost",
-                        requestFields(
-                                fieldWithPath("postId").description("게시글 Id")
+                        pathParameters(
+                                parameterWithName("postId").description("게시글 Id")
                         ),
                         responseFields(
-                                fieldWithPath("list").description("게시글 리스트"),
-                                fieldWithPath("totalElements").description("총 게시글 수"),
-                                fieldWithPath("totalCount").description("총 페이지 수")
+                                fieldWithPath("id").description("게시글 ID"),
+                                fieldWithPath("title").description("게시글 제목"),
+                                fieldWithPath("content").description("게시글 내용"),
+                                fieldWithPath("viewCount").description("게시글 조회 수"),
+                                fieldWithPath("likeCount").description("게시글 좋아요 수"),
+//                                fieldWithPath("comments").type(JsonFieldType.ARRAY).description("댓글"),
+                                fieldWithPath("comments.[].id").description("댓글 ID"),
+                                fieldWithPath("comments.[].username").description("댓글 사용자 이름"),
+                                fieldWithPath("comments.[].password").description("댓글 비밀번호").optional(),
+                                fieldWithPath("comments.[].commentContent").description("댓글 내용"),
+                                fieldWithPath("comments.[].secretStatus").description("댓글 비밀번호 상태"),
+                                fieldWithPath("comments.[].createdAt").description("생성 일자"),
+                                fieldWithPath("comments.[].lastModifiedDate").description("수정 일자"),
+                                fieldWithPath("comments.[].createdBy").description("생성한 유저 ID"),
+                                fieldWithPath("comments.[].lastModifiedBy").description("수정한 유저 ID"),
+                                fieldWithPath("createdAt").description("생성 일자"),
+                                fieldWithPath("lastModifiedDate").description("수정 일자"),
+                                fieldWithPath("createdBy").description("생성한 유저 ID"),
+                                fieldWithPath("lastModifiedBy").description("수정한 유저 ID")
                         )
                 ));
     }
@@ -98,11 +123,39 @@ public class PostControllerDocTest {
                 .andExpect(status().isOk())
                 .andDo(document("savePost",
                         requestFields(
-                                fieldWithPath("title").description("게시글 제목"),
+                                fieldWithPath("title").description("게시글 제목")
+                                        .attributes(Attributes.key("constraint").value("좋은 제목 입력해주세요")),
                                 fieldWithPath("content").description("게시글 내용"),
-                                fieldWithPath("viewCount").description("게시글 조회 수"),
-                                fieldWithPath("likeCount").description("게시글 좋아요 수")
+                                fieldWithPath("viewCount").description("게시글 조회 수").optional(),
+                                fieldWithPath("likeCount").description("게시글 좋아요 수").optional()
                         )
+                ));
+    }
+
+    @Test
+    @DisplayName("deletePost Restdocs")
+    void deletePostTest() throws Exception {
+        // given
+        Post post = Post.builder()
+                .title("글 제목입니다.")
+                .content("글 내용입니다.")
+                .viewCount(0)
+                .likeCount(0)
+                .build();
+        postRepository.save(post);
+
+        String json = objectMapper.writeValueAsString(post);     // Javascript의 JSON.stringfy(object) 느낌
+        System.out.println(json);
+
+        // expected
+        this.mockMvc.perform(delete("/posts/{postId}", post.getId())
+                        .accept(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("deletePost",
+                        requestFields(
+                                fieldWithPath("postId").description("게시글 Id")
+                        ),
+                        relaxedRequestFields()
                 ));
     }
 }

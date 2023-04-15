@@ -1,7 +1,10 @@
-= 블로그 API
-:toc:
-
-== 글 단건 조회
+= 게시글 단건 조회 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
 
 == 요청
 include::{snippets}/getOnePost/curl-request.adoc[]
@@ -9,8 +12,12 @@ include::{snippets}/getOnePost/curl-request.adoc[]
 === 요청 파라미터
 include::{snippets}/getOnePost/path-parameters.adoc[]
 
+=== 요청 필드
+include::{snippets}/getOnePost/request-fields.adoc[]
+
 == 응답
 include::{snippets}/getOnePost/http-request.adoc[]
+
 
 == cUrl
 include::{snippets}/getOnePost/http-response.adoc[]

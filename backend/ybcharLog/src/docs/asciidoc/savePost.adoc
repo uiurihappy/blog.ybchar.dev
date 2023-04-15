@@ -1,0 +1,25 @@
+= 게시글 저장 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== 요청
+include::{snippets}/savePost/curl-request.adoc[]
+
+=== 요청 파라미터
+[source]
+----
+----
+
+=== 요청 필드
+include::{snippets}/savePost/request-fields.adoc[]
+
+== 응답
+include::{snippets}/savePost/http-request.adoc[]
+
+
+== cUrl
+include::{snippets}/savePost/http-response.adoc[]

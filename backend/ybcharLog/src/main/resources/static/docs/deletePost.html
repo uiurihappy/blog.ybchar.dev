@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>게시글 단건 조회 API</title>
+<title>게시글 삭제 API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,88 +435,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="book toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>게시글 단건 조회 API</h1>
+<h1>게시글 삭제 API</h1>
 <div class="details">
 <span id="revnumber">version 0.0.1-SNAPSHOT</span>
 </div>
-<div id="toc" class="toc2">
+<div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_요청">요청</a>
-<ul class="sectlevel2">
-<li><a href="#_요청_파라미터">요청 파라미터</a></li>
-<li><a href="#_요청_필드">요청 필드</a></li>
-</ul>
-</li>
-<li><a href="#_응답">응답</a></li>
 <li><a href="#_curl">cUrl</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_요청"><a class="link" href="#_요청">요청</a></h2>
+<h2 id="_curl">cUrl</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'https://api.ybchar.dev:3002/posts/1' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'https://api.ybchar.dev:3002/posts/delete/1' -i -X DELETE \
     -H 'Accept: application/json'</code></pre>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_요청_파라미터"><a class="link" href="#_요청_파라미터">요청 파라미터</a></h3>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /posts/{postId}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>postId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 Id</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_요청_필드"><a class="link" href="#_요청_필드">요청 필드</a></h3>
-
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_응답"><a class="link" href="#_응답">응답</a></h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /posts/1 HTTP/1.1
-Accept: application/json
-Host: api.ybchar.dev:3002</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_curl"><a class="link" href="#_curl">cUrl</a></h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json
-Content-Length: 679
-
-{"createdAt":null,"lastModifiedDate":null,"createdBy":null,"lastModifiedBy":null,"id":1,"title":"title1","content":"content1","viewCount":0,"likeCount":0,"comments":[{"createdAt":null,"lastModifiedDate":null,"createdBy":null,"lastModifiedBy":null,"id":1,"username":"tester1","password":null,"commentContent":"댓글1","secretStatus":0},{"createdAt":null,"lastModifiedDate":null,"createdBy":null,"lastModifiedBy":null,"id":2,"username":"tester2","password":null,"commentContent":"댓글2","secretStatus":0},{"createdAt":null,"lastModifiedDate":null,"createdBy":null,"lastModifiedBy":null,"id":3,"username":"tester3","password":"1234","commentContent":"댓글3","secretStatus":0}]}</code></pre>
 </div>
 </div>
 </div>
@@ -525,11 +465,8 @@ Content-Length: 679
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-16 02:05:21 +0900
+Last updated 2023-04-16 01:47:09 +0900
 </div>
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

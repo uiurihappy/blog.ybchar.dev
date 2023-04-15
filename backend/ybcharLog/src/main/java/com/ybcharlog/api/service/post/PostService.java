@@ -7,6 +7,7 @@ import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
+import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.mapper.post.GetPostResDtoMapper;
 import com.ybcharlog.api.repository.comment.CommentRepository;
@@ -83,8 +84,9 @@ public class PostService {
 
 	@Transactional
 	public void deletePost(Long postId) {
-		List<Long> commentIds = postRepository.getPostOne(postId).getComments().stream().map(item -> item.getId()).collect(Collectors.toList());
-		System.out.println(commentIds);
+		List<Long> commentIds = postRepository.getPostOne(postId)
+				.getComments()
+				.stream().map(Comment::getId).collect(Collectors.toList());
 		commentRepository.deleteAllByCommentInQuery(commentIds);
 		postRepository.deleteByPostId(postId);
 	}

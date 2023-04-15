@@ -442,6 +442,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="revnumber">version 0.0.1-SNAPSHOT</span>
 </div>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_글_단건_조회">글 단건 조회</a></li>
+<li><a href="#_요청">요청</a>
+<ul class="sectlevel2">
+<li><a href="#_요청_파라미터">요청 파라미터</a></li>
+</ul>
+</li>
+<li><a href="#_응답">응답</a></li>
+<li><a href="#_curl">cUrl</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div class="sect1">
@@ -455,9 +468,31 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/posts/1' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'https://api.ybchar.dev:3002/posts/1' -i -X GET \
     -H 'Accept: application/json'</code></pre>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_요청_파라미터">요청 파라미터</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /posts/{postId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>postId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 Id</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -468,7 +503,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /posts/1 HTTP/1.1
 Accept: application/json
-Host: localhost:8080</code></pre>
+Host: api.ybchar.dev:3002</code></pre>
 </div>
 </div>
 </div>
@@ -491,7 +526,7 @@ Content-Length: 679
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-15 15:54:46 +0900
+Last updated 2023-04-15 16:35:31 +0900
 </div>
 </div>
 </body>

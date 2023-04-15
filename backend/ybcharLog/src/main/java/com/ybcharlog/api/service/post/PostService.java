@@ -55,16 +55,16 @@ public class PostService {
 				.collect(Collectors.toList());
 	}
 	public CustomPage<PostResponse> getListByPage(GetPostPageReq req, Pageable pageable) {
-		Page<Post> noticePage = postRepository.getPostListByPage(req, pageable);
+		Page<Post> postPage = postRepository.getPostListByPage(req, pageable);
 		// Querydsl
-		List<PostResponse> dtoList = GetPostResDtoMapper.INSTANCE.toDtoList(noticePage.getContent());
+		List<PostResponse> dtoList = GetPostResDtoMapper.INSTANCE.toDtoList(postPage.getContent());
 
 		return CustomPage.<PostResponse>builder()
 				.list(dtoList)
 				// list
-				.totalElements(noticePage.getTotalElements())
+				.totalElements(postPage.getTotalElements())
 				// count
-				.totalCount(noticePage.getTotalPages())
+				.totalCount(postPage.getTotalPages())
 				.build();
 	}
 

@@ -31,7 +31,7 @@ public class PostSearchDto {
 		return (long) (max(1, page) - 1) * max(size, MAX_SIZE);
 	}
 
-	@Data
+//	@Data
 	public static class GetPostPageReq extends BasicConditionRequest {
 	}
 }

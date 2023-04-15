@@ -6,6 +6,9 @@
 == 요청
 include::{snippets}/getOnePost/curl-request.adoc[]
 
+=== 요청 파라미터
+include::{snippets}/getOnePost/path-parameters.adoc[]
+
 == 응답
 include::{snippets}/getOnePost/http-request.adoc[]
 

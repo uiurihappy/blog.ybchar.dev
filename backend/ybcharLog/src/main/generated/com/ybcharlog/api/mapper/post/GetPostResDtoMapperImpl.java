@@ -10,25 +10,25 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-15T15:45:50+0900",
+    date = "2023-04-15T16:54:04+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
 )
 @Component
 public class GetPostResDtoMapperImpl implements GetPostResDtoMapper {
 
     @Override
-    public Post toEntity(PostResponse arg0) {
-        if ( arg0 == null ) {
+    public Post toEntity(PostResponse dto) {
+        if ( dto == null ) {
             return null;
         }
 
         Post.PostBuilder post = Post.builder();
 
-        post.title( arg0.getTitle() );
-        post.content( arg0.getContent() );
-        post.viewCount( arg0.getViewCount() );
-        post.likeCount( arg0.getLikeCount() );
-        List<Comment> list = arg0.getComments();
+        post.title( dto.getTitle() );
+        post.content( dto.getContent() );
+        post.viewCount( dto.getViewCount() );
+        post.likeCount( dto.getLikeCount() );
+        List<Comment> list = dto.getComments();
         if ( list != null ) {
             post.comments( new ArrayList<Comment>( list ) );
         }
@@ -37,16 +37,16 @@ public class GetPostResDtoMapperImpl implements GetPostResDtoMapper {
     }
 
     @Override
-    public void updateEntity(PostResponse arg0, Post arg1) {
-        if ( arg0 == null ) {
+    public void updateEntity(PostResponse dto, Post entity) {
+        if ( dto == null ) {
             return;
         }
 
-        if ( arg1.getComments() != null ) {
-            arg1.getComments().clear();
-            List<Comment> list = arg0.getComments();
+        if ( entity.getComments() != null ) {
+            entity.getComments().clear();
+            List<Comment> list = dto.getComments();
             if ( list != null ) {
-                arg1.getComments().addAll( list );
+                entity.getComments().addAll( list );
             }
         }
     }

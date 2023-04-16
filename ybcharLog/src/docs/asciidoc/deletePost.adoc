@@ -1,0 +1,11 @@
+= 게시글 삭제 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:attribute: JSON
+
+== cUrl
+include::{snippets}/deletePost/curl-request.adoc[]

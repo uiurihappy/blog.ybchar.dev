@@ -12,7 +12,7 @@ Spring boot, Data JPA, Querydsl을 수강했으니 직접 블로그 프로젝트
   <li> Querydsl </li>
 </ul>
 
-<h3> 프론트엔드(현재 미개발) </h3>
+<h3> 프론트엔드(개발 진행 중) </h3>
 <ul>
   <li> Vue.js </li>
 </ul>

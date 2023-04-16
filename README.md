@@ -16,7 +16,7 @@ Spring boot, Data JPA, Querydsl을 수강했으니 직접 블로그 프로젝트
 # application.yml
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/ybchar-blog?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/{DB 스키마 이름}?serverTimezone=Asia/Seoul
     username: {mysql 사용자 이름}
     password: {mysql 비밀번호}
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -40,3 +40,6 @@ out/
 /src/test/resources/application.yml
 **/**/.DS_Store
 .DS_Store
+
+## ybchar log
+nodeenv-16

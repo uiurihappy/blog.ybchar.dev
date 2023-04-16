@@ -41,5 +41,8 @@ out/
 **/**/.DS_Store
 .DS_Store
 
+/src/main/generated
+
+
 ## ybchar log
 nodeenv-16

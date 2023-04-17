@@ -46,3 +46,4 @@ out/
 
 ## ybchar log
 nodeenv-16
+/src/main/resources/static/docs

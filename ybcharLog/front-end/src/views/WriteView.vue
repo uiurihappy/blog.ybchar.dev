@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import axios from 'axios';
-
+import { useRouter } from 'vue-router';
 // import dotenv from 'dotenv';
 // dotenv.config();
-
+const router = useRouter();
 const title = ref('');
 const content = ref('');
 
@@ -15,6 +15,7 @@ const writePost = function () {
       content: content.value,
     })
     .then(() => {
+      router.replace({ name: 'home' });
       alert('게시글 작성이 정상적으로 되었습니다.');
     })
     .catch(() => {

@@ -1,15 +1,38 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-const count = ref(0);
+import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const title = ref('');
+const content = ref('');
+const url = process.env.VUE_APP_BASE_URL;
+console.log(url);
+
+const write = function () {
+  axios.post(`${url}posts/save`, {
+    title: title.value,
+    content: content.value,
+  });
+  //   alert(title.value + ' / ' + cofntent.value);
+};
 </script>
 
 <template>
-  <p>안녕하세요</p>
-  <button @click="count += 1">버튼을 눌러주세요</button>
-  <p>{{ count }}</p>
-  <main>
-    <TheWelcome />
-  </main>
+  <div>
+    <el-input v-model="title" placeholder="제목을 입력해주세요" />
+  </div>
+
+  <div class="mt-2">
+    <el-input v-model="content" type="textarea" rows="15" />
+  </div>
+
+  <div class="mt-2">
+    <div class="d-flex justify-content-end">
+      <el-button type="primary" @click="write()">글 작성완료</el-button>
+    </div>
+  </div>
 </template>
 
 <style></style>

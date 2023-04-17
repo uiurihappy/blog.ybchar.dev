@@ -1,10 +1,10 @@
-<h1 style="background-color:gray;"> 블로그 프로젝트 </h1>
+<h1 style="background-color:gray;"> 📝 블로그 프로젝트 </h1>
 Spring boot, Data JPA, Querydsl을 수강했으니 직접 블로그 프로젝트를 개발하면서
 <br>
 티스토리에 게시한 글과 학습한 내용을 기록하고자 한다.
 <div>
-<h2> Tech Stack </h2>
-<h3> 백엔드 </h3>
+<h1> Tech Stack </h1>
+<h2> 백엔드 </h2>
 <ul>
   <li> Java 17 </li>
   <li> Spring boot </li>
@@ -51,21 +51,34 @@ server:
 <b> 중활호 {} 에 있는 본인 환경에 맞춰서 사용할 것 </b>
 
 <br/>
-<h3> 프론트엔드(개발 진행 중) </h3>
+<h2> 프론트엔드(개발 진행 중) </h2>
 <ul>
   <li> Vue.js </li>
 </ul>
 </div>
+<br/>
 
-## API Mapping
-### 게시글
-- GET /posts/{postId} ->            단건 조회
-- POST /posts ->                    게시글 저장
-- GET /posts/list ->                게시글 리스트
-- PATCH /posts/update/{postId} ->   게시글 수정
-- DELETE /posts/delete/{postId} ->  게시글 삭제
+<h2> TODO List </h2>
+<ul>
+  <li> category API 개발 </li>
+  <li> index에 게시글 리스트 페이지 </li>
+</ul>
+<br/>
 
-### 댓글
-- GET /comments/{commentId} ->      댓글 단건 조회
-- POST /comments ->                 댓글 저장
-- DELETE /comments/{commentId} ->   댓글 단건 삭제
+<h2> API Mapping </h2>
+
+<h3> 게시글 </h3>
+<ul> 
+<li> GET /posts/{postId} ->            단건 조회 </li>
+<li> POST /posts ->                    게시글 저장 </li>
+<li> GET /posts/list ->                게시글 리스트 </li>
+<li> PATCH /posts/update/{postId} ->   게시글 수정 </li>
+<li> DELETE /posts/delete/{postId} ->  게시글 삭제 </li>
+</ul>
+
+<h3> 댓글 </h3>
+<ul>
+<li> GET /comments/{commentId} ->      댓글 단건 조회 </li>
+<li> POST /comments ->                 댓글 저장 </li>
+<li> DELETE /comments/{commentId} ->   댓글 단건 삭제 </li>
+</ul>

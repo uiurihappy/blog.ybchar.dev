@@ -8,12 +8,18 @@ import axios from 'axios';
 const title = ref('');
 const content = ref('');
 
-const write = function () {
-  axios.post(`/api/posts/save`, {
-    title: title.value,
-    content: content.value,
-  });
-  //   alert(title.value + ' / ' + cofntent.value);
+const writePost = function () {
+  axios
+    .post(`/api/posts/save`, {
+      title: title.value,
+      content: content.value,
+    })
+    .then(() => {
+      alert('게시글 작성이 정상적으로 되었습니다.');
+    })
+    .catch(() => {
+      alert('게시글 작성이 실패되었습니다.');
+    });
 };
 </script>
 
@@ -28,7 +34,7 @@ const write = function () {
 
   <div class="mt-2">
     <div class="d-flex justify-content-end">
-      <el-button type="primary" @click="write()">글 작성완료</el-button>
+      <el-button type="primary" @click="writePost()">글 작성완료</el-button>
     </div>
   </div>
 </template>

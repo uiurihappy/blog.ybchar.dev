@@ -9,7 +9,7 @@ const title = ref('');
 const content = ref('');
 
 const write = function () {
-  axios.post(`${import.meta.env.VITE_API_URL}posts/save`, {
+  axios.post(`/api/posts/save`, {
     title: title.value,
     content: content.value,
   });

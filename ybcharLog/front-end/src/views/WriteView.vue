@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import axios from 'axios';
-import dotenv from 'dotenv';
 
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 const title = ref('');
 const content = ref('');
-const url = process.env.VUE_APP_BASE_URL;
-console.log(url);
 
 const write = function () {
-  axios.post(`${url}posts/save`, {
+  axios.post(`${import.meta.env.VITE_API_URL}posts/save`, {
     title: title.value,
     content: content.value,
   });

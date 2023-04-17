@@ -7,3 +7,13 @@ const env = dotenv.config().parsed;
     VUE_APP_LOCAL_URI: JSON.stringify(env.BASE_URL),
   }),
 ];
+
+module.exports = {
+  plugins: [
+    require('@import-meta-env/unplugin').webpack({
+      env: '.env',
+      example: '.env.example',
+      transformMode: 'compile-time',
+    }),
+  ],
+};

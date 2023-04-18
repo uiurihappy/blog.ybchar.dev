@@ -33,7 +33,7 @@ public class PostService {
 	private final CommentRepository commentRepository;
 
 	public Post write(PostCreateDto postCreateDto) {
-		return postRepository.save(Post.initPost(postCreateDto.getTitle(), postCreateDto.getContent()));
+		return postRepository.save(Post.initPost(postCreateDto.getTitle(), postCreateDto.getContent(), postCreateDto.getDisplay()));
 	}
 
 	public Post getOne(Long postId) {

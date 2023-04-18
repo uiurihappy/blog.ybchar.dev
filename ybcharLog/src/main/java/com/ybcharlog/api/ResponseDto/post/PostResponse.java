@@ -22,6 +22,8 @@ public class PostResponse {
 	private final Long id;
 	private final String title;
 	private final String content;
+	private final Integer display;
+	private final Integer isDeleted;
 	private final Integer viewCount;
 	private final Integer likeCount;
 	private final List<Comment> comments;
@@ -31,6 +33,8 @@ public class PostResponse {
 		this.id = post.getId();
 		this.title = post.getTitle();
 		this.content = post.getContent();
+		this.display = post.getDisplay();
+		this.isDeleted = post.getIsDeleted();
 		this.viewCount = post.getViewCount();
 		this.likeCount = post.getLikeCount();
 		this.comments = getComments();
@@ -38,10 +42,12 @@ public class PostResponse {
 
 	@Builder
 	@QueryProjection
-	public PostResponse(Long id, String title, String content, Integer viewCount, Integer likeCount, List<Comment> comments) {
+	public PostResponse(Long id, String title, String content, Integer display, Integer isDeleted, Integer viewCount, Integer likeCount, List<Comment> comments) {
 		this.id = id;
 		this.title = title.substring(0, Math.min(title.length(), 10));
 		this.content = content;
+		this.display = display;
+		this.isDeleted = isDeleted;
 		this.viewCount = viewCount;
 		this.likeCount = likeCount;
 		this.comments = comments;

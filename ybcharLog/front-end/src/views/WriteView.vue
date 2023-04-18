@@ -7,12 +7,14 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const title = ref('');
 const content = ref('');
+const display = ref(0);
 
 const writePost = function () {
   axios
     .post(`/api/posts/save`, {
       title: title.value,
       content: content.value,
+      display: display.value,
     })
     .then(() => {
       router.replace({ name: 'home' });
@@ -31,6 +33,10 @@ const writePost = function () {
 
   <div class="mt-2">
     <el-input v-model="content" type="textarea" rows="15" />
+  </div>
+
+  <div class="mt-2">
+    노출 상태 <el-checkbox v-model="display" true-label="1" false-label="0" />
   </div>
 
   <div class="mt-2">

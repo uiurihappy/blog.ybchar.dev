@@ -25,11 +25,14 @@ public class CommentService {
                 .password(comment.getPassword())
                 .commentContent(comment.getCommentContent())
                 .secretStatus(comment.getSecretStatus())
+		        .display(comment.getDisplay())
+		        .isDeleted(comment.getIsDeleted())
                 .build();
     }
 
     public Comment write(CommentCreateDto commentCreateDto) {
-        return commentRepository.save(Comment.initComment(commentCreateDto.getUsername(), commentCreateDto.getPassword(), commentCreateDto.getCommentContent(), commentCreateDto.getSecretStatus()));
+        return commentRepository.save(Comment.initComment(commentCreateDto.getUsername(), commentCreateDto.getPassword()
+		        , commentCreateDto.getCommentContent(), commentCreateDto.getSecretStatus(), commentCreateDto.getDisplay(), commentCreateDto.getIsDeleted()));
     }
 
 	public void deleteOneComment(Long commentId) {

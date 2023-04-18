@@ -24,4 +24,7 @@ public class CommentCreateDto {
     @NotBlank(message = "Require secretStatus")
     private Integer secretStatus;
 
+    private Integer display;
+    private Integer isDeleted;
+
 }

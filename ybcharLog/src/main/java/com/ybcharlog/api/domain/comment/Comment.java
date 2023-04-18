@@ -28,6 +28,12 @@ public class Comment extends BaseEntity {
     @Column(columnDefinition = "text not null COMMENT '댓글 내용'")
     private String commentContent;
 
+    @Column(columnDefinition = "tinyint(3) not null default 1 COMMENT '노출 상태'")
+    private Integer display;
+
+    @Column(columnDefinition = "tinyint(3) not null default 0 COMMENT '삭제 상태'")
+    private Integer isDeleted;
+
     @Column(columnDefinition = "tinyint(3) not null default 0 COMMENT '비밀 댓글 상태'")
     private Integer secretStatus;
 
@@ -36,15 +42,18 @@ public class Comment extends BaseEntity {
     @JsonIgnore
     private Post post;
 
-    public static Comment initComment(String username, String password, String commentContent, Integer secretStatus) {
-        return Comment.builder().username(username).password(password).commentContent(commentContent).secretStatus(0).build();
+    public static Comment initComment(String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted) {
+        return Comment.builder().username(username).password(password).commentContent(commentContent)
+                .secretStatus(secretStatus == null ? 0 : secretStatus).display(1).isDeleted(0).build();
     }
 
     @Builder
-    public Comment(String username, String password, String commentContent, Integer secretStatus) {
+    public Comment(String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted) {
         this.username = username;
         this.password = password;
         this.commentContent = commentContent;
         this.secretStatus = secretStatus;
+        this.display = display;
+        this.isDeleted = isDeleted;
     }
 }

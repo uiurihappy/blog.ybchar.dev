@@ -39,6 +39,8 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
                 .selectFrom(QPost.post)
                 .leftJoin(QPost.post.comments).fetchJoin()
                 .where(QPost.post.id.eq(postId))
+                .where(QPost.post.isDeleted.eq(0))
+                .where(QPost.post.display.eq(1))
                 .fetchOne();
         if (post == null)
             throw new IllegalArgumentException("존재하지 않는 글입니다.");
@@ -48,6 +50,8 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
     @Override
     public List<Post> getList(PostSearchDto postSearchDto) {
         return jpaQueryFactory.selectFrom(post)
+                .where(post.isDeleted.eq(0))
+                .where(post.display.eq(1))
                 .limit(postSearchDto.getSize())
                 .offset(postSearchDto.getOffset(postSearchDto.getPage(), postSearchDto.getSize()))
                 .orderBy(post.id.desc())
@@ -59,20 +63,25 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
         jpaQueryFactory.update(post)
                 .set(post.title, postEditDto.getTitle())
                 .set(post.content, postEditDto.getContent())
+                .set(post.isDeleted, postEditDto.getIsDeleted())
+                .set(post.display, postEditDto.getDisplay())
                 .where(post.id.eq(postId))
                 .execute();
     }
 
     @Override
     public Page<Post> getPostListByPage(GetPostPageReq req, Pageable pageable) {
-        JPAQuery<Post> query = jpaQueryFactory.selectFrom(post).leftJoin(post.comments).fetchJoin().orderBy(post.id.desc());
+        JPAQuery<Post> query = jpaQueryFactory.selectFrom(post).leftJoin(post.comments).fetchJoin().where(post.isDeleted.eq(0))
+                .where(post.display.eq(1)).orderBy(post.id.desc());
 //		this.setWhereQueryForFindAllNotice(query, req);
         super.setPageQuery(query, pageable, post);
         List<Post> result = query.fetch();
 
         JPAQuery<Long> countQuery = jpaQueryFactory
                 .select(post.id.count())
-                .from(post);
+                .from(post)
+                .where(post.isDeleted.eq(0))
+                .where(post.display.eq(1));
         Long count = countQuery.fetchOne();
         count = count == null ? 0 : count;
 

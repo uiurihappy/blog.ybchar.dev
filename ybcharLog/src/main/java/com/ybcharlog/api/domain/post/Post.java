@@ -30,6 +30,12 @@ public class Post extends BaseEntity {
 	@Lob
 	private String content;
 
+	@Column(columnDefinition = "tinyint(3) not null default 0 COMMENT '노출 상태'")
+	private Integer display;
+
+	@Column(columnDefinition = "tinyint(3) not null default 1 COMMENT '삭제 상태'")
+	private Integer isDeleted;
+
 	@Column(columnDefinition = "int unsigned not null default 0 COMMENT '게시글 조회 수'")
 	private Integer viewCount;
 
@@ -39,14 +45,16 @@ public class Post extends BaseEntity {
 	@OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.REMOVE)
 	private List<Comment> comments = new ArrayList<>();
 
-	public static Post initPost(String title, String content) {
-		return Post.builder().title(title).content(content).viewCount(0).likeCount(0).build();
+	public static Post initPost(String title, String content, Integer display) {
+		return Post.builder().title(title).content(content).display(display).isDeleted(0).viewCount(0).likeCount(0).build();
 	}
 
 	@Builder
-	public Post(String title, String content, Integer viewCount, Integer likeCount, List<Comment> comments) {
+	public Post(String title, String content, Integer display, Integer isDeleted, Integer viewCount, Integer likeCount, List<Comment> comments) {
 		this.title = title;
 		this.content = content;
+		this.display = display;
+		this.isDeleted = isDeleted;
 		this.viewCount = viewCount;
 		this.likeCount = likeCount;
 	}
@@ -73,5 +81,7 @@ public class Post extends BaseEntity {
 	public void edit(PostEditDto postEditDto, Post post) {
 		this.title = postEditDto.getTitle() != null ? postEditDto.getTitle() : post.getTitle();
 		this.content = postEditDto.getContent() != null ? postEditDto.getContent() : post.getContent();
+		this.isDeleted = postEditDto.getIsDeleted() != null ? postEditDto.getIsDeleted() : post.getIsDeleted();
+		this.display = postEditDto.getDisplay() != null ? postEditDto.getDisplay() : post.getDisplay();
 	}
 }

@@ -22,6 +22,8 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom{
     public List<Comment> getList(Long postId, CommentSearchDto commentSearchDto) {
         return jpaQueryFactory.selectFrom(comment)
                 .leftJoin(comment.post, QPost.post)
+                .where(comment.isDeleted.eq(0))
+                .where(comment.display.eq(1))
                 .limit(commentSearchDto.getSize())
                 .offset(commentSearchDto.getOffset(commentSearchDto.getPage(), commentSearchDto.getSize()))
                 .orderBy(comment.id.desc())
@@ -31,6 +33,8 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom{
     public void editComment(Long commentId, CommentEditDto commentEditDto) {
         jpaQueryFactory.update(comment)
                 .set(comment.commentContent, commentEditDto.getCommentContent())
+                .where(comment.isDeleted.eq(0))
+                .where(comment.display.eq(1))
                 .where(comment.id.eq(commentId))
                 .execute();
     }

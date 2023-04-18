@@ -27,6 +27,7 @@ const router = createRouter({
       path: '/edit/:postId',
       name: 'edit',
       component: EditPostView,
+      props: true,
     },
     //   {
     //     path: '/about',

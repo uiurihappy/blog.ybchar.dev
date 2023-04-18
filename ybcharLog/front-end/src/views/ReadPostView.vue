@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { defineProps, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { defineProps } from 'vue';
 import type { Comments } from '../common/comments/comments.interface';
 
-const router = useRouter();
 const props = defineProps({
   postId: {
     type: [Number, String],
@@ -19,9 +17,10 @@ const post = ref({
   content: '',
   comments: [] as Comments[],
 });
+const router = useRouter();
 
-const moveToEdit = () => {
-  router.push({ name: 'edit', params: { postId: props.postId } });
+const moveToEdit = (postId: number) => {
+  router.push({ name: 'edit', params: { postId } });
 };
 
 onMounted(() => {
@@ -44,7 +43,9 @@ onMounted(() => {
   <div class="mt-2">글 내용: {{ post.content }}</div>
   <br />
   <div class="d-flex justify-content-end">
-    <el-button type="warning" @click="moveToEdit()"> 수정하기 </el-button>
+    <el-button type="warning" @click="moveToEdit(post.id)">
+      수정하기
+    </el-button>
   </div>
   <h2>댓글</h2>
   <div class="mt-2">

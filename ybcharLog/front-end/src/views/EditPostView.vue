@@ -5,11 +5,6 @@ import { useRouter } from 'vue-router';
 // import dotenv from 'dotenv';
 // dotenv.config();
 const router = useRouter();
-const updatePost = ref({
-  title: '',
-  content: '',
-  display: 0,
-});
 
 const getPost = ref({
   id: 0,
@@ -28,9 +23,7 @@ const props = defineProps({
 axios
   .get(`/api/posts/${props.postId}`)
   .then(result => {
-    updatePost.value.title = result.data.title;
-    updatePost.value.content = result.data.content;
-    updatePost.value.display = result.data.display;
+    getPost.value = result.data;
   })
   .catch(() => {
     alert('글 조회에 실패하였습니다.');
@@ -38,7 +31,7 @@ axios
 
 const edit = () => {
   axios
-    .patch(`/api/posts/update/${props.postId}`, updatePost.value)
+    .patch(`/api/posts/update/${props.postId}`, getPost.value)
     .then(() => {
       alert('글 수정이 완료되었습니다.');
       router.replace({ name: 'home' });

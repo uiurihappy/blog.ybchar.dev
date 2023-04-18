@@ -37,7 +37,7 @@ spring:
         # page를 1부터 시작하는 옵션
         one-indexed-parameters: true
         # page 사이즈
-        default-page-size: 10
+        # default-page-size: 10
         # 최대 page 사이즈
         max-page-size: 2000
 
@@ -47,6 +47,8 @@ logging.level:
 
 server:
   port: {사용할 port 번호}
+frontEnd:
+  port: {cors 해결을 위해 Front-end PORT 번호}
 ```
 <b> 중활호 {} 에 있는 본인 환경에 맞춰서 사용할 것 </b>
 

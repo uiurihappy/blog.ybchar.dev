@@ -13,7 +13,6 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(CorsRegistry corsRegistry) {
-		System.out.println(portNumber);
 		corsRegistry.addMapping("/**")
 				.allowedOrigins("http://localhost:" + portNumber, "http://localhost:8081");
 	}

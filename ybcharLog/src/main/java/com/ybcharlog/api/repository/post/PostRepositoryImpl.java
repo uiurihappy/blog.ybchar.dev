@@ -37,7 +37,7 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
     public Post getPostOne(Long postId) {
         Post post = jpaQueryFactory
                 .selectFrom(QPost.post)
-                .innerJoin(QPost.post.comments).fetchJoin()
+                .leftJoin(QPost.post.comments).fetchJoin()
                 .where(QPost.post.id.eq(postId))
                 .fetchOne();
         if (post == null)
@@ -65,7 +65,7 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
 
     @Override
     public Page<Post> getPostListByPage(GetPostPageReq req, Pageable pageable) {
-        JPAQuery<Post> query = jpaQueryFactory.selectFrom(post).leftJoin(post.comments).fetchJoin();
+        JPAQuery<Post> query = jpaQueryFactory.selectFrom(post).leftJoin(post.comments).fetchJoin().orderBy(post.id.desc());
 //		this.setWhereQueryForFindAllNotice(query, req);
         super.setPageQuery(query, pageable, post);
         List<Post> result = query.fetch();

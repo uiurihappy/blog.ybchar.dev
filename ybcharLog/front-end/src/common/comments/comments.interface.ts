@@ -3,6 +3,7 @@ export interface Comments {
   password: string | null;
   username: string;
   secretPassword: number;
+  commentContent: string;
   createdAt: string | null;
   lastModifiedDate: string | null;
   createdBy: string | null;

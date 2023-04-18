@@ -1,31 +1,31 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import axios from 'axios';
 import type { PostList, Posts } from '../common/posts/posts.interface';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-const posts: PostList = {
-  list: [],
-  totalCount: 0,
-  totalElements: 0,
-};
-const getPostList = () => {
-  axios
-    .get(`/api/posts/list`)
-    .then(result => {
-      result.data.list.forEach((item: Posts) => {
-        posts.list.push(item);
-      });
-      posts.totalCount = result.data.totalCount;
-      posts.totalElements = result.data.totalElements;
+const posts = ref({ list: [] as Posts[], totalCount: 0, totalElements: 0 });
+// PostList = {
+//   list: [],
+//   totalCount: 0,
+//   totalElements: 0,
+// };
+axios
+  .get(`/api/posts/list`)
+  .then(result => {
+    console.log(result);
 
-      console.log(posts);
-    })
-    .catch(err => {
-      console.log(err);
+    result.data.list.forEach((item: Posts) => {
+      posts.value.list.push(item);
     });
-  return posts;
-};
+
+    posts.value.totalCount = result.data.totalCount;
+    posts.value.totalElements = result.data.totalElements;
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 const moveToRead = () => {
   router.push({ name: 'read' });
@@ -40,7 +40,7 @@ const moveToRead = () => {
     {{ posts.totalElements }}
   </div>
   <ul>
-    <li v-for="post in getPostList().list" :key="post.id" @click="moveToRead()">
+    <li v-for="post in posts.list" :key="post.id" @click="moveToRead()">
       <div>
         <router-link :to="{ name: 'read', params: { postId: post.id } }">{{
           post.title

@@ -20,6 +20,10 @@ const post = ref({
   comments: [] as Comments[],
 });
 
+const moveToEdit = () => {
+  router.push({ name: 'edit', params: { postId: props.postId } });
+};
+
 onMounted(() => {
   axios
     .get(`/api/posts/${props.postId}`)
@@ -39,7 +43,9 @@ onMounted(() => {
 
   <div class="mt-2">글 내용: {{ post.content }}</div>
   <br />
-
+  <div class="d-flex justify-content-end">
+    <el-button type="warning" @click="moveToEdit()"> 수정하기 </el-button>
+  </div>
   <h2>댓글</h2>
   <div class="mt-2">
     <ul>

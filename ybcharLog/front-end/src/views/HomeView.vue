@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import axios from 'axios';
 import type { PostList, Posts } from '../common/posts/posts.interface';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
+const posts: PostList = {
+  list: [],
+  totalCount: 0,
+  totalElements: 0,
+};
 const getPostList = () => {
-  const posts: PostList = {
-    list: [],
-    totalCount: 0,
-    totalElements: 0,
-  };
-
   axios
     .get(`/api/posts/list`)
     .then(result => {
@@ -25,16 +26,29 @@ const getPostList = () => {
     });
   return posts;
 };
+
+const moveToRead = () => {
+  router.push({ name: 'read' });
+};
 </script>
 
 <template>
+  <div>
+    {{ posts.totalCount }}
+  </div>
+  <div>
+    {{ posts.totalElements }}
+  </div>
   <ul>
-    <li v-for="post in getPostList().list" :key="post.id">
+    <li v-for="post in getPostList().list" :key="post.id" @click="moveToRead()">
       <div>
-        {{ post.title }}
-      </div>
-      <div>
-        {{ post.content }}
+        <router-link :to="{ name: 'read', params: { postId: post.id } }">{{
+          post.title
+        }}</router-link>
+        <br />
+        <router-link :to="{ name: 'read', params: { postId: post.id } }">{{
+          post.content
+        }}</router-link>
       </div>
     </li>
   </ul>

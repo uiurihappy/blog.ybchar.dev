@@ -67,7 +67,7 @@ const moveToRead = () => {
           {{
             post.createdAt === null
               ? dayjs().format('YYYY-MM-DD HH:mm:ss')
-              : dayjs(post.createdAt).format('YYYY-MM-DD')
+              : dayjs(post.createdAt).format('YYYY-MM-DD HH:mm:ss')
           }}
         </div>
       </div>
@@ -94,16 +94,20 @@ ul {
       }
     }
 
-    .content a {
-      font-size: 0.85rem;
-      margin-top: 4px;
-      color: #5d5d5d;
-      text-decoration: none;
-    }
+    .content {
+      a {
+        font-size: 0.95rem;
+        margin-top: 4px;
+        color: #5d5d5d;
+        text-decoration: none;
+        white-space: break-spaces;
+        line-height: 1.5;
+      }
 
-    .content a:hover {
-      color: #adadad;
-      text-decoration: underline;
+      a:hover {
+        color: #adadad;
+        text-decoration: underline;
+      }
     }
 
     &:last-child {

@@ -41,7 +41,7 @@ const writePost = function () {
 
   <div class="mt-2">
     <div class="d-flex justify-content-end">
-      <el-button type="primary" @click="writePost()">글 작성완료</el-button>
+      <el-button type="primary" @click="writePost()">작성완료</el-button>
     </div>
   </div>
 </template>

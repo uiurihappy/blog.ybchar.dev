@@ -54,7 +54,7 @@ const edit = () => {
     <el-checkbox v-model="getPost.display" true-label="1" false-label="0" />
   </div>
 
-  <div class="mt-2 d-flect justify-content-end">
+  <div class="mt-2 d-flex justify-content-end">
     <el-button type="warning" @click="edit()"> 수정 </el-button>
   </div>
 </template>

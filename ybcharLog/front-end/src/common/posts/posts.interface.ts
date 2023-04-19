@@ -12,4 +12,6 @@ export interface Posts {
   viewCount: number;
   likeCount: number;
   comments: Comments[];
+  createdAt: string;
+  lastModifiedDate: string;
 }

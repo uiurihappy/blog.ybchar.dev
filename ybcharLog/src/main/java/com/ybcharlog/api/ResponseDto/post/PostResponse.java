@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -28,6 +29,9 @@ public class PostResponse {
 	private final Integer likeCount;
 	private final List<Comment> comments;
 
+	private final LocalDateTime createdAt;
+	private final LocalDateTime lastModifiedDate;
+
 	// 생성자 오버로딩
 	public PostResponse(Post post) {
 		this.id = post.getId();
@@ -37,12 +41,15 @@ public class PostResponse {
 		this.isDeleted = post.getIsDeleted();
 		this.viewCount = post.getViewCount();
 		this.likeCount = post.getLikeCount();
-		this.comments = getComments();
+		this.comments = post.getComments();
+		this.createdAt = post.getCreatedAt();
+		this.lastModifiedDate = post.getLastModifiedDate();
 	}
 
 	@Builder
 	@QueryProjection
-	public PostResponse(Long id, String title, String content, Integer display, Integer isDeleted, Integer viewCount, Integer likeCount, List<Comment> comments) {
+	public PostResponse(Long id, String title, String content, Integer display, Integer isDeleted, Integer viewCount, Integer likeCount,
+	                    List<Comment> comments, LocalDateTime createdAt, LocalDateTime lastModifiedDate) {
 		this.id = id;
 		this.title = title.substring(0, Math.min(title.length(), 10));
 		this.content = content;
@@ -51,5 +58,7 @@ public class PostResponse {
 		this.viewCount = viewCount;
 		this.likeCount = likeCount;
 		this.comments = comments;
+		this.createdAt = createdAt;
+		this.lastModifiedDate = lastModifiedDate;
 	}
 }

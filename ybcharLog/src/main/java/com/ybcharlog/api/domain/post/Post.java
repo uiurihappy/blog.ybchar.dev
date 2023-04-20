@@ -1,7 +1,9 @@
 package com.ybcharlog.api.domain.post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ybcharlog.api.Common.BaseEntity;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
+import com.ybcharlog.api.domain.category.Category;
 import com.ybcharlog.api.domain.comment.Comment;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -42,8 +44,14 @@ public class Post extends BaseEntity {
 	@Column(columnDefinition = "int unsigned not null default 0 COMMENT '게시글 좋아요 수'")
 	private Integer likeCount;
 
+
 	@OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.REMOVE)
 	private List<Comment> comments = new ArrayList<>();
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "categoryId")
+	@JsonIgnore
+	private Category category;
 
 	public static Post initPost(String title, String content, Integer display) {
 		return Post.builder().title(title).content(content).display(display).isDeleted(0).viewCount(0).likeCount(0).build();

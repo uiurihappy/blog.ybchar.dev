@@ -200,4 +200,24 @@ class PostServiceTest {
 		assertEquals("존재하지 않는 글입니다.", e.getMessage());
 	}
 
+	@Test
+	@DisplayName("게시글 삭제 - 존재하지 않는 글")
+	void NotFoundPostDelete() {
+		// given
+		Post post = Post.builder()
+				.title("test1")
+				.content("test Content1")
+				.viewCount(0)
+				.likeCount(0)
+				.isDeleted(0)
+				.display(1)
+				.build();
+		postRepository.save(post);
+
+		// when
+		postService.deletePost(post.getId() + 1L);
+
+		// then
+		assertEquals(0, postRepository.count());
+	}
 }

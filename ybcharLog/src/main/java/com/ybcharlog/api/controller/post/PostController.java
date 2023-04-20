@@ -7,6 +7,7 @@ import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.domain.post.Post;
+import com.ybcharlog.api.exception.InvalidRequest;
 import com.ybcharlog.api.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,8 @@ public class PostController {
 	*/
     @PostMapping("/save")
     public Post post(@RequestBody @Valid PostCreateDto request)  {
+        request.titleValidate();
+
         return postService.write(request);
     }
 

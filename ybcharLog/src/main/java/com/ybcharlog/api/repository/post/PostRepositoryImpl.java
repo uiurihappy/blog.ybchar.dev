@@ -10,6 +10,7 @@ import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.domain.post.QPost;
+import com.ybcharlog.api.exception.PostNotFound;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -43,7 +44,7 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
                 .where(QPost.post.display.eq(1))
                 .fetchOne();
         if (post == null)
-            throw new IllegalArgumentException("존재하지 않는 글입니다.");
+            throw new PostNotFound();
         return post;
     }
 

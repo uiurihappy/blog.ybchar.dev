@@ -2,8 +2,12 @@ package com.ybcharlog.api.controller.common;
 
 
 import com.ybcharlog.api.ResponseDto.common.ErrorResponse;
+import com.ybcharlog.api.exception.InvalidRequest;
+import com.ybcharlog.api.exception.PostNotFound;
+import com.ybcharlog.api.exception.YbcharLogException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -35,4 +39,27 @@ public class ExceptionController {
 			return null;
 		}
 	}
+
+	@ResponseBody
+	@ExceptionHandler(YbcharLogException.class)
+	public ResponseEntity<ErrorResponse> ybcharLogException(YbcharLogException e) {
+		int statusCode = e.statusCode();
+
+		ErrorResponse body = ErrorResponse.builder()
+				.code(String.valueOf(statusCode))
+				.message(e.getMessage())
+				.validation(e.getValidation())
+				.build();
+		// 응답 json validation - 해당 키의 에러를 포함시킨다.
+//		if (e instanceof InvalidRequest) {
+//			InvalidRequest invalidRequest = (InvalidRequest) e;
+//			String fieldName = invalidRequest.getFieldName();
+//			String message = invalidRequest.getMessage();
+//			body.addValidation(fieldName, message);
+//		}
+
+		ResponseEntity<ErrorResponse> response = ResponseEntity.status(statusCode).body(body);
+		return response;
+	}
+
 }

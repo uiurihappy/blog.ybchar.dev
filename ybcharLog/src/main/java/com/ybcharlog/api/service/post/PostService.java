@@ -9,6 +9,7 @@ import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.domain.post.Post;
+import com.ybcharlog.api.exception.PostNotFound;
 import com.ybcharlog.api.mapper.post.GetPostResDtoMapper;
 import com.ybcharlog.api.repository.comment.CommentRepository;
 import com.ybcharlog.api.repository.post.PostRepository;
@@ -72,7 +73,7 @@ public class PostService {
 	@Transactional
 	public void editPost(Long postId, PostEditDto postEditDto) {
 		Post post = postRepository.findById(postId)
-				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+				.orElseThrow(PostNotFound::new);
 //		PostEditorBuilder editorBuilder = post.toEditor();
 //
 //		PostEditor postEditor = editorBuilder.title(postEditDto.getTitle())

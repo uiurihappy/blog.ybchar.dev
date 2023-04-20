@@ -33,7 +33,7 @@ public class Post extends BaseEntity {
 	@Column(columnDefinition = "tinyint(3) not null default 0 COMMENT '노출 상태'")
 	private Integer display;
 
-	@Column(columnDefinition = "tinyint(3) not null default 1 COMMENT '삭제 상태'")
+	@Column(columnDefinition = "tinyint(3) not null default 0 COMMENT '삭제 상태'")
 	private Integer isDeleted;
 
 	@Column(columnDefinition = "int unsigned not null default 0 COMMENT '게시글 조회 수'")

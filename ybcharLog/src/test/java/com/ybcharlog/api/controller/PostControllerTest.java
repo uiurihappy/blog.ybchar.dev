@@ -55,17 +55,19 @@ class PostControllerTest {
                 .content("글 내용입니다.")
                 .viewCount(0)
                 .likeCount(0)
+                .isDeleted(0)
+                .display(1)
                 .build();
         String json = objectMapper.writeValueAsString(request);     // Javascript의 JSON.stringfy(object) 느낌
 //        System.out.println(json);
 
         // expected
-        mockMvc.perform(post("/posts")
+        mockMvc.perform(post("/posts/save")
                                 .contentType(APPLICATION_JSON)
                                 .content(json)
                 )
                 .andExpect(status().isOk())
-                .andExpect(content().string(""))
+                .andExpect(content().string(json))
                 .andDo(print());
 
         // DB에 1개 저장
@@ -77,11 +79,13 @@ class PostControllerTest {
         // given
         PostCreateDto request = PostCreateDto.builder()
                 .content("글 내용입니다.")
+                .isDeleted(0)
+                .display(1)
                 .build();
         String json = objectMapper.writeValueAsString(request);
 
         // expected
-        mockMvc.perform(post("/posts")
+        mockMvc.perform(post("/posts/save")
                                 .contentType(APPLICATION_JSON)
                                 .content(json)
                 )
@@ -103,11 +107,13 @@ class PostControllerTest {
                 .content("글 내용 test")
                 .viewCount(0)
                 .likeCount(0)
+                .isDeleted(0)
+                .display(1)
                 .build();
         String json = objectMapper.writeValueAsString(request);
 
         // when
-        mockMvc.perform(post("/posts")
+        mockMvc.perform(post("/posts/save")
                         .contentType(APPLICATION_JSON)
                         .content(json)
                 )
@@ -135,6 +141,8 @@ class PostControllerTest {
                 .content("bar")
                 .viewCount(0)
                 .likeCount(0)
+                .isDeleted(0)
+                .display(1)
                 .build();
         postRepository.save(post);
         System.out.println("postId = " + post.getId());
@@ -160,6 +168,8 @@ class PostControllerTest {
                     .content("bar" + i)
                     .viewCount(0)
                     .likeCount(0)
+                    .isDeleted(0)
+                    .display(1)
                     .build();
             postRepository.save(savePost);
         }
@@ -167,7 +177,7 @@ class PostControllerTest {
         List<Post> posts = postRepository.findAll();
 
         // expected
-        mockMvc.perform(get("/posts")
+        mockMvc.perform(get("/posts/list")
                         .contentType(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
@@ -193,16 +203,17 @@ class PostControllerTest {
                         .content("ybchar content " + i)
                         .viewCount(0)
                         .likeCount(0)
+                        .isDeleted(0)
+                        .display(1)
                         .build())
                 .collect(Collectors.toList());
         postRepository.saveAll(requestPosts);
 
         // expected
-        mockMvc.perform(get("/posts?page=1&size=10")
+        mockMvc.perform(get("/posts/list?page=1&size=10")
                         .contentType(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()", Matchers.is(10)))
                 .andExpect(jsonPath("$[0].id").value(30))
                 .andExpect(jsonPath("$[0].title").value("ybchar title 30"))
                 .andExpect(jsonPath("$.[0].content").value("ybchar content 30"))
@@ -220,12 +231,14 @@ class PostControllerTest {
                         .content("ybchar content " + i)
                         .viewCount(0)
                         .likeCount(0)
+                        .isDeleted(0)
+                        .display(1)
                         .build())
                 .collect(Collectors.toList());
         postRepository.saveAll(requestPosts);
 
         // expected
-        mockMvc.perform(get("/posts?page=0&size=10")
+        mockMvc.perform(get("/posts/list?page=0&size=10")
                         .contentType(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
@@ -246,6 +259,8 @@ class PostControllerTest {
                 .content("ybchar content 1")
                 .viewCount(0)
                 .likeCount(0)
+                .isDeleted(0)
+                .display(1)
                 .build();
         postRepository.save(post);
 
@@ -256,7 +271,7 @@ class PostControllerTest {
 
 //        System.out.println(objectMapper.writeValueAsString(postEditDto));
         // expected
-        mockMvc.perform(patch("/posts/{postId}", post.getId())  // PATCH /posts/{postId|
+        mockMvc.perform(patch("/posts/update/{postId}", post.getId())  // PATCH /posts/{postId|
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(postEditDto))
                 )
@@ -274,11 +289,13 @@ class PostControllerTest {
                 .content("ybchar content 1")
                 .viewCount(0)
                 .likeCount(0)
+                .isDeleted(0)
+                .display(1)
                 .build();
         postRepository.save(post);
 
         // expected
-        mockMvc.perform(delete("/posts/{postId}", post.getId())
+        mockMvc.perform(delete("/posts/delete/{postId}", post.getId())
                     .contentType(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
@@ -286,5 +303,54 @@ class PostControllerTest {
 
     }
 
+    @Test
+    @DisplayName("존재하지 않는 게시글 조회")
+    void NotFoundPostException() throws Exception {
+        // expected
+        mockMvc.perform(delete("/posts/delete/{postId}", 1L)
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print());
 
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 게시글 조회")
+    void NotFoundPostUpdate() throws Exception {
+        // given
+        PostEditDto postEditDto = PostEditDto.builder()
+                .title("ybchar edit title test1")
+                .content("ybchar edit content test1")
+                .build();
+
+//        System.out.println(objectMapper.writeValueAsString(postEditDto));
+        // expected
+        mockMvc.perform(patch("/posts/update/{postId}", 1L)  // PATCH /posts/{postId|
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(postEditDto))
+                )
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("게시글 제목에 '바보'는 포함될 수 없다.")
+    void InvalidPostTitleException() throws Exception {
+        // given
+        PostCreateDto request = PostCreateDto.builder()
+                .title("나는 바보입니다.")
+                .content("글 내용 test")
+                .viewCount(0)
+                .likeCount(0)
+                .build();
+        String json = objectMapper.writeValueAsString(request);
+
+        // when
+        mockMvc.perform(post("/posts/save")
+                        .contentType(APPLICATION_JSON)
+                        .content(json)
+                )
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
 }

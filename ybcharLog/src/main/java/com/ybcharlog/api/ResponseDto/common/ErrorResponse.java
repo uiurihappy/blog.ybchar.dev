@@ -1,4 +1,5 @@
 package com.ybcharlog.api.ResponseDto.common;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,10 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
+@JsonInclude(value = JsonInclude.Include.NON_EMPTY)
 public class ErrorResponse {
 
 	private final String code;
 	private final String message;
+	private final Map<String, String> validation;
 
 	/* Map 사용 지양하는 이유
 		- 고정타입 문제
@@ -31,12 +34,12 @@ public class ErrorResponse {
 	 */
 
 	@Builder
-	public ErrorResponse(String code, String message) {
+	public ErrorResponse(String code, String message, Map<String, String> validation) {
 		this.code = code;
 		this.message = message;
+		this.validation = validation;
 	}
 
-	private final Map<String, String> validation = new HashMap<>();
 
 	public void addValidation(String fieldName, String errorMessage) {
 //		ValidationTuple tuple = new ValidationTuple(fieldName, errorMessage);

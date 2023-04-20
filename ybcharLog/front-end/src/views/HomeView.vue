@@ -80,7 +80,7 @@ ul {
   list-style: none;
   padding: 0;
   li {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
 
     .title {
       a {
@@ -89,7 +89,7 @@ ul {
         text-decoration: none;
       }
       a:hover {
-        font: 120% system-ui;
+        font: 1.2rem system-ui;
         text-decoration: underline;
       }
     }
@@ -97,7 +97,6 @@ ul {
     .content {
       a {
         font-size: 0.95rem;
-        margin-top: 4px;
         color: #5d5d5d;
         text-decoration: none;
         white-space: break-spaces;

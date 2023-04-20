@@ -112,9 +112,9 @@ onMounted(() => {
   }
 }
 
-.content {
+.content read {
   font-size: 0.95rem;
-  margin-top: 12px;
+  margin-top: 8px;
   color: #616161;
   white-space: break-spaces;
   line-height: 1.5;

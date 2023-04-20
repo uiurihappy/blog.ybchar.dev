@@ -89,6 +89,6 @@ public class PostService {
 				.getComments()
 				.stream().map(Comment::getId).collect(Collectors.toList());
 		commentRepository.deleteAllByCommentInQuery(commentIds);
-		postRepository.deleteByPostId(postId);
+		postRepository.updateDeletedByPostId(postId);
 	}
 }

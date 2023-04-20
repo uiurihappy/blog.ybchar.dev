@@ -95,4 +95,12 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
         return new PageImpl<>(result, super.getValidPageable(pageable), count);
 
     }
+
+    @Override
+    public void updateDeletedByPostId(Long postId) {
+        jpaQueryFactory.update(post)
+                .set(post.isDeleted, 1)
+                .where(post.id.eq(postId))
+                .execute();
+    }
 }

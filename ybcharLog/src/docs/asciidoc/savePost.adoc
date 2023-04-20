@@ -1,3 +1,7 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+
 = 게시글 저장 API
 :doctype: book
 :icons: font

@@ -65,6 +65,9 @@ test {
 asciidoctor {
     inputs.dir snippetsDir
     configurations 'asciidoctorExt'
+    forkOptions {
+        jvmArgs('--add-opens', 'java.base/sun.nio.ch=ALL-UNNAMED', '--add-opens', 'java.base/java.io=ALL-UNNAMED')
+    }
     dependsOn test
 }
 
@@ -78,12 +81,19 @@ bootJar {
         into "src/main/resources/static/docs"
     }
 }
+jar {
+    enabled = false
+}
 //ForkOptions {
 //    jvmArgs(
 //            "--add-opens", "java.base/sun.nio.ch=ALL-UNNAMED",
 //            "--add-opens", "java.base/java.io=ALL-UNNAMED"
 //    )
 //}
+
+clean {
+    delete file("$buildDir/generated/*")
+}
 
 def querydslDir = "$buildDir/generated/sources/annotationProcessor/java/main"
 
@@ -100,9 +110,7 @@ sourceSets {
     main.java.srcDir querydslDir
 }
 //gradle clean 시, Q Class 디렉토리까지 삭제하도록 설정
-clean {
-    delete file("$buildDir/generated/*")
-}
+
 
 
 

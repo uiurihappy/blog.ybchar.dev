@@ -28,6 +28,8 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import java.util.Optional;
+
 import static org.springframework.http.MediaType.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -69,9 +71,25 @@ public class PostControllerDocTest {
 //                .build();
 //    }
 
+    @BeforeEach
+    public void deleteAll() {
+        postRepository.deleteAll();
+    }
     @Test
     @DisplayName("getOnePost Restdocs")
     void getOnePostTest() throws Exception {
+
+        // given
+        Post post = Post.builder()
+                .title("글 제목입니다.")
+                .content("글 내용입니다.")
+                .viewCount(0)
+                .likeCount(0)
+                .display(0)
+                .isDeleted(0)
+                .build();
+        postRepository.save(post);
+
         // expected
         this.mockMvc.perform(RestDocumentationRequestBuilders.get("/posts/{postId}", 1L)
                 .accept(APPLICATION_JSON))
@@ -88,12 +106,17 @@ public class PostControllerDocTest {
                                 fieldWithPath("content").description("게시글 내용"),
                                 fieldWithPath("viewCount").description("게시글 조회 수"),
                                 fieldWithPath("likeCount").description("게시글 좋아요 수"),
+                                fieldWithPath("display").description("게시글 viewStatus"),
+                                fieldWithPath("isDeleted").description("게시글 삭제 상태"),
+
 //                                fieldWithPath("comments").type(JsonFieldType.ARRAY).description("댓글"),
                                 fieldWithPath("comments.[].id").description("댓글 ID"),
                                 fieldWithPath("comments.[].username").description("댓글 사용자 이름"),
                                 fieldWithPath("comments.[].password").description("댓글 비밀번호").optional(),
                                 fieldWithPath("comments.[].commentContent").description("댓글 내용"),
                                 fieldWithPath("comments.[].secretStatus").description("댓글 비밀번호 상태"),
+                                fieldWithPath("comments.[].display").description("게시글 viewStatus"),
+                                fieldWithPath("comments.[].isDeleted").description("게시글 삭제 상태"),
                                 fieldWithPath("comments.[].createdAt").description("생성 일자"),
                                 fieldWithPath("comments.[].lastModifiedDate").description("수정 일자"),
                                 fieldWithPath("comments.[].createdBy").description("생성한 유저 ID"),
@@ -116,6 +139,8 @@ public class PostControllerDocTest {
                 .content("글 내용입니다.")
                 .viewCount(0)
                 .likeCount(0)
+                .display(0)
+                .isDeleted(0)
                 .build();
         String json = objectMapper.writeValueAsString(request);     // Javascript의 JSON.stringfy(object) 느낌
 
@@ -133,7 +158,9 @@ public class PostControllerDocTest {
                                         .attributes(Attributes.key("constraint").value("좋은 제목 입력해주세요")),
                                 fieldWithPath("content").description("게시글 내용"),
                                 fieldWithPath("viewCount").description("게시글 조회 수").optional(),
-                                fieldWithPath("likeCount").description("게시글 좋아요 수").optional()
+                                fieldWithPath("likeCount").description("게시글 좋아요 수").optional(),
+                                fieldWithPath("display").description("게시글 viewStatus"),
+                                fieldWithPath("isDeleted").description("게시글 삭제 상태")
                         )
                 ));
     }
@@ -147,15 +174,20 @@ public class PostControllerDocTest {
                 .content("글 내용입니다.")
                 .viewCount(0)
                 .likeCount(0)
+                .display(0)
+                .isDeleted(0)
                 .build();
         postRepository.save(post);
 
         String json = objectMapper.writeValueAsString(post);     // Javascript의 JSON.stringfy(object) 느낌
         System.out.println(json);
+        Optional<Post> findPost = postRepository.findById(1L);
 
         // expected
-        this.mockMvc.perform(delete("/posts/{postId}", post.getId())
-                        .accept(APPLICATION_JSON))
+        this.mockMvc.perform(delete("/posts/delete/{postId}", post.getId())
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isOk())
                 .andDo(document("deletePost",
                         requestFields(

@@ -45,6 +45,12 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
                 .fetchOne();
         if (post == null)
             throw new PostNotFound();
+        else {
+            jpaQueryFactory.update(QPost.post)
+                    .set(QPost.post.viewCount, QPost.post.viewCount.add(1))
+                    .where(QPost.post.id.eq(postId))
+                    .execute();
+        }
         return post;
     }
 

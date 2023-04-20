@@ -37,8 +37,8 @@ public class PostService {
 		return postRepository.save(Post.initPost(postCreateDto.getTitle(), postCreateDto.getContent(), postCreateDto.getDisplay()));
 	}
 
+	@Transactional
 	public Post getOne(Long postId) {
-
 		return postRepository.getPostOne(postId);
 	}
 

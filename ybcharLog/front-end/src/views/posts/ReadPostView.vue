@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import type { Posts } from '../../common/posts/posts.interface';
+import { getFormattedDate } from '../../common/tools/dateFormat.tool';
 dayjs.extend(timezone);
 
 const username = ref('');
@@ -72,7 +73,7 @@ onMounted(() => {
   <el-row>
     <el-col>
       <div class="mt-2">
-        <h2 class="title">제목: {{ post.title }}</h2>
+        <h2 class="title">{{ post.title }}</h2>
         <div class="sub d-flex">
           <div class="category">개발</div>
 
@@ -91,7 +92,7 @@ onMounted(() => {
 
   <el-row>
     <el-col>
-      <div class="content">글 내용: {{ post.content }}</div>
+      <div class="content">{{ post.content }}</div>
     </el-col>
   </el-row>
 
@@ -107,38 +108,47 @@ onMounted(() => {
     </el-col>
   </el-row>
 
-  <h2>댓글</h2>
-  <div class="mt-2">
-    <ul>
-      <li v-for="comment in post.comments" :key="comment.id">
-        <div>
-          {{ comment.username }}
+  <h2 style="font-size: 1.5rem; margin-bottom: 1rem">댓글</h2>
+  <div class="comment">
+    <div class="comment-list">
+      <div
+        v-for="comment in post.comments"
+        :key="comment.id"
+        class="comment-item"
+      >
+        <div class="comment-info">
+          <span class="comment-username">{{ comment.username }}</span>
+          <span class="comment-date">{{
+            getFormattedDate(comment.createdAt)
+          }}</span>
         </div>
-        <div>
-          {{ comment.commentContent }}
-        </div>
-      </li>
-    </ul>
-  </div>
-  <h3>댓글 작성</h3>
-  <div>
-    <el-input v-model="username" placeholder="이름을 적어주세요" />
-  </div>
-  <div>
-    <el-input v-model="password" placeholder="비밀번호를 적어주세요" />
-  </div>
-  <div class="mt-2">
-    비밀글<el-checkbox v-model="secretStatus" true-label="1" false-label="0" />
-  </div>
-  <div class="mt-2">
-    <el-input v-model="commentContent" type="textarea" rows="15" />
-  </div>
-
-  <div class="mt-2">
-    <div class="d-flex justify-content-end">
-      <el-button type="primary" @click="writeComment(post)">작성완료</el-button>
+        <div class="comment-content">{{ comment.commentContent }}</div>
+      </div>
     </div>
   </div>
+
+  <template v-if="post.id">
+    <div class="comment-write">
+      <h3 class="comment-write__title">댓글 작성</h3>
+      <div class="comment-write__input">
+        <el-input v-model="username" placeholder="이름" />
+      </div>
+      <div class="comment-write__input mt-2">
+        <el-input
+          v-model="commentContent"
+          placeholder="내용을 입력해주세요"
+          type="textarea"
+          rows="5"
+        />
+      </div>
+
+      <div class="comment-write__button">
+        <div class="d-flex justify-content-end">
+          <el-button type="primary" @click="writeComment(post)">등록</el-button>
+        </div>
+      </div>
+    </div>
+  </template>
 </template>
 
 <style scope lang="scss">
@@ -157,6 +167,65 @@ onMounted(() => {
     margin-left: 15px;
     color: #6b6b6b;
   }
+}
+
+.comment {
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.comment-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.comment-item {
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.comment-info {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 0.5rem;
+}
+
+.comment-username {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.comment-date {
+  font-style: italic;
+}
+
+.comment-content {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.comment-write {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.comment-write__title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.comment-write__input {
+  margin-bottom: 1rem;
+}
+
+.comment-write__button {
+  margin-top: 1rem;
 }
 
 .content read {

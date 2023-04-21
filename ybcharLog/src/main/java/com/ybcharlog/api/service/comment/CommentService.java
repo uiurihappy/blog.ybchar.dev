@@ -3,7 +3,11 @@ package com.ybcharlog.api.service.comment;
 import com.ybcharlog.api.RequestDto.comment.CommentCreateDto;
 import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
 import com.ybcharlog.api.domain.comment.Comment;
+import com.ybcharlog.api.domain.post.Post;
+import com.ybcharlog.api.exception.PostNotFound;
+import com.ybcharlog.api.mapper.comment.GetCommentResDtoMapper;
 import com.ybcharlog.api.repository.comment.CommentRepository;
+import com.ybcharlog.api.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,8 +16,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
+	private final PostRepository postRepository;
 
-    private final CommentRepository commentRepository;
+	private final CommentRepository commentRepository;
 
     public CommentResponse getOne(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
@@ -30,9 +35,11 @@ public class CommentService {
                 .build();
     }
 
-    public Comment write(CommentCreateDto commentCreateDto) {
-        return commentRepository.save(Comment.initComment(commentCreateDto.getUsername(), commentCreateDto.getPassword()
-		        , commentCreateDto.getCommentContent(), commentCreateDto.getSecretStatus(), commentCreateDto.getDisplay(), commentCreateDto.getIsDeleted()));
+    public CommentResponse write(CommentCreateDto commentCreateDto, Long postId) {
+	    Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
+
+        return GetCommentResDtoMapper.INSTANCE.toDto(commentRepository.save(Comment.initComment(commentCreateDto.getUsername(), commentCreateDto.getPassword()
+		        , commentCreateDto.getCommentContent(), commentCreateDto.getSecretStatus(), commentCreateDto.getDisplay(), commentCreateDto.getIsDeleted(), post)));
     }
 
 	public void deleteOneComment(Long commentId) {

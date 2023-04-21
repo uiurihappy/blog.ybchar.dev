@@ -1,6 +1,7 @@
 package com.ybcharlog.api.RequestDto.comment;
 
 
+import com.ybcharlog.api.domain.post.Post;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -21,10 +22,11 @@ public class CommentCreateDto {
     @NotBlank(message = "comment input please")
     private String commentContent;
 
-    @NotBlank(message = "Require secretStatus")
     private Integer secretStatus;
 
     private Integer display;
     private Integer isDeleted;
+
+    private Long postId;
 
 }

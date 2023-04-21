@@ -13,21 +13,20 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/comments")
 public class CommentController {
 
     private final CommentService commentService;
 
     // 댓글 단건 조회
-    @GetMapping("/{commentId}")
+    @GetMapping("/comments/{commentId}")
     public CommentResponse getOne(@PathVariable Long commentId) {
         return commentService.getOne(commentId);
     }
 
     // 댓글 등록
-    @PostMapping("/save")
-    public Comment save(@RequestBody @Valid CommentCreateDto request) {
-        return commentService.write(request);
+    @PostMapping("/posts/{postId}/comments")
+    public CommentResponse save(@RequestBody @Valid CommentCreateDto request, @PathVariable Long postId) {
+        return commentService.write(request, postId);
     }
 
     // 댓글 단건 삭제

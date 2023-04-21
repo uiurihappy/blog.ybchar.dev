@@ -71,10 +71,11 @@ public class PostControllerDocTest {
 //                .build();
 //    }
 
-    @BeforeEach
-    public void deleteAll() {
-        postRepository.deleteAll();
-    }
+//    @BeforeEach
+//    public void deleteAll() {
+//        postRepository.deleteAll();
+//    }
+
     @Test
     @DisplayName("getOnePost Restdocs")
     void getOnePostTest() throws Exception {
@@ -85,20 +86,21 @@ public class PostControllerDocTest {
                 .content("글 내용입니다.")
                 .viewCount(0)
                 .likeCount(0)
-                .display(0)
+                .display(1)
                 .isDeleted(0)
                 .build();
         postRepository.save(post);
 
         // expected
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/posts/{postId}", 1L)
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/posts/{postId}", post.getId())
                 .accept(APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("getOnePost",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         pathParameters(
-                                parameterWithName("postId").description("게시글 Id")
+                                parameterWithName("postId").description("게시글 ID")
                         ),
                         responseFields(
                                 fieldWithPath("id").description("게시글 ID"),

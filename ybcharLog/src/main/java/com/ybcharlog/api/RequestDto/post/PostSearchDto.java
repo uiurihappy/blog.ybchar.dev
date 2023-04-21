@@ -9,7 +9,6 @@ import lombok.Setter;
 import static java.lang.Math.*;
 
 @Getter
-@Setter
 @Builder
 @Data
 public class PostSearchDto {

@@ -2,6 +2,7 @@ package com.ybcharlog.api.domain.comment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ybcharlog.api.Common.BaseEntity;
+import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
 import com.ybcharlog.api.domain.post.Post;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,21 +40,25 @@ public class Comment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "postId")
-    @JsonIgnore
+//    @JsonIgnore
     private Post post;
 
-    public static Comment initComment(String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted) {
+    public static Comment initComment(String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted, Post post) {
+        secretStatus = password == null ? 0 : secretStatus;
+        display = display == null ? 0 : display;
+        isDeleted = (isDeleted == 1 || isDeleted == null) ? 0 : display;
         return Comment.builder().username(username).password(password).commentContent(commentContent)
-                .secretStatus(secretStatus == null ? 0 : secretStatus).display(1).isDeleted(0).build();
+                .secretStatus(secretStatus).display(display).isDeleted(isDeleted).post(post).build();
     }
 
     @Builder
-    public Comment(String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted) {
+    public Comment(String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted, Post post) {
         this.username = username;
         this.password = password;
         this.commentContent = commentContent;
         this.secretStatus = secretStatus;
         this.display = display;
         this.isDeleted = isDeleted;
+        this.post = post;
     }
 }

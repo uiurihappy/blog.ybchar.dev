@@ -1,10 +1,13 @@
 package com.ybcharlog.api.ResponseDto.comment;
 
 import com.ybcharlog.api.domain.comment.Comment;
+import com.ybcharlog.api.domain.post.Post;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
+@AllArgsConstructor
 @Getter
 public class CommentResponse {
 
@@ -28,7 +31,7 @@ public class CommentResponse {
     }
 
     @Builder
-    public CommentResponse(Long id, String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted) {
+    public CommentResponse(Long id, String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted, Post post) {
         this.id = id;
         this.username = username;
         this.password = password;

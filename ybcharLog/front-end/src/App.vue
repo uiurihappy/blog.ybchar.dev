@@ -5,14 +5,17 @@ import Content from './components/Content.vue';
 </script>
 
 <template>
+  <!-- <div style="background-color: #444654"> -->
   <Header />
   <Content />
+  <!-- </div> -->
 </template>
 
 <style>
 body {
   margin: 0;
   width: 100%;
+
   font-family: 'Pretendard Variable', Pretendard, -apple-system,
     BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
     'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji',

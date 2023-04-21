@@ -87,6 +87,8 @@ public class Post extends BaseEntity {
 	}
 
 	public void edit(PostEditDto postEditDto, Post post) {
+		System.out.println(postEditDto.getDisplay());
+		System.out.println(postEditDto.getIsDeleted());
 		this.title = postEditDto.getTitle() != null ? postEditDto.getTitle() : post.getTitle();
 		this.content = postEditDto.getContent() != null ? postEditDto.getContent() : post.getContent();
 		this.isDeleted = postEditDto.getIsDeleted() != null ? postEditDto.getIsDeleted() : post.getIsDeleted();

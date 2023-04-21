@@ -74,13 +74,8 @@ public class PostService {
 	public void editPost(Long postId, PostEditDto postEditDto) {
 		Post post = postRepository.findById(postId)
 				.orElseThrow(PostNotFound::new);
-//		PostEditorBuilder editorBuilder = post.toEditor();
-//
-//		PostEditor postEditor = editorBuilder.title(postEditDto.getTitle())
-//				.content(postEditDto.getContent())
-//				.build();
+
 		post.edit(postEditDto, post);
-//		postRepository.editPost(postId, postEditDto);
 	}
 
 	@Transactional

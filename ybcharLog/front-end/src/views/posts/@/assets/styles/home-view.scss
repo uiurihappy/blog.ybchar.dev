@@ -32,6 +32,7 @@ $tertiary-color: #2d2d2d;
   margin: 0 auto;
   padding: 2rem 1rem;
   font-family: 'Montserrat', sans-serif;
+// background-color: #444654;
 }
 
 .page-count {
@@ -98,17 +99,15 @@ $tertiary-color: #2d2d2d;
 }
 
 .post-category {
-    font-family: 'dohyeon';
+    font-family: 'jua';
     font-size: 12px;
     font-weight: normal;
   }
-  
-  .post-date {
-    font-family: 'dohyeon';
-
+.post-date {
+    font-family: 'jua';
     font-size: 12px;
     font-weight: normal;
-  }
+}
 
 .gradient-background {
   background: linear-gradient(135deg, $gradient-color-1, $gradient-color-2, $gradient-color-3);

@@ -13,14 +13,14 @@
             post.title
           }}</router-link>
         </div>
+        <div class="post-sub">
+          <div class="post-category">개발</div>
+          <div class="post-date">{{ getFormattedDate(post.createdAt) }}</div>
+        </div>
         <div class="post-content">
           <router-link :to="{ name: 'read', params: { postId: post.id } }">
             <p v-text="truncateText(post.content, 120)"></p>
           </router-link>
-        </div>
-        <div class="post-sub">
-          <div class="post-category">개발</div>
-          <div class="post-date">{{ getFormattedDate(post.createdAt) }}</div>
         </div>
       </li>
     </ul>
@@ -41,8 +41,6 @@ const posts = ref<PostList>({ list: [], totalCount: 0, totalElements: 0 });
 axios
   .get(`/api/posts/list`)
   .then(result => {
-    console.log(result);
-
     posts.value = result.data;
   })
   .catch(err => {
@@ -56,6 +54,5 @@ const moveToRead = (postId: number) => {
 
 <style scoped lang="scss">
 @import '@/assets/styles/home-view.scss';
-
 /* 홈 화면에만 적용될 스타일 코드 */
 </style>

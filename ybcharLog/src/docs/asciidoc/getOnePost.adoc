@@ -17,8 +17,8 @@ include::{snippets}/getOnePost/curl-request.adoc[]
 === 요청 파라미터
 include::{snippets}/getOnePost/path-parameters.adoc[]
 
-=== 요청 필드
-include::{snippets}/getOnePost/request-fields.adoc[]
+// === 요청 필드
+// include::{snippets}/getOnePost/request-fields.adoc[]
 
 == 응답
 include::{snippets}/getOnePost/http-request.adoc[]

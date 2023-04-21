@@ -46,9 +46,9 @@ public class Comment extends BaseEntity {
     public static Comment initComment(String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted, Post post) {
         secretStatus = password == null ? 0 : secretStatus;
         display = display == null ? 0 : display;
-        isDeleted = (isDeleted == 1 || isDeleted == null) ? 0 : display;
+//        isDeleted = isDeleted == 1 ? 0 : isDeleted;
         return Comment.builder().username(username).password(password).commentContent(commentContent)
-                .secretStatus(secretStatus).display(display).isDeleted(isDeleted).post(post).build();
+                .secretStatus(secretStatus).display(display).isDeleted(0).post(post).build();
     }
 
     @Builder

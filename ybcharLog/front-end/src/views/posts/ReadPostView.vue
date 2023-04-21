@@ -2,12 +2,17 @@
 import { defineProps, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import type { Comments } from '../common/comments/comments.interface';
+import type { Comments } from '../../common/comments/comments.interface';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import type { Posts } from '@/common/posts/posts.interface';
 dayjs.extend(timezone);
 
+const username = ref('');
+const password = ref('');
+const secretStatus = ref(0);
+const commentContent = ref('');
 const props = defineProps({
   postId: {
     type: [Number, String],
@@ -19,6 +24,11 @@ const post = ref({
   id: 0,
   title: '',
   content: '',
+  viewCount: 0,
+  likeCount: 0,
+  isDeleted: 0,
+  display: 0,
+  lastModifiedDate: '',
   createdAt: '',
   comments: [] as Comments[],
 });
@@ -26,6 +36,24 @@ const router = useRouter();
 
 const moveToEdit = (postId: number) => {
   router.push({ name: 'edit', params: { postId } });
+};
+
+const writeComment = (post: Posts) => {
+  axios
+    .post(`/api/posts/${props.postId}/comments`, {
+      username: username.value,
+      password: password.value,
+      secretStatus: secretStatus.value,
+      commentContent: commentContent.value,
+      post,
+    })
+    .then(() => {
+      router.go(0);
+      alert('댓글이 성공적으로 작성되었습니다.');
+    })
+    .catch(() => {
+      alert('댓글 작성이 실패되었습니다.');
+    });
 };
 
 onMounted(() => {
@@ -91,6 +119,25 @@ onMounted(() => {
         </div>
       </li>
     </ul>
+  </div>
+  <h3>댓글 작성</h3>
+  <div>
+    <el-input v-model="username" placeholder="이름을 적어주세요" />
+  </div>
+  <div>
+    <el-input v-model="password" placeholder="비밀번호를 적어주세요" />
+  </div>
+  <div class="mt-2">
+    비밀글<el-checkbox v-model="secretStatus" true-label="1" false-label="0" />
+  </div>
+  <div class="mt-2">
+    <el-input v-model="commentContent" type="textarea" rows="15" />
+  </div>
+
+  <div class="mt-2">
+    <div class="d-flex justify-content-end">
+      <el-button type="primary" @click="writeComment(post)">작성완료</el-button>
+    </div>
   </div>
 </template>
 

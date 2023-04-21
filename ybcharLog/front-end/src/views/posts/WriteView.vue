@@ -18,7 +18,7 @@ const writePost = function () {
     })
     .then(() => {
       router.replace({ name: 'home' });
-      alert('게시글 작성이 정상적으로 되었습니다.');
+      alert('게시글이 성공적으로 작성되었습니다.');
     })
     .catch(() => {
       alert('게시글 작성이 실패되었습니다.');

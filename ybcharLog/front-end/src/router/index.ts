@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
-import WriteView from '../views/WriteView.vue';
-import ReadPostView from '../views/ReadPostView.vue';
-import EditPostView from '../views/EditPostView.vue';
+import HomeView from '../views/posts/HomeView.vue';
+import WriteView from '../views/posts/WriteView.vue';
+import ReadPostView from '../views/posts/ReadPostView.vue';
+import EditPostView from '../views/posts/EditPostView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

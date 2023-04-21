@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import axios from 'axios';
-import type { PostList, Posts } from '../common/posts/posts.interface';
+import type { PostList, Posts } from '../../common/posts/posts.interface';
 import { useRouter } from 'vue-router';
 
 import dayjs from 'dayjs';

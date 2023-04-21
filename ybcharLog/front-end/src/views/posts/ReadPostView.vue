@@ -6,7 +6,7 @@ import type { Comments } from '../../common/comments/comments.interface';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import type { Posts } from '@/common/posts/posts.interface';
+import type { Posts } from '../../common/posts/posts.interface';
 dayjs.extend(timezone);
 
 const username = ref('');

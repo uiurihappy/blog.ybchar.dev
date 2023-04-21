@@ -1,0 +1,130 @@
+// 그라데이션을 위한 변수
+$gradient-color-1: #f69d3c;
+$gradient-color-2: #eb4c3d;
+$gradient-color-3: #643fea;
+
+$bg-color: #F7F7F7;
+$primary-color: #383838;
+$secondary-color: #5d5d5d;
+$tertiary-color: #2d2d2d;
+
+@font-face {
+    font-family: 'jua';
+    src: url('../../../../../../public/fonts/BMJUA_ttf.ttf');
+}
+@font-face {
+    font-family: 'dohyeon';
+    src: url('../../../../../../public/fonts/BMDOHYEON_ttf.ttf');
+}
+
+// .post-title a {
+//     font-size: 1.1rem;
+//     color: $primary-color;
+//     text-decoration: none;
+//     transition: font-size 0.2s ease-in-out;
+//     font-family: 'dohyeon';
+//   }
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.page-count {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.post-count {
+  margin-bottom: 2rem;
+}
+
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-list li {
+  margin-bottom: 2rem;
+  cursor: pointer;
+  box-shadow: 0 8px 6px -6px #222;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.post-list li:hover {
+  box-shadow: 0 16px 12px -12px #222;
+}
+
+.post-list li:last-child {
+  margin-bottom: 0;
+}
+
+.post-title a {
+  font-size: 1.1rem;
+  color: $primary-color;
+  text-decoration: none;
+  transition: font-size 0.2s ease-in-out;
+  font-family: 'dohyeon';
+}
+
+.post-title a:hover {
+  font-size: 1.2rem;
+  text-decoration: underline;
+}
+
+.post-content a {
+  font-size: 0.95rem;
+  color: $secondary-color;
+  text-decoration: none;
+  white-space: break-spaces;
+  line-height: 1.5;
+  transition: color 0.2s ease-in-out;
+}
+
+.post-content a:hover {
+  color: $tertiary-color;
+  text-decoration: underline;
+}
+
+.post-sub {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 0.78rem;
+}
+
+.post-category {
+    font-family: 'dohyeon';
+    font-size: 12px;
+    font-weight: normal;
+  }
+  
+  .post-date {
+    font-family: 'dohyeon';
+
+    font-size: 12px;
+    font-weight: normal;
+  }
+
+.gradient-background {
+  background: linear-gradient(135deg, $gradient-color-1, $gradient-color-2, $gradient-color-3);
+  background-size: 600% 600%;
+  animation: gradient 12s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+

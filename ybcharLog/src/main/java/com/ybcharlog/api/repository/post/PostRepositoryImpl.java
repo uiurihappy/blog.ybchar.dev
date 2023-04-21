@@ -11,6 +11,7 @@ import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.domain.post.QPost;
 import com.ybcharlog.api.exception.PostNotFound;
+import com.ybcharlog.api.mapper.post.GetPostResDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,14 +36,14 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
     }
 
     @Override
-    public Post getPostOne(Long postId) {
-        Post post = jpaQueryFactory
+    public PostResponse getPostOne(Long postId) {
+        PostResponse post = GetPostResDtoMapper.INSTANCE.toDto(jpaQueryFactory
                 .selectFrom(QPost.post)
                 .leftJoin(QPost.post.comments).fetchJoin()
                 .where(QPost.post.id.eq(postId))
                 .where(QPost.post.isDeleted.eq(0))
                 .where(QPost.post.display.eq(1))
-                .fetchOne();
+                .fetchOne());
         if (post == null)
             throw new PostNotFound();
         else {

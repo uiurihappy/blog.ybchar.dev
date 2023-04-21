@@ -18,7 +18,7 @@ import static com.ybcharlog.api.RequestDto.post.PostSearchDto.*;
 
 public interface PostRepositoryCustom {
 
-    Post getPostOne(Long postId);
+    PostResponse getPostOne(Long postId);
     List<Post> getList(PostSearchDto postSearchDto);
     void editPost(Long postId, PostEditDto postEditDto);
 

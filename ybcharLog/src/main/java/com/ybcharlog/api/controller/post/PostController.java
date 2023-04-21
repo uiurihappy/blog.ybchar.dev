@@ -73,7 +73,7 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public Post getOne(@PathVariable Long postId) {
+    public PostResponse getOne(@PathVariable Long postId) {
         // 서비스 정책에 맞는 응답 클래스를 분리하는 것이 옳다.
         return postService.getOne(postId);
     }

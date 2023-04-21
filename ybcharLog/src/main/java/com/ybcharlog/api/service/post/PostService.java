@@ -38,7 +38,7 @@ public class PostService {
 	}
 
 	@Transactional
-	public Post getOne(Long postId) {
+	public PostResponse getOne(Long postId) {
 		return postRepository.getPostOne(postId);
 	}
 

@@ -40,7 +40,7 @@ public class Comment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "postId")
-//    @JsonIgnore
+    @JsonIgnore
     private Post post;
 
     public static Comment initComment(String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted, Post post) {

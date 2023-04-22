@@ -1,19 +1,17 @@
 <template>
-  <div class="blog">
-    <el-header class="header">
-      <div class="logo">
-        <el-menu-item class="indexHeader" index="/">ybchar blog</el-menu-item>
-      </div>
-      <div class="menu">
-        <el-menu mode="horizontal" router>
-          <el-menu-item class="saveHeader" index="/write">글 작성</el-menu-item>
-        </el-menu>
-      </div>
-    </el-header>
-    <el-main class="main">
-      <router-view></router-view>
-    </el-main>
-  </div>
+  <el-header class="header">
+    <el-menu class="header-menu" mode="horizontal" router>
+      <el-menu-item class="header-menu-item" index="/"
+        >ybchar blog</el-menu-item
+      >
+      <el-menu-item class="header-menu-item" index="/write"
+        >글 작성</el-menu-item
+      >
+    </el-menu>
+  </el-header>
+  <el-main class="main">
+    <router-view></router-view>
+  </el-main>
 </template>
 
 <style lang="scss" scoped>
@@ -25,37 +23,29 @@
   font-family: 'dohyeon';
   src: url('../../public/fonts/BMDOHYEON_ttf.ttf');
 }
-.blog {
+
+.header {
+  height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid #e6e6e6;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-menu {
   height: 100%;
 }
 
-.header {
-  height: auto;
-  background-color: #fff;
-  border-bottom: 1px solid #e6e6e6;
-}
-
-.logo {
-  font-family: 'jua';
-  font-size: 24px;
+.header-menu-item {
+  font-family: 'dohyeon';
+  font-size: 20px;
   color: black;
   padding: 10px;
 }
 
-.indexHeader {
+.header-menu-item.router-link-active:first-child {
   color: black;
-}
-
-.menu {
-  padding: 10px;
-}
-
-.el-menu {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 }
 
 .main {

@@ -66,7 +66,7 @@ class PostServiceTest {
 		postRepository.save(savePost);
 
 		// when
-		Post post = postService.getOne(savePost.getId());
+		PostResponse post = postService.getOne(savePost.getId());
 
 		// then
 		assertNotNull(post);

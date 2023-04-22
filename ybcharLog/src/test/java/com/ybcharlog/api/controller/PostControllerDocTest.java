@@ -132,9 +132,9 @@ public class PostControllerDocTest {
 //                                fieldWithPath("comments.[].createdBy").description("생성한 유저 ID"),
 //                                fieldWithPath("comments.[].lastModifiedBy").description("수정한 유저 ID"),
                                 fieldWithPath("createdAt").description("생성 일자"),
-                                fieldWithPath("lastModifiedDate").description("수정 일자"),
-                                fieldWithPath("createdBy").description("생성한 유저 ID"),
-                                fieldWithPath("lastModifiedBy").description("수정한 유저 ID")
+                                fieldWithPath("lastModifiedDate").description("수정 일자")
+//                                fieldWithPath("createdBy").description("생성한 유저 ID"),
+//                                fieldWithPath("lastModifiedBy").description("수정한 유저 ID")
                         ))
                 );
 

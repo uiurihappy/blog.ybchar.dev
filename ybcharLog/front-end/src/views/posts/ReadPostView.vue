@@ -92,7 +92,7 @@ onMounted(() => {
 
   <el-row>
     <el-col>
-      <div class="content">{{ post.content }}</div>
+      <div class="content" v-html="post.content.replace(/\n/g, '<p>')"></div>
     </el-col>
   </el-row>
 
@@ -151,88 +151,6 @@ onMounted(() => {
   </template>
 </template>
 
-<style scope lang="scss">
-.title {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #383838;
-  margin: 0;
-}
-
-.sub {
-  margin-top: 6px;
-  margin-bottom: 5px;
-  font-size: 0.78rem;
-  .regDate {
-    margin-left: 15px;
-    color: #6b6b6b;
-  }
-}
-
-.comment {
-  background-color: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 1rem;
-}
-
-.comment-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.comment-item {
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 1rem;
-}
-
-.comment-info {
-  font-size: 0.8rem;
-  color: #999;
-  margin-bottom: 0.5rem;
-}
-
-.comment-username {
-  font-weight: bold;
-  margin-right: 0.5rem;
-}
-
-.comment-date {
-  font-style: italic;
-}
-
-.comment-content {
-  font-size: 1.1rem;
-  line-height: 1.5;
-}
-
-.comment-write {
-  border: 1px solid #ccc;
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
-.comment-write__title {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-.comment-write__input {
-  margin-bottom: 1rem;
-}
-
-.comment-write__button {
-  margin-top: 1rem;
-}
-
-.content read {
-  font-size: 0.95rem;
-  margin-top: 8px;
-  color: #616161;
-  white-space: break-spaces;
-  line-height: 1.5;
-}
+<style lang="scss" scoped>
+@import '@/assets/styles/read-view.scss';
 </style>

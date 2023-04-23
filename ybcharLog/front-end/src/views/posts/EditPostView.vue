@@ -37,7 +37,7 @@ const edit = () => {
     })
     .then(() => {
       alert('글 수정이 완료되었습니다.');
-      router.replace({ name: 'home' });
+      router.replace({ name: 'Home' });
     })
     .catch(() => alert('글 수정에 실패하였습니다.'));
 };

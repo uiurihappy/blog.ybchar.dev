@@ -1,49 +1,141 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { defineProps, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-// import dotenv from 'dotenv';
-// dotenv.config();
-const router = useRouter();
-const title = ref('');
-const content = ref('');
-const display = ref(0);
 
-const writePost = function () {
-  axios
-    .post(`/api/posts/save`, {
-      title: title.value,
-      content: content.value,
-      display: display.value,
-    })
-    .then(() => {
-      router.replace({ name: 'home' });
-      alert('게시글이 성공적으로 작성되었습니다.');
-    })
-    .catch(() => {
-      alert('게시글 작성이 실패되었습니다.');
-    });
+const props = defineProps({
+  post: { type: Object },
+});
+
+const router = useRouter();
+const form = ref({
+  title: props.post ? props.post.title : '',
+  content: props.post ? props.post.content : '',
+  display: props.post ? Boolean(props.post.display) : true,
+});
+const loading = ref(false);
+
+const submitForm = async function () {
+  loading.value = true;
+  const postData = { ...form.value, display: form.value.display ? 1 : 0 };
+
+  try {
+    if (props.post) {
+      await axios.patch(`/api/posts/${props.post.id}`, postData);
+      alert('게시글이 수정되었습니다.');
+    } else {
+      await axios.post('/api/posts', postData);
+      alert('게시글이 작성되었습니다.');
+    }
+    router.push({ name: 'home' });
+  } catch (error) {
+    console.error(error);
+    alert('게시글 작성/수정에 실패하였습니다.');
+  }
+
+  loading.value = false;
 };
 </script>
 
 <template>
-  <div>
-    <el-input v-model="title" placeholder="제목을 입력해주세요" />
-  </div>
+  <div class="post-form-container">
+    <el-form :model="form" class="post-form" label-width="120px">
+      <el-form-item label="제목" class="form-item">
+        <el-input
+          v-model.trim="form.title"
+          placeholder="제목을 입력해주세요"
+          clearable
+          class="form-input"
+        />
+      </el-form-item>
 
-  <div class="mt-2">
-    <el-input v-model="content" type="textarea" rows="15" />
-  </div>
+      <el-form-item label="내용" class="form-item">
+        <el-input
+          v-model.trim="form.content"
+          type="textarea"
+          rows="19"
+          placeholder="내용을 입력해주세요"
+          clearable
+          class="form-input"
+        />
+      </el-form-item>
 
-  <div class="mt-2">
-    노출 상태 <el-checkbox v-model="display" true-label="1" false-label="0" />
-  </div>
+      <el-form-item label="노출 여부" class="form-item">
+        <el-switch
+          v-model="form.display"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+        ></el-switch>
+      </el-form-item>
 
-  <div class="mt-2">
-    <div class="d-flex justify-content-end">
-      <el-button type="primary" @click="writePost()">작성완료</el-button>
-    </div>
+      <el-form-item class="form-item form-item--submit">
+        <el-button
+          type="primary"
+          @click="submitForm"
+          :loading="loading"
+          class="form-button"
+        >
+          작성 완료
+        </el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
-<style></style>
+<style lang="scss" scoped>
+.post-form-container {
+  margin: 20px;
+}
+
+.post-form {
+  max-width: 800px;
+  margin: auto;
+}
+
+.form-input-container {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-size: 16px;
+  font-weight: bold;
+  width: 120px;
+  margin-right: 20px;
+}
+
+.form-input-wrapper {
+  flex: 1;
+
+  .form-input {
+    width: 100%;
+    margin-right: 20px;
+  }
+
+  .form-button {
+    width: 120px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 4px;
+    background-color: #13ce66;
+    border-color: #13ce66;
+
+    &:hover {
+      background-color: #0dbf5b;
+      border-color: #0dbf5b;
+    }
+
+    &:active,
+    &:focus {
+      background-color: #13ce66;
+      border-color: #13ce66;
+    }
+  }
+}
+
+.form-item--submit {
+  display: flex;
+  justify-content: flex-end;
+}
+</style>

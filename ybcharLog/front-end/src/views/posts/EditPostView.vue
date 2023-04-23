@@ -1,13 +1,64 @@
+<template>
+  <div class="container">
+    <div class="edit-header">
+      <h2 class="edit-title">글 수정</h2>
+      <el-button type="warning" @click="edit()">수정 완료</el-button>
+    </div>
+    <hr class="edit-divider" />
+
+    <div class="edit-form">
+      <el-form label-width="80px">
+        <el-form-item label="제목">
+          <el-input
+            v-model="updatePost.title"
+            placeholder="제목을 입력해주세요"
+          />
+        </el-form-item>
+
+        <el-form-item label="내용">
+          <el-input
+            v-model="updatePost.content"
+            type="textarea"
+            :autosize="{ minRows: 10, maxRows: 20 }"
+            placeholder="내용을 입력해주세요"
+          />
+        </el-form-item>
+
+        <el-form-item label="노출 상태">
+          <el-switch
+            v-model="checkDisplay"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          />
+        </el-form-item>
+      </el-form>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { defineProps, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+
 const props = defineProps({
   postId: {
     type: [Number, String],
     required: true,
   },
 });
+
+const router = useRouter();
+
+const checkDisplay = ref(1);
+
+const updatePost = ref({
+  id: 0,
+  title: '',
+  content: '',
+  display: checkDisplay.value,
+});
+
 axios
   .get(`/api/posts/${props.postId}`)
   .then(result => {
@@ -19,14 +70,6 @@ axios
   .catch(() => {
     alert('글 조회에 실패하였습니다.');
   });
-const router = useRouter();
-const checkDisplay = ref(1);
-const updatePost = ref({
-  id: 0,
-  title: '',
-  content: '',
-  display: checkDisplay.value,
-});
 
 const edit = () => {
   axios
@@ -43,27 +86,30 @@ const edit = () => {
 };
 </script>
 
-<template>
-  <div class="mt-2 d-flex justify-content-end">
-    <el-button type="warning" @click="edit()"> 수정 </el-button>
-  </div>
-  <div>
-    <el-input v-model="updatePost.title" placeholder="제목을 입력해주세요" />
-  </div>
+<style scoped>
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
 
-  <div class="mt-2">
-    <el-input v-model="updatePost.content" type="textarea" rows="15" />
-  </div>
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  <div class="mt-2">
-    <input
-      type="checkbox"
-      v-model="checkDisplay"
-      true-value="1"
-      false-value="0"
-    />
-    <el-label> 노출 상태 </el-label>
-  </div>
-</template>
+.edit-title {
+  margin: 0;
+}
 
-<style></style>
+.edit-divider {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.edit-form {
+  margin-top: 2rem;
+}
+</style>

@@ -43,7 +43,7 @@
   src: url('../../public/fonts/BMDOHYEON_ttf.ttf');
 }
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 3rem 2rem;
 }

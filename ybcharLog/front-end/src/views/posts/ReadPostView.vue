@@ -109,7 +109,11 @@ onMounted(() => {
       </el-col>
     </el-row>
 
-    <h2 style="font-size: 1.5rem; margin-bottom: 1rem">댓글</h2>
+    <div>
+      <h2 style="font-size: 1.5rem; margin-bottom: 1rem">
+        댓글 ({{ post.comments.length }})
+      </h2>
+    </div>
     <div class="comment">
       <div class="comment-list">
         <div

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "serve": "vue-cli-service serve --port 5173",
     "dev": "vite",
     "local": "vue-cli-service serve --mode local",
     "build": "run-p type-check build-only",

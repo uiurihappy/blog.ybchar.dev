@@ -21,7 +21,7 @@ $tertiary-color: #2d2d2d;
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 2rem 1rem;
   font-family: 'Montserrat', sans-serif;
@@ -31,10 +31,12 @@ $tertiary-color: #2d2d2d;
       list-style: none;
       cursor: pointer;
       padding: 1rem 0;
-      border-bottom: 1px solid #eee;
 
       &:hover {
         background-color: #f5f5f5;
+      }
+      &:not(:last-child) {
+        border-bottom: 2px solid #bbb;
       }
 
       .post-thumbnail {

@@ -2,6 +2,8 @@
 import { defineProps, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import mavonEditor from 'mavon-editor';
+import 'mavon-editor/dist/css/index.css';
 
 const props = defineProps({
   post: { type: Object },
@@ -50,19 +52,26 @@ const submitForm = async function () {
       </el-form-item>
 
       <el-form-item label="내용" class="form-item">
-        <el-input
-          v-model.trim="form.content"
-          type="textarea"
-          rows="19"
-          placeholder="내용을 입력해주세요"
-          clearable
-          class="form-input"
-        />
+        <mavon-editor
+          v-model="form.content"
+          :editable="true"
+          :subfield="false"
+          :defaultOpen="true"
+          :toolbarsFlag="false"
+          :previewMode="true"
+          :scrollStyle="{
+            height: '400px',
+            'max-height': '400px',
+            'min-height': '400px',
+          }"
+        ></mavon-editor>
       </el-form-item>
 
       <el-form-item label="노출 여부" class="form-item">
         <el-switch
           v-model="form.display"
+          :active-value="1"
+          :inactive-value="0"
           active-color="#13ce66"
           inactive-color="#ff4949"
         ></el-switch>

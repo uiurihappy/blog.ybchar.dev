@@ -26,7 +26,9 @@
 
         <el-form-item label="노출 상태">
           <el-switch
-            v-model="checkDisplay"
+            v-model="updatePost.display"
+            :active-value="1"
+            :inactive-value="0"
             active-color="#13ce66"
             inactive-color="#ff4949"
           />
@@ -50,7 +52,7 @@ const props = defineProps({
 
 const router = useRouter();
 
-const checkDisplay = ref(1);
+const checkDisplay = ref(0);
 
 const updatePost = ref({
   id: 0,
@@ -66,6 +68,7 @@ axios
     updatePost.value.title = result.data.title;
     updatePost.value.content = result.data.content;
     checkDisplay.value = result.data.display;
+    updatePost.value.display = result.data.display;
   })
   .catch(() => {
     alert('글 조회에 실패하였습니다.');
@@ -76,7 +79,7 @@ const edit = () => {
     .patch(`/api/posts/update/${props.postId}`, {
       title: updatePost.value.title,
       content: updatePost.value.content,
-      display: Number(checkDisplay.value),
+      display: Number(updatePost.value.display),
     })
     .then(() => {
       alert('글 수정이 완료되었습니다.');

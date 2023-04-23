@@ -70,85 +70,89 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-row>
-    <el-col>
-      <div class="mt-2">
-        <h2 class="title">{{ post.title }}</h2>
-        <div class="sub d-flex">
-          <div class="category">개발</div>
+  <div class="container">
+    <el-row>
+      <el-col>
+        <div class="mt-2">
+          <h2 class="title">{{ post.title }}</h2>
+          <div class="sub d-flex">
+            <div class="category">개발</div>
 
-          <div class="regDate">
-            작성일:
-            {{
-              post.createdAt === null
-                ? dayjs().format('YYYY-MM-DD HH:mm:ss')
-                : dayjs(post.createdAt).format('YYYY-MM-DD HH:mm:ss')
-            }}
+            <div class="regDate">
+              작성일:
+              {{
+                post.createdAt === null
+                  ? dayjs().format('YYYY-MM-DD HH:mm:ss')
+                  : dayjs(post.createdAt).format('YYYY-MM-DD HH:mm:ss')
+              }}
+            </div>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col>
+        <div class="content" v-html="post.content.replace(/\n/g, '<p>')"></div>
+      </el-col>
+    </el-row>
+
+    <br />
+
+    <el-row>
+      <el-col>
+        <div class="d-flex justify-content-end">
+          <el-button type="warning" @click="moveToEdit(post.id)">
+            수정하기
+          </el-button>
+        </div>
+      </el-col>
+    </el-row>
+
+    <h2 style="font-size: 1.5rem; margin-bottom: 1rem">댓글</h2>
+    <div class="comment">
+      <div class="comment-list">
+        <div
+          v-for="comment in post.comments"
+          :key="comment.id"
+          class="comment-item"
+        >
+          <div class="comment-info">
+            <span class="comment-username">{{ comment.username }}</span>
+            <span class="comment-date">{{
+              getFormattedDate(comment.createdAt)
+            }}</span>
+          </div>
+          <div class="comment-content">{{ comment.commentContent }}</div>
+        </div>
+      </div>
+    </div>
+
+    <template v-if="post.id">
+      <div class="comment-write">
+        <h3 class="comment-write__title">댓글 작성</h3>
+        <div class="comment-write__input">
+          <el-input v-model="username" placeholder="이름" />
+        </div>
+        <div class="comment-write__input mt-2">
+          <el-input
+            v-model="commentContent"
+            placeholder="내용을 입력해주세요"
+            type="textarea"
+            rows="5"
+          />
+        </div>
+
+        <div class="comment-write__button">
+          <div class="d-flex justify-content-end">
+            <el-button type="primary" @click="writeComment(post)"
+              >등록</el-button
+            >
           </div>
         </div>
       </div>
-    </el-col>
-  </el-row>
-
-  <el-row>
-    <el-col>
-      <div class="content" v-html="post.content.replace(/\n/g, '<p>')"></div>
-    </el-col>
-  </el-row>
-
-  <br />
-
-  <el-row>
-    <el-col>
-      <div class="d-flex justify-content-end">
-        <el-button type="warning" @click="moveToEdit(post.id)">
-          수정하기
-        </el-button>
-      </div>
-    </el-col>
-  </el-row>
-
-  <h2 style="font-size: 1.5rem; margin-bottom: 1rem">댓글</h2>
-  <div class="comment">
-    <div class="comment-list">
-      <div
-        v-for="comment in post.comments"
-        :key="comment.id"
-        class="comment-item"
-      >
-        <div class="comment-info">
-          <span class="comment-username">{{ comment.username }}</span>
-          <span class="comment-date">{{
-            getFormattedDate(comment.createdAt)
-          }}</span>
-        </div>
-        <div class="comment-content">{{ comment.commentContent }}</div>
-      </div>
-    </div>
+    </template>
   </div>
-
-  <template v-if="post.id">
-    <div class="comment-write">
-      <h3 class="comment-write__title">댓글 작성</h3>
-      <div class="comment-write__input">
-        <el-input v-model="username" placeholder="이름" />
-      </div>
-      <div class="comment-write__input mt-2">
-        <el-input
-          v-model="commentContent"
-          placeholder="내용을 입력해주세요"
-          type="textarea"
-          rows="5"
-        />
-      </div>
-
-      <div class="comment-write__button">
-        <div class="d-flex justify-content-end">
-          <el-button type="primary" @click="writeComment(post)">등록</el-button>
-        </div>
-      </div>
-    </div>
-  </template>
 </template>
 
 <style lang="scss" scoped>

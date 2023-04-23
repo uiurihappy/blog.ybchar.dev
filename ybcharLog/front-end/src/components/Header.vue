@@ -1,15 +1,28 @@
 <template>
-  <div>
+  <div class="container">
     <el-header class="header">
-      <div class="logo">ybchar blog</div>
+      <div class="logo" type="primary" active-text-color="transparent">
+        <router-link :to="{ name: 'Home' }" style="text-decoration: none"
+          >ybchar blog</router-link
+        >
+      </div>
       <el-menu class="menu" mode="horizontal" router>
-        <el-menu-item class="menu-item" index="/">Home</el-menu-item>
-        <el-menu-item class="menu-item" index="/write">Write</el-menu-item>
+        <el-menu-item
+          class="menu-item"
+          index="/"
+          active-text-color="transparent"
+          >Home</el-menu-item
+        >
+        <el-menu-item
+          class="menu-item"
+          index="/write"
+          active-text-color="transparent"
+          >Write</el-menu-item
+        >
       </el-menu>
     </el-header>
-    <div class="main">
-      <!-- 페이지 컨텐츠 영역 -->
-      <!-- <h1>Welcome to my blog!</h1>
+    <!-- 페이지 컨텐츠 영역 -->
+    <!-- <h1>Welcome to my blog!</h1>
       <p>This is my blog where I share my thoughts and ideas.</p>
       <p>Here are some of my recent posts:</p>
       <ul>
@@ -17,7 +30,6 @@
         <li><a href="#">Post 2</a></li>
         <li><a href="#">Post 3</a></li>
       </ul> -->
-    </div>
   </div>
 </template>
 
@@ -30,6 +42,11 @@
   font-family: 'dohyeon';
   src: url('../../public/fonts/BMDOHYEON_ttf.ttf');
 }
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
 
 .header {
   background-color: #fff;
@@ -37,6 +54,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
+  position: sticky;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   z-index: 1;
@@ -44,8 +62,22 @@
 }
 
 .logo {
-  font-size: 24px;
-  font-family: 'dohyeon';
+  font-size: 28px;
+  font-family: 'dohyeon', sans-serif;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-out;
+  text-decoration: none;
+}
+
+.logo:hover {
+  cursor: pointer;
+  color: #ff6b6b;
+  text-shadow: none;
+  text-decoration: none;
 }
 
 .menu {

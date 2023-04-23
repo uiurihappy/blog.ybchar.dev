@@ -2,8 +2,6 @@
 import { defineProps, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import mavonEditor from 'mavon-editor';
-import 'mavon-editor/dist/css/index.css';
 
 const props = defineProps({
   post: { type: Object },
@@ -57,14 +55,18 @@ const submitForm = async function () {
           :editable="true"
           :subfield="false"
           :defaultOpen="true"
-          :toolbarsFlag="false"
+          :toolbarsFlag="true"
           :previewMode="true"
           :scrollStyle="{
-            height: '400px',
-            'max-height': '400px',
+            height: '1200px',
+            'max-height': '1200px',
             'min-height': '400px',
           }"
+          placeholder="마크다운 내용을 입력해주세요."
         ></mavon-editor>
+      </el-form-item>
+      <el-form-item label="미리보기" class="preview-column">
+        <mavon-editor-preview :markdown="form.content"> </mavon-editor-preview>
       </el-form-item>
 
       <el-form-item label="노출 여부" class="form-item">
@@ -96,7 +98,7 @@ const submitForm = async function () {
 }
 
 .post-form {
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
 }
 
@@ -145,5 +147,8 @@ const submitForm = async function () {
 .form-item--submit {
   display: flex;
   justify-content: flex-end;
+}
+.preview-column {
+  flex: 1;
 }
 </style>

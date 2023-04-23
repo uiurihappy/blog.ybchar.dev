@@ -25,10 +25,12 @@
     "dotenv": "^16.0.3",
     "element-plus": "^2.3.3",
     "lodash": "^4.17.21",
-    "mavon-editor": "^2.10.4",
+    "marked": "^4.3.0",
+    "mavon-editor": "^3.0.1",
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.32",
     "vue": "^3.2.47",
+    "vue-markdown": "^2.2.4",
     "vue-router": "^4.1.6",
     "web3": "^0.20.7"
   },

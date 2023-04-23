@@ -8,6 +8,7 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import type { Posts } from '../../common/posts/posts.interface';
 import { getFormattedDate } from '../../common/tools/dateFormat.tool';
+
 dayjs.extend(timezone);
 
 const username = ref('');

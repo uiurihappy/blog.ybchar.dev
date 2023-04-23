@@ -27,10 +27,9 @@
         <el-form-item label="노출 상태">
           <el-switch
             v-model="updatePost.display"
+            active-color="#13ce66"
             :active-value="1"
             :inactive-value="0"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
           />
         </el-form-item>
       </el-form>

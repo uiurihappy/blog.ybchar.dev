@@ -16,12 +16,21 @@
         </el-form-item>
 
         <el-form-item label="내용">
-          <el-input
-            v-model="updatePost.content"
-            type="textarea"
-            :autosize="{ minRows: 10, maxRows: 20 }"
-            placeholder="내용을 입력해주세요"
-          />
+          <MdEditor
+          v-model="updatePost.content"
+          :editable="true"
+          :subfield="false"
+          :defaultOpen="true"
+          :toolbarsFlag="true"
+          :previewMode="true"
+          :scrollStyle="{
+            height: '800px',
+            'max-height': '800px',
+            'min-height': '400px',
+          }"
+          placeholder="마크다운 내용을 입력해주세요."
+          style="height: 800px"
+        />
         </el-form-item>
 
         <el-form-item label="노출 상태">
@@ -41,6 +50,8 @@
 import { defineProps, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import MdEditor from 'md-editor-v3';
+import 'md-editor-v3/lib/style.css';
 
 const props = defineProps({
   postId: {

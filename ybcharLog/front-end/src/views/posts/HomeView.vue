@@ -24,9 +24,10 @@
         </div>
         <div class="post-content">
           <router-link :to="{ name: 'read', params: { postId: post.id } }">
-            <p v-text="truncateText(post.content, 300)"></p>
+            <p v-html="truncateText(post.content, 300)"></p>
           </router-link>
         </div>
+        
       </li>
     </ul>
     <ul class="pagination">
@@ -110,6 +111,19 @@ const moveToRead = (postId: number) => {
   //   window.scrollTo(0, 0);
   // });
 };
+
+const pagedPostsHtml = computed(() => {
+  const startIndex = (currentPage.value - 1) * PAGE_SIZE;
+  const pagedPostsHtmlArray = posts.value.list
+    .slice(startIndex, startIndex + PAGE_SIZE)
+    .map(post => {
+      return {
+        ...post,
+        content: marked(post.content)
+      };
+    });
+  return pagedPostsHtmlArray;
+});
 </script>
 
 <style scoped lang="scss">

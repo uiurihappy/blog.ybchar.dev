@@ -2,6 +2,8 @@
 import { defineProps, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import MdEditor from 'md-editor-v3';
+import 'md-editor-v3/lib/style.css';
 
 const props = defineProps({
   post: { type: Object },
@@ -50,7 +52,7 @@ const submitForm = async function () {
       </el-form-item>
 
       <el-form-item label="내용" class="form-item">
-        <mavon-editor
+        <MdEditor
           v-model="form.content"
           :editable="true"
           :subfield="false"
@@ -58,15 +60,13 @@ const submitForm = async function () {
           :toolbarsFlag="true"
           :previewMode="true"
           :scrollStyle="{
-            height: '1200px',
-            'max-height': '1200px',
+            height: '800px',
+            'max-height': '800px',
             'min-height': '400px',
           }"
           placeholder="마크다운 내용을 입력해주세요."
-        ></mavon-editor>
-      </el-form-item>
-      <el-form-item label="미리보기" class="preview-column">
-        <mavon-editor-preview :markdown="form.content"> </mavon-editor-preview>
+          style="height: 800px"
+        />
       </el-form-item>
 
       <el-form-item label="노출 여부" class="form-item">
@@ -98,7 +98,7 @@ const submitForm = async function () {
 }
 
 .post-form {
-  max-width: 900px;
+  max-width: 1200px;
   margin: auto;
 }
 
@@ -144,10 +144,26 @@ const submitForm = async function () {
   }
 }
 
+.form-item {
+  margin-bottom: 20px;
+}
+
+.form-item > .el-form-item__label {
+  font-size: 16px;
+  font-weight: bold;
+  width: 120px;
+  margin-right: 20px;
+}
+
+.form-item > .el-form-item__content {
+  flex: 1;
+}
+
 .form-item--submit {
   display: flex;
   justify-content: flex-end;
 }
+
 .preview-column {
   flex: 1;
 }

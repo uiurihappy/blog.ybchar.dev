@@ -8,7 +8,4 @@
 
 <script setup lang="ts"></script>
 
-<style scoped>
-.content {
-}
-</style>
+<style scoped></style>

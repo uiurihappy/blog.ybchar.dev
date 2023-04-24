@@ -8,6 +8,7 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import type { Posts } from '../../common/posts/posts.interface';
 import { getFormattedDate } from '../../common/tools/dateFormat.tool';
+import { marked } from 'marked';
 
 dayjs.extend(timezone);
 
@@ -35,6 +36,7 @@ const post = ref({
   comments: [] as Comments[],
 });
 const router = useRouter();
+
 
 const moveToEdit = (postId: number) => {
   router.push({ name: 'edit', params: { postId } });
@@ -78,7 +80,6 @@ onMounted(() => {
           <h2 class="title">{{ post.title }}</h2>
           <div class="sub d-flex">
             <div class="category">개발</div>
-
             <div class="regDate">
               작성일:
               {{
@@ -94,7 +95,7 @@ onMounted(() => {
 
     <el-row>
       <el-col>
-        <div class="content" v-html="post.content.replace(/\n/g, '<p>')"></div>
+        <div class="content" v-html="post.content"></div>
       </el-col>
     </el-row>
 
@@ -150,15 +151,16 @@ onMounted(() => {
 
         <div class="comment-write__button">
           <div class="d-flex justify-content-end">
-            <el-button type="primary" @click="writeComment(post)"
-              >등록</el-button
-            >
+            <el-button type="primary" @click="writeComment(post)">
+              등록
+            </el-button>
           </div>
         </div>
       </div>
     </template>
   </div>
 </template>
+
 
 <style lang="scss" scoped>
 @import '@/assets/styles/read-view.scss';

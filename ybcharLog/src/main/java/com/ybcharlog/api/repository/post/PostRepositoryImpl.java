@@ -44,6 +44,7 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
                 .where(QPost.post.isDeleted.eq(0))
                 .where(QPost.post.display.eq(1))
                 .fetchOne());
+
         if (post == null)
             throw new PostNotFound();
         else {

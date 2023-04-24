@@ -11,12 +11,9 @@
             post.title
           }}</router-link>
         </div>
-        <!-- <div class="post-thumbnail">
-          <img
-            src="https://d1.awsstatic.com/asset-repository/products/amazon-rds/1024px-MySQL.ff87215b43fd7292af172e2a5d9b844217262571.png"
-            alt="MySQL"
-          />
-        </div> -->
+        <div v-if="post.thumbnailImage" class="post-thumbnail">
+          <img :src="post.thumbnailImage" />
+        </div>
 
         <div class="post-sub">
           <div class="post-category">개발</div>
@@ -61,7 +58,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, nextTick } from 'vue';
+import { ref, computed, nextTick, onMounted } from 'vue';
 import axios from 'axios';
 import type { PostList, Posts } from '../../common/posts/posts.interface';
 import { useRouter } from 'vue-router';
@@ -70,27 +67,31 @@ import { truncateText } from '../../common/tools/truncateText.tool';
 import { marked } from 'marked';
 
 const router = useRouter();
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 12;
 const currentPage = ref(1);
 
 const posts = ref<PostList>({ list: [], totalCount: 0, totalElements: 0 });
 
-axios
-  .get(`/api/posts/list`)
-  .then(result => {
+const loadPosts = async () => {
+  try {
+    const result = await axios.get(
+      `/api/posts/list?page=${currentPage.value}&size=${PAGE_SIZE}`
+    );
     posts.value = result.data;
-  })
-  .catch(err => {
+  } catch (err) {
     console.log(err);
-  });
+  }
+};
 
+// loadPosts();
 const pagedPosts = computed(() => {
   const startIndex = (currentPage.value - 1) * PAGE_SIZE;
-  return posts.value.list.slice(startIndex, startIndex + PAGE_SIZE);
+  const endIndex = Math.min(posts.value.list.length, startIndex + PAGE_SIZE);
+  return posts.value.list.slice(startIndex, endIndex);
 });
 
 const totalPages = computed(() =>
-  Math.ceil(posts.value.totalCount / PAGE_SIZE)
+  Math.ceil(posts.value.totalElements / PAGE_SIZE)
 );
 const pageNumbers = computed(() => {
   const numbers: number[] = [];
@@ -102,19 +103,19 @@ const pageNumbers = computed(() => {
 
 const setCurrentPage = (page: number) => {
   currentPage.value = page;
+  // nextTick();
+  loadPosts();
 };
 
 const moveToRead = (postId: number) => {
   router.push({ name: 'read', params: { postId } });
-  // nextTick(() => {
-  //   window.scrollTo(0, 0);
-  // });
 };
 
 const pagedPostsHtml = computed(() => {
   const startIndex = (currentPage.value - 1) * PAGE_SIZE;
+  const endIndex = Math.min(posts.value.list.length, startIndex + PAGE_SIZE);
   const pagedPostsHtmlArray = posts.value.list
-    .slice(startIndex, startIndex + PAGE_SIZE)
+    .slice(startIndex, endIndex)
     .map(post => {
       return {
         ...post,
@@ -122,6 +123,17 @@ const pagedPostsHtml = computed(() => {
       };
     });
   return pagedPostsHtmlArray;
+});
+
+onMounted(() => {
+  axios
+    .get(`/api/posts/list?page=${currentPage.value}`)
+    .then(result => {
+      posts.value = result.data;
+    })
+    .catch(() => {
+      alert('글 조회에 실패하였습니다.');
+    });
 });
 </script>
 

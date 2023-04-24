@@ -27,6 +27,7 @@ public class PostResponse {
 	private final Integer isDeleted;
 	private final Integer viewCount;
 	private final Integer likeCount;
+	private final String thumbnailImage;
 	private final List<Comment> comments;
 
 	private final LocalDateTime createdAt;
@@ -41,15 +42,15 @@ public class PostResponse {
 		this.isDeleted = post.getIsDeleted();
 		this.viewCount = post.getViewCount();
 		this.likeCount = post.getLikeCount();
+		this.thumbnailImage = post.getThumbnailImage();
 		this.comments = post.getComments();
 		this.createdAt = post.getCreatedAt();
 		this.lastModifiedDate = post.getLastModifiedDate();
 	}
 
 	@Builder
-	@QueryProjection
 	public PostResponse(Long id, String title, String content, Integer display, Integer isDeleted, Integer viewCount, Integer likeCount,
-	                    List<Comment> comments, LocalDateTime createdAt, LocalDateTime lastModifiedDate) {
+	                    String thumbnailImage, List<Comment> comments, LocalDateTime createdAt, LocalDateTime lastModifiedDate) {
 		this.id = id;
 		this.title = title.substring(0, Math.min(title.length(), 10));
 		this.content = content;
@@ -57,6 +58,7 @@ public class PostResponse {
 		this.isDeleted = isDeleted;
 		this.viewCount = viewCount;
 		this.likeCount = likeCount;
+		this.thumbnailImage = thumbnailImage;
 		this.comments = comments;
 		this.createdAt = createdAt;
 		this.lastModifiedDate = lastModifiedDate;

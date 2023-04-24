@@ -45,6 +45,7 @@ public class Post extends BaseEntity {
 	private Integer likeCount;
 
 	@Column(columnDefinition = "text COMMENT '게시글 썸네일 이미지 경로'")
+	@Lob
 	private String thumbnailImage;
 
 	@OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.REMOVE)
@@ -60,13 +61,14 @@ public class Post extends BaseEntity {
 	}
 
 	@Builder
-	public Post(String title, String content, Integer display, Integer isDeleted, Integer viewCount, Integer likeCount, List<Comment> comments) {
+	public Post(String title, String content, Integer display, Integer isDeleted, Integer viewCount, Integer likeCount, String thumbnailImage, List<Comment> comments) {
 		this.title = title;
 		this.content = content;
 		this.display = display;
 		this.isDeleted = isDeleted;
 		this.viewCount = viewCount;
 		this.likeCount = likeCount;
+		this.thumbnailImage = thumbnailImage;
 	}
 
 	public void changeTitle(String title) {

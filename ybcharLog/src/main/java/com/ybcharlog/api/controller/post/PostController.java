@@ -68,7 +68,7 @@ public class PostController {
     @GetMapping("/list")
     public ResponseEntity<CustomPage<PostResponse>> getPostList(GetPostPageReq req, Pageable pageable) {
         // 페이징 처리가 필요 -> response 비용이 많이 들기 때문이다.
-        // -> 통신, 트래픽 비용이 많아지면 응답 속도 시간뿐만 아니라 직접 겪어봐서 아는데 DB까지 터진다.
+        // -> 통신, 트래픽 비용이 많아지면 응답 속도 시간뿐만 아니라 직접 겪어봐서 아는데 DB까지 터진다.\
         return ResponseEntity.ok(postService.getListByPage(req, pageable));
     }
 

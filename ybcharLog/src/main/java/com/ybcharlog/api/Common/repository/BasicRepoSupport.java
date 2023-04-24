@@ -25,7 +25,6 @@ public abstract class BasicRepoSupport extends QuerydslRepositorySupport {
 		if (pageable == null) {
 			return;
 		}
-
 		query.offset(pageable.getOffset())
 				.limit(pageable.getPageSize());
 

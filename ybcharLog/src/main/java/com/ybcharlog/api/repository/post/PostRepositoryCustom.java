@@ -25,6 +25,9 @@ public interface PostRepositoryCustom {
     Page<Post> getPostListByPage(GetPostPageReq req, Pageable pageable);
 
     void updateDeletedByPostId(Long postId);
+
+    @Transactional
+    void updatePostThumbnailImage(String imagePath, Long postId);
 //    @Transactional
 //    @Modifying(clearAutomatically = true)
 //    @Query("delete from Post p where p.id = :id")

@@ -44,6 +44,8 @@ public class Post extends BaseEntity {
 	@Column(columnDefinition = "int unsigned not null default 0 COMMENT '게시글 좋아요 수'")
 	private Integer likeCount;
 
+	@Column(columnDefinition = "text COMMENT '게시글 썸네일 이미지 경로'")
+	private String thumbnailImage;
 
 	@OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.REMOVE)
 	private List<Comment> comments = new ArrayList<>();

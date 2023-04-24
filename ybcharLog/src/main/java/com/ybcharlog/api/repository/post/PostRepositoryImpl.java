@@ -104,4 +104,12 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
                 .where(post.id.eq(postId))
                 .execute();
     }
+
+    @Override
+    public void updatePostThumbnailImage(String imagePath, Long postId) {
+        jpaQueryFactory.update(post)
+                .set(post.thumbnailImage, imagePath)
+                .where(post.id.eq(postId))
+                .execute();
+    }
 }

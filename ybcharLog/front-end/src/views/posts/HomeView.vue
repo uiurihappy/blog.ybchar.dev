@@ -11,12 +11,12 @@
             post.title
           }}</router-link>
         </div>
-        <div class="post-thumbnail">
+        <!-- <div class="post-thumbnail">
           <img
             src="https://d1.awsstatic.com/asset-repository/products/amazon-rds/1024px-MySQL.ff87215b43fd7292af172e2a5d9b844217262571.png"
             alt="MySQL"
           />
-        </div>
+        </div> -->
 
         <div class="post-sub">
           <div class="post-category">개발</div>
@@ -27,7 +27,6 @@
             <p v-html="truncateText(post.content, 300)"></p>
           </router-link>
         </div>
-        
       </li>
     </ul>
     <ul class="pagination">
@@ -119,7 +118,7 @@ const pagedPostsHtml = computed(() => {
     .map(post => {
       return {
         ...post,
-        content: marked(post.content)
+        content: marked(post.content),
       };
     });
   return pagedPostsHtmlArray;

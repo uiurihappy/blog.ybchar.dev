@@ -1,4 +1,4 @@
-package com.ybcharlog.api.domain;
+package com.ybcharlog.api.domain.post;
 
 import java.io.Serializable;
 import javax.persistence.Column;

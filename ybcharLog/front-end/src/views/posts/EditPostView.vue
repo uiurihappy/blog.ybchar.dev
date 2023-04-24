@@ -17,20 +17,20 @@
 
         <el-form-item label="내용">
           <MdEditor
-          v-model="updatePost.content"
-          :editable="true"
-          :subfield="false"
-          :defaultOpen="true"
-          :toolbarsFlag="true"
-          :previewMode="true"
-          :scrollStyle="{
-            height: '800px',
-            'max-height': '800px',
-            'min-height': '400px',
-          }"
-          placeholder="마크다운 내용을 입력해주세요."
-          style="height: 800px"
-        />
+            v-model="updatePost.content"
+            :editable="true"
+            :subfield="false"
+            :defaultOpen="true"
+            :toolbarsFlag="true"
+            :previewMode="true"
+            :scrollStyle="{
+              height: '800px',
+              'max-height': '800px',
+              'min-height': '400px',
+            }"
+            placeholder="마크다운 내용을 입력해주세요."
+            style="height: 800px"
+          />
         </el-form-item>
 
         <el-form-item label="노출 상태">
@@ -41,13 +41,26 @@
             :inactive-value="0"
           />
         </el-form-item>
+        <el-form-item label="썸네일 이미지 등록">
+          <el-upload
+            ref="dropzone"
+            action="/api/posts/thumbnail/image"
+            :show-file-list="false"
+            :on-success="postThumbnailEdit"
+          >
+            <el-button size="small" type="primary">파일 선택</el-button>
+            <template v-slot:tip>
+              <div class="el-upload__tip">썸네일 이미지를 업로드하세요</div>
+            </template>
+          </el-upload>
+        </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import MdEditor from 'md-editor-v3';
@@ -96,6 +109,28 @@ const edit = () => {
       router.replace({ name: 'Home' });
     })
     .catch(() => alert('글 수정에 실패하였습니다.'));
+};
+
+const postThumbnailEdit = () => {
+  const formData = new FormData();
+  const image = $refs.dropzone.getAcceptedFiles()[0];
+  const path = `post/thumbnail/${props.postId}`;
+  console.log(path);
+  console.log(props.postId);
+  console.log(image);
+  formData.append('file', image);
+
+  formData.append('path', '/' + path);
+  formData.append('postId', props.postId);
+
+  axios
+    .post(`/api/posts/thumbnail/image`, formData)
+    .then(() => {
+      alert('썸네일 이미지 등록이 완료되었습니다.');
+    })
+    .catch(() => {
+      alert('썸네일 이미지 등록 실패되었습니다.');
+    });
 };
 </script>
 

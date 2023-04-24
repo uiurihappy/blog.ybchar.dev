@@ -24,7 +24,7 @@
         </div>
         <div class="post-content">
           <router-link :to="{ name: 'read', params: { postId: post.id } }">
-            <p v-text="truncateText(post.content, 120)"></p>
+            <p v-text="truncateText(post.content, 300)"></p>
           </router-link>
         </div>
       </li>
@@ -67,6 +67,7 @@ import type { PostList, Posts } from '../../common/posts/posts.interface';
 import { useRouter } from 'vue-router';
 import { getFormattedDate } from '../../common/tools/dateFormat.tool';
 import { truncateText } from '../../common/tools/truncateText.tool';
+import { marked } from 'marked';
 
 const router = useRouter();
 const PAGE_SIZE = 10;

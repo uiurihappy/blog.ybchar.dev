@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 public class S3UploadController {
 
 	private final S3UploaderService s3UploaderService;
+
 	@PostMapping("/files/images")
 	public ResponseEntity<String> uploadImageFile(
 			@RequestParam("file") MultipartFile file, @RequestParam("path") String dirName)

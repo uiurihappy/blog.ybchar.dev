@@ -46,7 +46,8 @@
             ref="dropzone"
             action="/api/posts/thumbnail/image"
             :show-file-list="false"
-            :on-success="postThumbnailEdit"
+            :before-upload="beforeUpload"
+            :on-success="onUploadSuccess"
           >
             <el-button size="small" type="primary">파일 선택</el-button>
             <template v-slot:tip>
@@ -115,13 +116,10 @@ const postThumbnailEdit = () => {
   const formData = new FormData();
   const image = $refs.dropzone.getAcceptedFiles()[0];
   const path = `post/thumbnail/${props.postId}`;
-  console.log(path);
-  console.log(props.postId);
-  console.log(image);
   formData.append('file', image);
-
-  formData.append('path', '/' + path);
+  formData.append('path', path);
   formData.append('postId', props.postId);
+  console.log(formData);
 
   axios
     .post(`/api/posts/thumbnail/image`, formData)
@@ -131,6 +129,22 @@ const postThumbnailEdit = () => {
     .catch(() => {
       alert('썸네일 이미지 등록 실패되었습니다.');
     });
+};
+
+// postThumbnailEdit 함수 삭제
+
+const beforeUpload = (file: any) => {
+  const formData = new FormData();
+  const path = `post/thumbnail/${props.postId}`;
+  formData.append('file', file);
+  formData.append('path', '/' + path);
+  formData.append('postId', props.postId);
+  $refs.dropzone.uploadFiles(formData);
+  return false;
+};
+
+const onUploadSuccess = () => {
+  alert('썸네일 이미지 등록이 완료되었습니다.');
 };
 </script>
 

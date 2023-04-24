@@ -35,11 +35,13 @@ public class S3UploadController {
 
 	@PostMapping("/posts/thumbnail/image")
 	public ResponseEntity<?> postThumbnailImageUpload(
-			@RequestParam("file") MultipartFile file, @RequestParam("path") String dirName, @RequestParam("postId") Long postId) throws IOException {
+			@RequestParam("file") MultipartFile file, @RequestParam("path") String path, @RequestParam("postId") Long postId) throws IOException {
 //		MultipartFile file = postThumbNailImageDto.getFile();
 //		String dirName = postThumbNailImageDto.getPath();
 //		Long postId = postThumbNailImageDto.getPostId();
-		String uploadImagePath = s3UploaderService.upload(file, dirName);
+		System.out.println(path);
+		System.out.println(postId);
+		String uploadImagePath = s3UploaderService.upload(file, path);
 		System.out.println(uploadImagePath);
 		postRepository.updatePostThumbnailImage(uploadImagePath, postId);
 		return ResponseEntity.ok().body("SUCCESS");

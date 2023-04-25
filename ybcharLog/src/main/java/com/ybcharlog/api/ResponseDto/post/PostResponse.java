@@ -41,8 +41,8 @@ public class PostResponse {
 		this.isDeleted = post.getIsDeleted();
 		this.viewCount = post.getViewCount();
 		this.likeCount = post.getLikeCount();
-		this.thumbnailImage = post.getThumbnailImage();
 		this.comments = post.getComments();
+		this.thumbnailImage = post.getThumbnailImage();
 		this.createdAt = post.getCreatedAt();
 		this.lastModifiedDate = post.getLastModifiedDate();
 	}

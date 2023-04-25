@@ -102,13 +102,14 @@ class PostControllerTest {
     @DisplayName("/posts 요청 시 DB 값 저장 테스트")
     void postWriteTest() throws Exception {
         // given
-        PostCreateDto request = PostCreateDto.builder()
+        Post request = Post.builder()
                 .title("글 제목 test")
                 .content("글 내용 test")
                 .viewCount(0)
                 .likeCount(0)
                 .isDeleted(0)
                 .display(1)
+                .thumbnailImage("https://ybchar-blog.s3.ap-northeast-2.amazonaws.com/post/thumbnail/34/cover_original.png")
                 .build();
         String json = objectMapper.writeValueAsString(request);
 

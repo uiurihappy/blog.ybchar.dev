@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,18 +23,23 @@ import static com.ybcharlog.api.domain.post.PostEditor.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @BatchSize(size=100)
+@CacheEvict(value = "post", allEntries = true)
 public class Post extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(columnDefinition = "varchar(50) not null COMMENT '게시글 제목'")
+	@Column(columnDefinition = "varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci not null COMMENT '게시글 제목'")
 	private String title;
 
-	@Column(columnDefinition = "text not null COMMENT '게시글 내용'")
+	@Column(columnDefinition = "text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci not null COMMENT '게시글 내용'")
 	@Lob
 	private String content;
+
+	@Column(columnDefinition = "text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '게시글 썸네일 이미지 경로'")
+	@Lob
+	private String thumbnailImage;
 
 	@Column(columnDefinition = "tinyint(3) not null default 0 COMMENT '노출 상태'")
 	private Integer display;
@@ -46,13 +53,8 @@ public class Post extends BaseEntity {
 	@Column(columnDefinition = "int unsigned not null default 0 COMMENT '게시글 좋아요 수'")
 	private Integer likeCount;
 
-	@Column(columnDefinition = "text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '게시글 썸네일 이미지 경로'")
-	@Lob
-	private String thumbnailImage;
-
 	@OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.REMOVE)
 	private List<Comment> comments = new ArrayList<>();
-
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryId")

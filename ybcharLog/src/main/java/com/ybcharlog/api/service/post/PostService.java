@@ -53,6 +53,8 @@ public class PostService {
 				.map(PostResponse::new)
 				.collect(Collectors.toList());
 	}
+
+	@Transactional
 	public CustomPage<PostResponse> getListByPage(GetPostPageReq req, Pageable pageable) {
 		Page<Post> postPage = postRepository.getPostListByPage(req, pageable);
 		// Querydsl

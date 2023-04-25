@@ -62,6 +62,9 @@ class PostServiceTest {
 				.content("bar")
 				.viewCount(0)
 				.likeCount(0)
+				.isDeleted(0)
+				.display(1)
+				.thumbnailImage("https://ybchar-blog.s3.ap-northeast-2.amazonaws.com/post/thumbnail/34/cover_original.png")
 				.build();
 		postRepository.save(savePost);
 

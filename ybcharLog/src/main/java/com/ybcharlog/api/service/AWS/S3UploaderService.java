@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -27,13 +28,15 @@ public class S3UploaderService {
 	private String bucket;
 
 	// MultipartFile을 전달받아 File로 전환한 후 S3에 업로드
+	@Transactional
 	public String upload(MultipartFile multipartFile, String dirName) throws IOException {
 		File uploadFile = convert(multipartFile)
 				.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
 		return upload(uploadFile, dirName);
 	}
 
-	private String upload(File uploadFile, String dirName) {
+	@Transactional
+	public String upload(File uploadFile, String dirName) {
 		String fileName = dirName + "/" + uploadFile.getName();
 		String uploadImageUrl = putS3(uploadFile, fileName);
 
@@ -42,7 +45,8 @@ public class S3UploaderService {
 		return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
 	}
 
-	private String putS3(File uploadFile, String fileName) {
+	@Transactional
+	public String putS3(File uploadFile, String fileName) {
 		amazonS3Client.putObject(
 				new PutObjectRequest(bucket, fileName, uploadFile)
 						.withCannedAcl(CannedAccessControlList.PublicRead)	// PublicRead 권한으로 업로드 됨
@@ -50,7 +54,8 @@ public class S3UploaderService {
 		return amazonS3Client.getUrl(bucket, fileName).toString();
 	}
 
-	private void removeNewFile(File targetFile) {
+	@Transactional
+	public void removeNewFile(File targetFile) {
 		if(targetFile.delete()) {
 			log.info("파일이 삭제되었습니다.");
 		}else {
@@ -58,7 +63,8 @@ public class S3UploaderService {
 		}
 	}
 
-	private Optional<File> convert(MultipartFile file) throws  IOException {
+	@Transactional
+	public Optional<File> convert(MultipartFile file) throws  IOException {
 		File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
 		if(convertFile.createNewFile()) {
 			try (FileOutputStream fos = new FileOutputStream(convertFile)) {

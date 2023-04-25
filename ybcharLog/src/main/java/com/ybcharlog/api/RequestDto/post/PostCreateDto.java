@@ -25,6 +25,7 @@ public class PostCreateDto {
     private Integer likeCount;
     private Integer display;
     private Integer isDeleted;
+    private String thumbnailImage;
 
     public PostCreateDto changeTitle(String title) {
         return PostCreateDto.builder()

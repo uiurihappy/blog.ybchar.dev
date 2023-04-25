@@ -39,12 +39,17 @@ $tertiary-color: #2d2d2d;
   font-family: 'Montserrat', sans-serif;
 
   .post-list {
-    li {
+    .post-grid {
       list-style: none;
       cursor: pointer;
       padding: 2rem 0;
       border-bottom: 2px solid var(--secondary-color);
-
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(300px, 1fr)
+      ); /* 최소 300px 너비를 가진 그리드 아이템이 생성 */
+      grid-gap: 20px;
       &:hover {
         background-color: var(--background-color);
       }

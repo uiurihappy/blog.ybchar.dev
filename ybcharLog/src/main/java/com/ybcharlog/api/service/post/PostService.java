@@ -86,4 +86,9 @@ public class PostService {
 		commentRepository.deleteAllByCommentInQuery(commentIds);
 		postRepository.updateDeletedByPostId(postId);
 	}
+
+	@Transactional
+	public void updatePostThumbnailImage(String uploadImagePath, Long postId) {
+		postRepository.updatePostThumbnailImage(uploadImagePath, postId);
+	}
 }

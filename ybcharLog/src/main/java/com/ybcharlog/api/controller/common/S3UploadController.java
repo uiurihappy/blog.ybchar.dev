@@ -21,7 +21,6 @@ import java.net.URISyntaxException;
 public class S3UploadController {
 
 	private final S3UploaderService s3UploaderService;
-	private final PostRepository postRepository;
 
 	@PostMapping("/files/images")
 	public ResponseEntity<String> uploadImageFile(
@@ -31,19 +30,5 @@ public class S3UploadController {
 		String uploadStatus = s3UploaderService.upload(file, dirName);
 		System.out.println(uploadStatus);
 		return ResponseEntity.ok(uploadStatus);
-	}
-
-	@PostMapping("/posts/thumbnail/image")
-	public ResponseEntity<?> postThumbnailImageUpload(
-			@RequestParam("file") MultipartFile file, @RequestParam("path") String path, @RequestParam("postId") Long postId) throws IOException {
-//		MultipartFile file = postThumbNailImageDto.getFile();
-//		String dirName = postThumbNailImageDto.getPath();
-//		Long postId = postThumbNailImageDto.getPostId();
-		System.out.println(path);
-		System.out.println(postId);
-		String uploadImagePath = s3UploaderService.upload(file, path);
-		System.out.println(uploadImagePath);
-		postRepository.updatePostThumbnailImage(uploadImagePath, postId);
-		return ResponseEntity.ok().body("SUCCESS");
 	}
 }

@@ -22,7 +22,6 @@ public interface PostRepositoryCustom {
 
     void updateDeletedByPostId(Long postId);
 
-    @Transactional
     void updatePostThumbnailImage(String imagePath, Long postId);
 //    @Transactional
 //    @Modifying(clearAutomatically = true)

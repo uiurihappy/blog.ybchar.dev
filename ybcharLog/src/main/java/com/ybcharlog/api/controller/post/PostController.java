@@ -8,14 +8,17 @@ import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.exception.InvalidRequest;
+import com.ybcharlog.api.service.AWS.S3UploaderService;
 import com.ybcharlog.api.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 import static com.ybcharlog.api.RequestDto.post.PostSearchDto.*;
@@ -45,6 +48,7 @@ public class PostController {
                     // 세 번 이상이면 적어도 자동화를 고려해볼 것
     */
     private final PostService postService;
+    private final S3UploaderService s3UploaderService;
 
     /* response case
 		1. 저장한 데이터 Entity 통째로 response
@@ -86,5 +90,17 @@ public class PostController {
     @DeleteMapping("/delete/{postId}")
     public void deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
+    }
+
+    @PostMapping("/thumbnail/image")
+    public ResponseEntity<?> postThumbnailImageUpload(
+            @RequestParam("file") MultipartFile file, @RequestParam("path") String path, @RequestParam("postId") Long postId) throws IOException {
+//		MultipartFile file = postThumbNailImageDto.getFile();
+//		String dirName = postThumbNailImageDto.getPath();
+//		Long postId = postThumbNailImageDto.getPostId();
+
+        String uploadImagePath = s3UploaderService.upload(file, path);
+        postService.updatePostThumbnailImage(uploadImagePath, postId);
+        return ResponseEntity.ok().body("SUCCESS");
     }
 }

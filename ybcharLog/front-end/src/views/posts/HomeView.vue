@@ -1,7 +1,33 @@
 <template>
   <div class="container">
     <ul class="post-list">
-      <li
+      <div class="post-grid">
+        <div
+          v-for="post in pagedPosts"
+          :key="post.id"
+          @click="moveToRead(post.id)"
+        >
+          <div class="post-title">
+            <router-link :to="{ name: 'read', params: { postId: post.id } }">{{
+              post.title
+            }}</router-link>
+          </div>
+          <div v-if="post.thumbnailImage" class="post-thumbnail">
+            <img :src="post.thumbnailImage" />
+          </div>
+
+          <div class="post-sub">
+            <div class="post-category">개발</div>
+            <div class="post-date">{{ getFormattedDate(post.createdAt) }}</div>
+          </div>
+          <div class="post-content">
+            <router-link :to="{ name: 'read', params: { postId: post.id } }">
+              <p v-html="truncateText(post.content, 300)"></p>
+            </router-link>
+          </div>
+        </div>
+      </div>
+      <!-- <li
         v-for="post in pagedPosts"
         :key="post.id"
         @click="moveToRead(post.id)"
@@ -24,7 +50,7 @@
             <p v-html="truncateText(post.content, 300)"></p>
           </router-link>
         </div>
-      </li>
+      </li> -->
     </ul>
     <ul class="pagination">
       <li
@@ -77,6 +103,8 @@ const loadPosts = async () => {
     const result = await axios.get(
       `/api/posts/list?page=${currentPage.value}&size=${PAGE_SIZE}`
     );
+    console.log(result.data.thumbnailImage);
+
     posts.value = result.data;
   } catch (err) {
     console.log(err);
@@ -127,7 +155,7 @@ const pagedPostsHtml = computed(() => {
 
 onMounted(() => {
   axios
-    .get(`/api/posts/list?page=${currentPage.value}`)
+    .get(`/api/posts/list?page=${currentPage.value}&size=${PAGE_SIZE}`)
     .then(result => {
       posts.value = result.data;
     })

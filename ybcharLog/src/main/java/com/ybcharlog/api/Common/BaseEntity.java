@@ -19,6 +19,7 @@ public class BaseEntity extends BaseTimeEntity{
     @Column(updatable = false)
     private String createdBy;
 
+    @Column(insertable = false)
     @LastModifiedBy
     private String lastModifiedBy;
 }

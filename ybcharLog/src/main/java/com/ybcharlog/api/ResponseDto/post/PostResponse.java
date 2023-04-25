@@ -1,9 +1,11 @@
 package com.ybcharlog.api.ResponseDto.post;
 
-import com.querydsl.core.annotations.QueryProjection;
+import com.ybcharlog.api.Common.dto.BasicConditionRequest;
 import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.domain.post.Post;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,8 +15,8 @@ import java.util.List;
  */
 
 @Builder
-@Getter
 @Data
+@Getter
 public class PostResponse {
 
 	private final Long id;
@@ -59,5 +61,7 @@ public class PostResponse {
 		this.comments = comments;
 		this.createdAt = createdAt;
 		this.lastModifiedDate = lastModifiedDate;
+	}
+	public static class GetPostPageReq extends BasicConditionRequest {
 	}
 }

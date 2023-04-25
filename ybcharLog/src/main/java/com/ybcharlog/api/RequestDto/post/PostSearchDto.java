@@ -31,6 +31,4 @@ public class PostSearchDto {
 	}
 
 //	@Data
-	public static class GetPostPageReq extends BasicConditionRequest {
-	}
 }

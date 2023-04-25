@@ -1,13 +1,11 @@
 package com.ybcharlog.api.controller.post;
 
-import com.querydsl.core.Tuple;
 import com.ybcharlog.api.Common.dto.CustomPage;
 import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
-import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
+import com.ybcharlog.api.ResponseDto.post.PostResponse.GetPostPageReq;
 import com.ybcharlog.api.domain.post.Post;
-import com.ybcharlog.api.exception.InvalidRequest;
 import com.ybcharlog.api.service.AWS.S3UploaderService;
 import com.ybcharlog.api.service.post.PostService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
-
-import static com.ybcharlog.api.RequestDto.post.PostSearchDto.*;
 
 @Slf4j
 @RestController

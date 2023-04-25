@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import static com.ybcharlog.api.domain.post.PostEditor.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@BatchSize(size=100)
 public class Post extends BaseEntity {
 
 	@Id
@@ -44,12 +46,13 @@ public class Post extends BaseEntity {
 	@Column(columnDefinition = "int unsigned not null default 0 COMMENT '게시글 좋아요 수'")
 	private Integer likeCount;
 
-	@Column(columnDefinition = "text COMMENT '게시글 썸네일 이미지 경로'")
+	@Column(columnDefinition = "text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '게시글 썸네일 이미지 경로'")
 	@Lob
 	private String thumbnailImage;
 
 	@OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.REMOVE)
 	private List<Comment> comments = new ArrayList<>();
+
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryId")
@@ -57,7 +60,7 @@ public class Post extends BaseEntity {
 	private Category category;
 
 	public static Post initPost(String title, String content, Integer display) {
-		return Post.builder().title(title).content(content).display(display).isDeleted(0).viewCount(0).likeCount(0).build();
+		return Post.builder().title(title).content(content).display(display).isDeleted(0).viewCount(0).likeCount(0).thumbnailImage(null).build();
 	}
 
 	@Builder

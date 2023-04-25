@@ -1,12 +1,11 @@
 package com.ybcharlog.api.service.post;
 
-import com.querydsl.core.Tuple;
 import com.ybcharlog.api.Common.dto.CustomPage;
-import com.ybcharlog.api.RequestDto.comment.CommentSearchDto;
 import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
+import com.ybcharlog.api.ResponseDto.post.PostResponse.GetPostPageReq;
 import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.exception.PostNotFound;
@@ -22,8 +21,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.ybcharlog.api.RequestDto.post.PostSearchDto.*;
 
 @Slf4j
 @Service

@@ -103,7 +103,6 @@ const loadPosts = async () => {
     const result = await axios.get(
       `/api/posts/list?page=${currentPage.value}&size=${PAGE_SIZE}`
     );
-    console.log(result.data.thumbnailImage);
 
     posts.value = result.data;
   } catch (err) {

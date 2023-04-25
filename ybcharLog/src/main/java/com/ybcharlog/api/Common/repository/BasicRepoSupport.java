@@ -11,14 +11,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
+import javax.persistence.EntityManager;
+
 @SuppressWarnings("unchecked")
 public abstract class BasicRepoSupport extends QuerydslRepositorySupport {
 
 	protected final JPAQueryFactory jpaQueryFactory;
+	protected final EntityManager em;
 
-	protected BasicRepoSupport(JPAQueryFactory jpaQueryFactory) {
+	protected BasicRepoSupport(JPAQueryFactory jpaQueryFactory, EntityManager em) {
 		super(jpaQueryFactory.getClass());
 		this.jpaQueryFactory = jpaQueryFactory;
+		this.em = em;
 	}
 
 	protected <T> void setPageQuery(JPAQuery<?> query, Pageable pageable, BeanPath<T> clazz) {

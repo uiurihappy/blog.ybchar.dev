@@ -3,14 +3,12 @@ package com.ybcharlog.api.repository.post;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
+import com.ybcharlog.api.ResponseDto.post.PostResponse.GetPostPageReq;
 import com.ybcharlog.api.domain.post.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import javax.transaction.Transactional;
 import java.util.List;
-
-import static com.ybcharlog.api.RequestDto.post.PostSearchDto.GetPostPageReq;
 
 public interface PostRepositoryCustom {
 

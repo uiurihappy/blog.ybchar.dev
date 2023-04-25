@@ -43,9 +43,9 @@
   src: url('../../public/fonts/BMDOHYEON_ttf.ttf');
 }
 .container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 2rem 1rem;
 }
 
 .header {

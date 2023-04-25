@@ -97,7 +97,9 @@ jar {
 
 clean {
     delete file("$buildDir/generated/*")
+    delete file("src/main/generated/*")
 }
+
 
 def querydslDir = "$buildDir/generated/sources/annotationProcessor/java/main"
 

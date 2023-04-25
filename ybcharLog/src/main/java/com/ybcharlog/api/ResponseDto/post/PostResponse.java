@@ -51,7 +51,7 @@ public class PostResponse {
 	public PostResponse(Long id, String title, String content, Integer display, Integer isDeleted, Integer viewCount, Integer likeCount,
 	                    String thumbnailImage, List<Comment> comments, LocalDateTime createdAt, LocalDateTime lastModifiedDate) {
 		this.id = id;
-		this.title = title.substring(0, Math.min(title.length(), 10));
+		this.title = title;
 		this.content = content;
 		this.display = display;
 		this.isDeleted = isDeleted;

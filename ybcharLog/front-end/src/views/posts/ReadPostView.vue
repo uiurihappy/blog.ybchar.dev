@@ -78,8 +78,6 @@ onMounted(() => {
         <div class="mt-2">
           <h2 class="title">{{ post.title }}</h2>
           <div class="sub d-flex">
-            <div class="category">개발</div>
-
             <div class="regDate">
               작성일:
               {{
@@ -98,6 +96,26 @@ onMounted(() => {
         <div class="content" v-html="post.content.replace(/\n/g, '<br>')"></div>
       </el-col>
     </el-row>
+    <!-- <el-row>
+      <el-col>
+        <div class="content">
+          <template v-if="post.content.includes('```')">
+            <pre
+              v-html="post.content.split('```')[0].replace(/\n/g, '<br>')"
+            ></pre>
+            <div
+              v-html="post.content.split('```')[1].replace(/\n/g, '<br>')"
+            ></div>
+          </template>
+          <template v-else>
+            <div
+              class="content"
+              v-html="post.content.replace(/\n/g, '<br>')"
+            ></div>
+          </template>
+        </div>
+      </el-col>
+    </el-row> -->
 
     <br />
 

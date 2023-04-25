@@ -17,13 +17,15 @@
           </div>
 
           <div class="post-sub">
-            <div class="post-category">개발</div>
+            <div class="post-category">작성일:</div>
             <div class="post-date">{{ getFormattedDate(post.createdAt) }}</div>
           </div>
-          <div class="post-content">
-            <router-link :to="{ name: 'read', params: { postId: post.id } }">
-              <p v-html="truncateText(post.content, 300)"></p>
-            </router-link>
+          <div class="post-content-box">
+            <div class="post-content">
+              <router-link :to="{ name: 'read', params: { postId: post.id } }">
+                <p v-html="truncateText(post.content, 150)"></p>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>

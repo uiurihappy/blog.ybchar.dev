@@ -28,7 +28,6 @@ public class S3UploadController {
 			throws IOException, URISyntaxException {
 
 		String uploadStatus = s3UploaderService.upload(file, dirName);
-		System.out.println(uploadStatus);
 		return ResponseEntity.ok(uploadStatus);
 	}
 }

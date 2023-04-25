@@ -35,21 +35,22 @@ $tertiary-color: #2d2d2d;
 .container {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  margin-left: auto;
+  padding: 1rem 0rem;
   font-family: 'Montserrat', sans-serif;
 
   .post-list {
     .post-grid {
       list-style: none;
       cursor: pointer;
-      padding: 2rem 0;
       border-bottom: 2px solid var(--secondary-color);
       display: grid;
+      grid-template-rows: min-content 1fr min-content;
       grid-template-columns: repeat(
         auto-fit,
         minmax(300px, 1fr)
       ); /* 최소 300px 너비를 가진 그리드 아이템이 생성 */
-      grid-gap: 20px;
+      grid-gap: 40px;
       &:hover {
         background-color: var(--background-color);
       }
@@ -98,7 +99,8 @@ $tertiary-color: #2d2d2d;
           color: var(--secondary-color);
         }
       }
-
+      .post-content-box {
+        
       .post-content {
         color: var(--secondary-color);
         font-size: 1.2rem;
@@ -117,6 +119,8 @@ $tertiary-color: #2d2d2d;
             color: var(--gradient-color-1);
           }
         }
+      }
+      overflow: hidden;
       }
     }
   }

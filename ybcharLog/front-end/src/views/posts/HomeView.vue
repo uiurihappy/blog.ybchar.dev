@@ -3,29 +3,36 @@
     <ul class="post-list">
       <div class="post-grid">
         <div
+          class="post-item"
           v-for="post in pagedPosts"
           :key="post.id"
           @click="moveToRead(post.id)"
         >
-          <div class="post-title">
-            <router-link :to="{ name: 'read', params: { postId: post.id } }">{{
-              post.title
-            }}</router-link>
-          </div>
           <div v-if="post.thumbnailImage" class="post-thumbnail">
-            <img :src="post.thumbnailImage" />
+            <img :src="post.thumbnailImage" style="border-radius: 2.5%" />
           </div>
 
+          <div class="post-title">
+            <router-link :to="{ name: 'read', params: { postId: post.id } }">{{
+              truncateText(post.title, 15)
+            }}</router-link>
+          </div>
+
+          <div class="post-content-box">
+            <div v-if="post.thumbnailImage" class="post-content">
+              <router-link :to="{ name: 'read', params: { postId: post.id } }">
+                <p v-html="truncateText(post.content, 100)"></p>
+              </router-link>
+            </div>
+            <div v-else class="post-content">
+              <router-link :to="{ name: 'read', params: { postId: post.id } }">
+                <p v-html="truncateText(post.content, 450)"></p>
+              </router-link>
+            </div>
+          </div>
           <div class="post-sub">
             <div class="post-category">작성일:</div>
             <div class="post-date">{{ getFormattedDate(post.createdAt) }}</div>
-          </div>
-          <div class="post-content-box">
-            <div class="post-content">
-              <router-link :to="{ name: 'read', params: { postId: post.id } }">
-                <p v-html="truncateText(post.content, 150)"></p>
-              </router-link>
-            </div>
           </div>
         </div>
       </div>

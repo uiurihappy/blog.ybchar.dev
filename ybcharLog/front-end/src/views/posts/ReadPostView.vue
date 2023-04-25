@@ -161,9 +161,9 @@ onMounted(() => {
         <div class="comment-write__input mt-2">
           <el-input
             v-model="commentContent"
-            placeholder="내용을 입력해주세요"
+            placeholder="무분별한 댓글은 제작자에게 상처입니다.🥲"
             type="textarea"
-            rows="5"
+            rows="7"
           />
         </div>
 

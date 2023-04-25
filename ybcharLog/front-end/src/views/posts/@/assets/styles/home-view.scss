@@ -36,11 +36,11 @@ $tertiary-color: #2d2d2d;
   max-width: 1100px;
   margin: 0 auto;
   margin-left: auto;
-  padding: 1rem 0rem;
   font-family: 'Montserrat', sans-serif;
 
   .post-list {
     .post-grid {
+      justify-content: center;
       list-style: none;
       cursor: pointer;
       border-bottom: 2px solid var(--secondary-color);
@@ -48,20 +48,40 @@ $tertiary-color: #2d2d2d;
       grid-template-rows: min-content 1fr min-content;
       grid-template-columns: repeat(
         auto-fit,
-        minmax(300px, 1fr)
+        minmax(320px, 1fr)
       ); /* 최소 300px 너비를 가진 그리드 아이템이 생성 */
-      grid-gap: 40px;
+      grid-row-gap: 0.8cm;
       &:hover {
         background-color: var(--background-color);
       }
 
+      .post-item {
+        display: flex;
+        list-style: none;
+        cursor: pointer;
+        border-bottom: 2px solid var(--secondary-color);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+        display: grid;
+        grid-template-rows: min-content 1fr min-content;
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(320px, 1fr)
+        ); /* 최소 300px 너비를 가진 그리드 아이템이 생성 */
+        border-radius: 2.2%;
+        width: 320px; /* 고정된 너비값 추가 */
+        height: 420px; /* 고정된 높이값 추가 */
+        &:hover {
+          background-color: var(--background-color);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* 그림자 효과 추가 */
+        }
+      }
+
       .post-thumbnail {
         width: 100%;
-        height: 200px;
+        height: 220px;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        margin-bottom: 1rem;
 
         img {
           width: 100%;
@@ -69,11 +89,12 @@ $tertiary-color: #2d2d2d;
           object-fit: cover;
         }
       }
-
       .post-title {
-        font-size: 1.8rem;
+        margin-bottom: 0.6rem;
+        margin-top: 1.6rem;
+        margin-left: 0.45rem;
+        font-size: 1.25rem;
         font-family: 'dohyeon', serif;
-        margin-bottom: 1rem;
 
         a {
           color: var(--primary-color);
@@ -88,11 +109,19 @@ $tertiary-color: #2d2d2d;
       .post-sub {
         display: flex;
         margin-bottom: 10px;
+        color: var(--tertiary-color);
+        margin-right: 8px;
+        margin-left: 0.3rem;
+        --tw-border-opacity: 10;
+        border-color: rgb(229 231 235 / var(--tw-border-opacity));
+        border-top: 1.2px solid #ccc;
+        padding-top: 10px;
+        justify-content: end;
 
         .post-category {
           font-weight: bold;
           color: var(--tertiary-color);
-          margin-right: 10px;
+          margin-right: 6px;
         }
 
         .post-date {
@@ -100,27 +129,30 @@ $tertiary-color: #2d2d2d;
         }
       }
       .post-content-box {
-        
-      .post-content {
-        color: var(--secondary-color);
-        font-size: 1.2rem;
-        line-height: 1.5;
-        margin-bottom: 1rem;
+        .post-content {
+          color: var(--secondary-color);
+          font-size: 1rem;
+          line-height: 1rem;
+          margin-left: 0.4rem;
+          margin-right: 8px;
+          color: var(--tertiary-color);
+          --tw-border-opacity: 10;
+          border-color: rgb(229 231 235 / var(--tw-border-opacity));
+          border-top: 1.2px solid #ccc;
 
-        p {
-          margin: 0;
-        }
+          padding-top: 3px;
+          justify-content: center;
+          margin-bottom: 2px;
+          a {
+            text-decoration: none;
+            color: var(--primary-color);
 
-        a {
-          text-decoration: none;
-          color: var(--primary-color);
-
-          &:hover {
-            color: var(--gradient-color-1);
+            &:hover {
+              color: var(--gradient-color-1);
+            }
           }
         }
-      }
-      overflow: hidden;
+        overflow: hidden;
       }
     }
   }

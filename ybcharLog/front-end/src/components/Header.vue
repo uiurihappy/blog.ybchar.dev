@@ -70,7 +70,6 @@
   letter-spacing: 2px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-out;
-  text-decoration: none;
 }
 
 .logo:hover {
@@ -82,6 +81,8 @@
 
 .menu {
   height: 100%;
+  text-decoration: none;
+  opacity: 100%;
 }
 
 .menu-item {
@@ -89,8 +90,18 @@
   font-family: 'dohyeon';
   color: #666;
   padding: 0 16px;
+  text-decoration: none;
+  opacity: 100%;
+  border-top: transparent;
+  border-bottom: transparent;
+  transition: all ease-out;
 }
 
+.menu-item:hover {
+  border-top-color: #666;
+  color: #333;
+  cursor: pointer;
+}
 .menu-item.router-link-active {
   color: black;
   background-color: #f5f5f5;

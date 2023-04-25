@@ -5,7 +5,7 @@ dayjs.extend(timezone);
 
 export const getFormattedDate = (date: string | null): string => {
   if (!date) {
-    return dayjs().format('YYYY-MM-DD HH:mm:ss');
+    return dayjs().format('YYYY년 MM월 DD일 A H:mm');
   }
-  return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
+  return dayjs(date).format('YYYY년 MM월 DD일 A H:mm');
 };

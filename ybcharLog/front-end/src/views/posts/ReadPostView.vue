@@ -82,8 +82,8 @@ onMounted(() => {
               작성일:
               {{
                 post.createdAt === null
-                  ? dayjs().format('YYYY-MM-DD HH:mm:ss')
-                  : dayjs(post.createdAt).format('YYYY-MM-DD HH:mm:ss')
+                  ? dayjs().format('YYYY년 MM월 DD일 A H:mm')
+                  : dayjs(post.createdAt).format('YYYY년 MM월 DD일 A H:mm')
               }}
             </div>
           </div>

@@ -13,9 +13,18 @@
           </div>
 
           <div class="post-title">
-            <router-link :to="{ name: 'read', params: { postId: post.id } }">{{
-              truncateText(post.title, 24)
-            }}</router-link>
+            <div v-if="post.thumbnailImage" class="post-if-title">
+              <router-link
+                :to="{ name: 'read', params: { postId: post.id } }"
+                >{{ truncateText(post.title, 24) }}</router-link
+              >
+            </div>
+            <div v-else class="post-else-title">
+              <router-link
+                :to="{ name: 'read', params: { postId: post.id } }"
+                >{{ truncateText(post.title, 24) }}</router-link
+              >
+            </div>
           </div>
 
           <div class="post-content-box">
@@ -24,7 +33,7 @@
                 <p v-html="truncateText(post.content, 100)"></p>
               </router-link>
             </div>
-            <div v-else class="post-content">
+            <div v-else class="post-else-content">
               <router-link :to="{ name: 'read', params: { postId: post.id } }">
                 <p v-html="truncateText(post.content, 450)"></p>
               </router-link>

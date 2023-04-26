@@ -43,21 +43,27 @@
   src: url('../../public/fonts/BMDOHYEON_ttf.ttf');
 }
 .container {
+  background-color: #fff;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  position: sticky;
+  top: -20px;
+  padding-top: 32px;
+  z-index: 1;
+  padding {
+    opacity: 0.2;
+  }
 }
 
 .header {
+  z-index: 2;
   background-color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
-  position: sticky;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
-  z-index: 1;
   height: 64px;
 }
 
@@ -82,7 +88,6 @@
 .menu {
   height: 100%;
   text-decoration: none;
-  opacity: 100%;
 }
 
 .menu-item {
@@ -112,5 +117,6 @@
   margin-top: 16px; /* 예시로 추가한 마진 */
   flex-grow: 1;
   padding: 0 24px;
+  opacity: 0;
 }
 </style>

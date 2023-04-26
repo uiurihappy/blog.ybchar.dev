@@ -37,20 +37,36 @@ $tertiary-color: #2d2d2d;
   margin: 0 auto;
   margin-left: auto;
   font-family: 'Montserrat', sans-serif;
+  
+  padding: 2rem 5px;
+  
+
 
   .post-list {
+    padding: 0;
     .post-grid {
       justify-content: center;
       list-style: none;
       cursor: pointer;
       border-bottom: 2px solid var(--secondary-color);
       display: grid;
-      grid-template-rows: min-content 1fr min-content;
-      grid-template-columns: repeat(
-        auto-fit,
-        minmax(320px, 1fr)
-      ); /* 최소 300px 너비를 가진 그리드 아이템이 생성 */
-      grid-row-gap: 0.8cm;
+      // grid-template-rows: min-content 1fr min-content;
+      // grid-template-columns: repeat(
+      //   auto-fit,
+      //   minmax(320px, 1fr)
+      // ); 
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      /* 최소 300px 너비를 가진 그리드 아이템이 생성 */
+      column-gap: 25px;
+      row-gap: 30px;
+
+      @media (max-width:767px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      @media (max-width:376px) {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
       &:hover {
         background-color: var(--background-color);
       }
@@ -62,13 +78,13 @@ $tertiary-color: #2d2d2d;
         border-bottom: 2px solid var(--secondary-color);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
         display: grid;
-        grid-template-rows: min-content 1fr min-content;
-        grid-template-columns: repeat(
-          auto-fit,
-          minmax(320px, 1fr)
-        ); /* 최소 300px 너비를 가진 그리드 아이템이 생성 */
+        // grid-template-rows: min-content 1fr min-content;
+        // grid-template-columns: repeat(
+        //   auto-fit,
+        //   minmax(320px, 1fr)
+        // ); /* 최소 300px 너비를 가진 그리드 아이템이 생성 */
         border-radius: 2.2%;
-        width: 320px; /* 고정된 너비값 추가 */
+        // width: 320px; /* 고정된 너비값 추가 */
         height: 420px; /* 고정된 높이값 추가 */
         &:hover {
           background-color: var(--background-color);
@@ -90,34 +106,52 @@ $tertiary-color: #2d2d2d;
         }
       }
       .post-title {
-        margin-bottom: 0.6rem;
-        margin-top: 1.6rem;
-        margin-left: 0.45rem;
-        font-size: 1.25rem;
-        font-family: 'dohyeon', serif;
-
-        a {
-          color: var(--primary-color);
-          text-decoration: none;
-
-          &:hover {
-            color: var(--gradient-color-1);
+        display: flex;
+        .post-if-title {
+          margin-bottom: 0.6rem;
+          margin-top: 1.6rem;
+          margin-left: 0.45rem;
+          font-size: 1.25rem;
+          font-family: 'dohyeon', serif;
+  
+          a {
+            color: var(--primary-color);
+            text-decoration: none;
+  
+            &:hover {
+              color: var(--gradient-color-1);
+            }
+          }
+        }
+        .post-else-title {
+          padding-top: 1.6rem;
+          padding-left: 0.45rem;
+          font-size: 1.20rem;
+          font-family: 'dohyeon', serif;
+  
+          a {
+            color: var(--primary-color);
+            text-decoration: none;
+  
+            &:hover {
+              color: var(--gradient-color-1);
+            }
           }
         }
       }
+      
 
       .post-sub {
         justify-content: flex-end;
         display: flex;
         font-size: 0.7rem;
         margin-bottom: 10px;
-        color: var(--tertiary-color);
         margin-right: 8px;
         margin-left: 0.3rem;
-        --tw-border-opacity: 10;
+        --tw-border-opacity: 0.5;
         border-color: rgb(229 231 235 / var(--tw-border-opacity));
         border-top: 1.2px solid #ccc;
-        padding-top: 10px;
+        padding-top: 9px;
 
         .post-category {
           font-weight: bold;
@@ -143,7 +177,31 @@ $tertiary-color: #2d2d2d;
 
           padding-top: 3px;
           justify-content: center;
-          margin-bottom: 2px;
+          margin-bottom: 30px;
+          a {
+            text-decoration: none;
+            color: var(--primary-color);
+
+            &:hover {
+              color: var(--gradient-color-1);
+            }
+          }
+        }
+        .post-else-content {
+          color: var(--secondary-color);
+          font-size: 1rem;
+          line-height: 1rem;
+          margin-left: 0.4rem;
+          margin-right: 8px;
+          color: var(--tertiary-color);
+          --tw-border-opacity: 10;
+          border-color: rgb(229 231 235 / var(--tw-border-opacity));
+          border-top: 1.2px solid #ccc;
+
+          padding-top: 3px;
+          justify-content: center;
+          margin-bottom: 30px;
+          height:300px;
           a {
             text-decoration: none;
             color: var(--primary-color);

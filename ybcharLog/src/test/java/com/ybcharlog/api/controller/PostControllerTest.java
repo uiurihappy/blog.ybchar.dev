@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,6 +38,9 @@ class PostControllerTest {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Value("${auth.key}")
+    private String authKey;
 
     // 다른 테스트에 영향이 가지 않도록 사전에 deleteAll한다.
     @BeforeEach
@@ -115,7 +119,7 @@ class PostControllerTest {
 
         // when
         mockMvc.perform(post("/posts/save")
-                        .header("authorization", "ybchar")
+                        .header("authorization", authKey)
                         .contentType(APPLICATION_JSON)
                         .content(json)
                 )

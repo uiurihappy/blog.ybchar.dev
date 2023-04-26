@@ -58,6 +58,17 @@ public class PostController {
 		개발하면서 당연히 "반드시 fix"라는 것이 없기에 유연하게 반응할 수 있도록 대응하는 것이 좋다.
 			- 즉, 잘 관리하는 형태로 구현하는 것이 좋다.
 	*/
+
+    @GetMapping("/authTest")
+    public String test(){
+        return "Hello";
+    }
+
+    @GetMapping("/authTest2")
+    public String test2(){
+        return "Foo Hello";
+    }
+
     @PostMapping("/save")
     public Post post(@RequestBody @Valid PostCreateDto request, @RequestHeader String authorization) throws AuthenticationException {
         if (authorization.equals(headerAuthkey)) {

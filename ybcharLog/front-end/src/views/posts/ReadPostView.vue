@@ -15,6 +15,8 @@ const username = ref('');
 const password = ref('');
 const secretStatus = ref(0);
 const commentContent = ref('');
+let isCodeBlock = ref(false);
+let codeBlockContent = ref('');
 const props = defineProps({
   postId: {
     type: [Number, String],
@@ -35,6 +37,7 @@ const post = ref({
   thumbnailImage: '',
   comments: [] as Comments[],
 });
+
 const router = useRouter();
 
 const moveToEdit = (postId: number) => {
@@ -57,6 +60,16 @@ const writeComment = (post: Posts) => {
     .catch(() => {
       alert('댓글 작성이 실패되었습니다.');
     });
+};
+
+const isCodeBlocking = () => {
+  const regex = /```([\w\W]+?)```/;
+  const matches = regex.exec(post.value.content);
+
+  if (matches && matches.length > 1) {
+    isCodeBlock.value = true;
+    codeBlockContent.value = matches[1];
+  }
 };
 
 onMounted(() => {
@@ -93,7 +106,12 @@ onMounted(() => {
 
     <el-row>
       <el-col>
-        <div class="content" v-html="post.content.replace(/\n/g, '<br>')"></div>
+        <div v-if="isCodeBlock">
+          <pre>
+            <code class="code-block">{{ codeBlockContent }}</code>
+          </pre>
+        </div>
+        <div v-else v-html="post.content.replace(/\n/g, '<br>')"></div>
       </el-col>
     </el-row>
     <!-- <el-row>
@@ -161,7 +179,7 @@ onMounted(() => {
         <div class="comment-write__input mt-2">
           <el-input
             v-model="commentContent"
-            placeholder="무분별한 댓글은 제작자에게 상처입니다.🥲"
+            placeholder="무분별한 댓글은 운영자에게 상처입니다.🥲"
             type="textarea"
             rows="7"
           />

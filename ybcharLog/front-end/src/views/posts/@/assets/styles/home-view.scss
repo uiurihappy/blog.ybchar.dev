@@ -107,6 +107,7 @@ $tertiary-color: #2d2d2d;
       }
 
       .post-sub {
+        justify-content: flex-end;
         display: flex;
         font-size: 0.7rem;
         margin-bottom: 10px;
@@ -117,7 +118,6 @@ $tertiary-color: #2d2d2d;
         border-color: rgb(229 231 235 / var(--tw-border-opacity));
         border-top: 1.2px solid #ccc;
         padding-top: 10px;
-        justify-content: end;
 
         .post-category {
           font-weight: bold;

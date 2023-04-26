@@ -14,7 +14,7 @@
 
           <div class="post-title">
             <router-link :to="{ name: 'read', params: { postId: post.id } }">{{
-              truncateText(post.title, 15)
+              truncateText(post.title, 24)
             }}</router-link>
           </div>
 

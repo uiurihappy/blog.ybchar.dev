@@ -10,11 +10,13 @@ import com.ybcharlog.api.service.AWS.S3UploaderService;
 import com.ybcharlog.api.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.naming.AuthenticationException;
 import javax.validation.Valid;
 import java.io.IOException;
 
@@ -23,7 +25,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 public class PostController {
-
     /* HTTP methods
      * GET, POST, PATCH, DELETE, OPTIONS, HEAD, TRACE, CONNECT
      * 글 등록 - POST
@@ -42,6 +43,10 @@ public class PostController {
                 // 코드 && 개발에 관해 모든 것이 필요
                     // 세 번 이상이면 적어도 자동화를 고려해볼 것
     */
+
+    @Value("${auth.key}")
+    private String headerAuthkey;
+
     private final PostService postService;
     private final S3UploaderService s3UploaderService;
 
@@ -54,10 +59,13 @@ public class PostController {
 			- 즉, 잘 관리하는 형태로 구현하는 것이 좋다.
 	*/
     @PostMapping("/save")
-    public Post post(@RequestBody @Valid PostCreateDto request)  {
-        request.titleValidate();
-
-        return postService.write(request);
+    public Post post(@RequestBody @Valid PostCreateDto request, @RequestHeader String authorization) throws AuthenticationException {
+        if (authorization.equals(headerAuthkey)) {
+            request.titleValidate();
+            return postService.write(request);
+        } else {
+            throw new AuthenticationException("Key가 일치하지 않습니다.");
+        }
     }
 
     /*
@@ -78,13 +86,21 @@ public class PostController {
     }
 
     @PatchMapping("/update/{postId}")
-    public void editPost(@PathVariable Long postId, @RequestBody @Valid PostEditDto postEditDto) {
-        postService.editPost(postId, postEditDto);
+    public void editPost(@PathVariable Long postId, @RequestBody @Valid PostEditDto postEditDto, @RequestHeader String authorization) throws AuthenticationException {
+        if (authorization.equals(headerAuthkey)) {
+            postService.editPost(postId, postEditDto);
+        } else {
+            throw new AuthenticationException("Key가 일치하지 않습니다.");
+        }
     }
 
     @DeleteMapping("/delete/{postId}")
-    public void deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
+    public void deletePost(@PathVariable Long postId, @RequestHeader String authorization) throws AuthenticationException {
+        if (authorization.equals(headerAuthkey)) {
+            postService.deletePost(postId);
+        } else {
+            throw new AuthenticationException("Key가 일치하지 않습니다.");
+        }
     }
 
     @PostMapping("/thumbnail/image")

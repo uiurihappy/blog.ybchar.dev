@@ -115,6 +115,7 @@ class PostControllerTest {
 
         // when
         mockMvc.perform(post("/posts/save")
+                        .header("authorization", "ybchar")
                         .contentType(APPLICATION_JSON)
                         .content(json)
                 )

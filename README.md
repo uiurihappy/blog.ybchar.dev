@@ -76,7 +76,9 @@ aws:
 <br/>
 <h2> Front-end </h2>
 <ul>
+  <li> Typescript </li>
   <li> Vue.js </li>
+  <li> scss </li>
 </ul>
 </div>
 <br/>

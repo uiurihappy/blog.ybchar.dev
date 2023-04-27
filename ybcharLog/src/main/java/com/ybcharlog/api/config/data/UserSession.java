@@ -1,7 +1,10 @@
 package com.ybcharlog.api.config.data;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class UserSession {
 
 //	public Long id;
-	public String name;
+	public final Long id;
 }

@@ -61,9 +61,9 @@ public class PostController {
 	*/
 
     @GetMapping("/authTest")
-    public String test(UserSession userSession){
-        log.info(">> {}", userSession.name);
-        return userSession.name;
+    public Long test(UserSession userSession){
+        log.info(">> {}", userSession.id);
+        return userSession.id;
     }
 
     @PostMapping("/save")

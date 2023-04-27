@@ -1,0 +1,5 @@
+### 테스트 요청
+
+GET http://localhost:9000/posts/authTest
+Content-Type: application/json
+authorization: 12341452

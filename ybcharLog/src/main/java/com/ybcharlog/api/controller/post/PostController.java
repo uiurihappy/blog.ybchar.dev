@@ -5,6 +5,7 @@ import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.ResponseDto.post.PostResponse.GetPostPageReq;
+import com.ybcharlog.api.config.data.UserSession;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.service.AWS.S3UploaderService;
 import com.ybcharlog.api.service.post.PostService;
@@ -60,13 +61,9 @@ public class PostController {
 	*/
 
     @GetMapping("/authTest")
-    public String test(){
-        return "Hello";
-    }
-
-    @GetMapping("/authTest2")
-    public String test2(){
-        return "Foo Hello";
+    public String test(UserSession userSession){
+        log.info(">> {}", userSession.name);
+        return userSession.name;
     }
 
     @PostMapping("/save")

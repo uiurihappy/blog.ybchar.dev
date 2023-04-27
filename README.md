@@ -4,7 +4,7 @@ Spring boot, Data JPA, Querydsl을 수강했으니 직접 블로그 프로젝트
 티스토리에 게시한 글과 학습한 내용을 기록하고자 한다.
 <div>
 <h1> Tech Stack </h1>
-<h2> 백엔드 </h2>
+<h2> Back-end </h2>
 <ul>
   <li> Java 17 </li>
   <li> Spring boot </li>
@@ -47,25 +47,45 @@ logging.level:
 
 server:
   port: {사용할 port 번호}
+
 frontEnd:
   port: {cors 해결을 위해 Front-end PORT 번호}
+  
+auth:
+  key: {key 값}
+
+cloud:
+  aws:
+    credentials:
+      accessKey: {aws IAM 사용자 accessKey}
+      secretKey: {aws IAM 사용자 secretKey}
+    region:
+      static: {aws region}
+    stack:
+      auto: false
+
+aws:
+  s3:
+    bucketName: {aws 접근할 버킷 이름}
+
 ```
 <b> 중활호 {} 에 있는 본인 환경에 맞춰서 사용할 것 </b>
 
 <br/>
-<h2> 프론트엔드(개발 진행 중) </h2>
+<h2> Front-end </h2>
 <ul>
   <li> Vue.js </li>
 </ul>
 </div>
 <br/>
 
-<h2> TODO List </h2>
-<ul>
-  <li> category API 개발 </li>
-  <li> index에 게시글 리스트 페이지 </li>
-</ul>
-<br/>
+<h3> .env </h3>
+```
+# env
+VITE_ENVIRONMENT=development
+VITE_SERVER_PORT=9000
+VITE_API_URL=http://localhost:9000
+```
 
 <h2> API Mapping </h2>
 

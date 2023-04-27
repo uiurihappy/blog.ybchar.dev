@@ -10,20 +10,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ybcharlog.api.domain.post.PostEditor.*;
+import static com.ybcharlog.api.domain.post.PostEditor.PostEditorBuilder;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @BatchSize(size=100)
-@CacheEvict(value = "post", allEntries = true)
 public class Post extends BaseEntity {
 
 	@Id

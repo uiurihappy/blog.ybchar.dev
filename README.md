@@ -69,6 +69,8 @@ aws:
     bucketName: {aws 접근할 버킷 이름}
 
 ```
+
+
 <b> 중활호 {} 에 있는 본인 환경에 맞춰서 사용할 것 </b>
 
 <br/>
@@ -80,6 +82,7 @@ aws:
 <br/>
 
 <h3> .env </h3>
+
 ```
 # env
 VITE_ENVIRONMENT=development

@@ -2,19 +2,19 @@ package com.ybcharlog.api.controller.user;
 
 import com.ybcharlog.api.RequestDto.auth.LoginDto;
 import com.ybcharlog.api.ResponseDto.auth.SessionResponse;
-import com.ybcharlog.api.domain.user.User;
-import com.ybcharlog.api.exception.InvalidRequest;
-import com.ybcharlog.api.exception.InvalidSigninInformation;
-import com.ybcharlog.api.repository.user.UserRepository;
 import com.ybcharlog.api.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import java.time.Duration;
 
 @Slf4j
 @RestController
@@ -22,16 +22,25 @@ import java.util.Optional;
 @RequestMapping("/auth")
 public class AuthController {
 
-//	private final UserRepository userRepository;
+	@Value("${ybchar.host}")
+	private String hostname;
+
 	private final AuthService authService;
 	@PostMapping("/login")
-	public SessionResponse login(@RequestBody LoginDto loginDto) {
-		// json 아이디/ 비밀번호
-		log.info(">>> login {} ", loginDto);
+	public ResponseEntity<Object> login(@RequestBody LoginDto loginDto) {
+		SessionResponse sessionResponse = authService.signIn(loginDto);
+		ResponseCookie responseCookie = ResponseCookie.from("SESSION", sessionResponse.getAccessToken())
+				.domain(hostname)
+				.path("/")
+				.httpOnly(true)
+				.secure(false)
+				.maxAge(Duration.ofDays(30))
+				.sameSite("Strict")
+				.build();
 
-		// DB 에서 조회
+		log.info(">>>> cookie = {}", responseCookie);
 
-		// 토근을 응답
-		return authService.signIn(loginDto);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.SET_COOKIE, responseCookie.toString()).build();
 	}
 }

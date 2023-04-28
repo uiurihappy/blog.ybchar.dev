@@ -106,12 +106,14 @@ onMounted(() => {
 
     <el-row>
       <el-col>
-        <div v-if="isCodeBlock">
-          <pre>
+        <div class="content">
+          <div v-if="isCodeBlock">
+            <pre>
             <code class="code-block">{{ codeBlockContent }}</code>
           </pre>
+          </div>
+          <div v-else v-html="post.content.replace(/\n/g, '<br>')"></div>
         </div>
-        <div v-else v-html="post.content.replace(/\n/g, '<br>')"></div>
       </el-col>
     </el-row>
     <!-- <el-row>

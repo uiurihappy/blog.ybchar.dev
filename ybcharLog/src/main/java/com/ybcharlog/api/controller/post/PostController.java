@@ -67,13 +67,13 @@ public class PostController {
     }
 
     @PostMapping("/save")
-    public Post post(@RequestBody @Valid PostCreateDto request, @RequestHeader String authorization) throws AuthenticationException {
-        if (authorization.equals(headerAuthkey)) {
+    public Post post(@RequestBody @Valid PostCreateDto request) {
+//        if (authorization.equals(headerAuthkey)) {
             request.titleValidate();
             return postService.write(request);
-        } else {
-            throw new AuthenticationException("Key가 일치하지 않습니다.");
-        }
+//        } else {
+//            throw new AuthenticationException("Key가 일치하지 않습니다.");
+//        }
     }
 
     /*
@@ -94,21 +94,21 @@ public class PostController {
     }
 
     @PatchMapping("/update/{postId}")
-    public void editPost(@PathVariable Long postId, @RequestBody @Valid PostEditDto postEditDto, @RequestHeader String authorization) throws AuthenticationException {
-        if (authorization.equals(headerAuthkey)) {
+    public void editPost(@PathVariable Long postId, @RequestBody @Valid PostEditDto postEditDto) {
+//        if (authorization.equals(headerAuthkey)) {
             postService.editPost(postId, postEditDto);
-        } else {
-            throw new AuthenticationException("Key가 일치하지 않습니다.");
-        }
+//        } else {
+//            throw new AuthenticationException("Key가 일치하지 않습니다.");
+//        }
     }
 
     @DeleteMapping("/delete/{postId}")
-    public void deletePost(@PathVariable Long postId, @RequestHeader String authorization) throws AuthenticationException {
-        if (authorization.equals(headerAuthkey)) {
+    public void deletePost(@PathVariable Long postId) {
+//        if (authorization.equals(headerAuthkey)) {
             postService.deletePost(postId);
-        } else {
-            throw new AuthenticationException("Key가 일치하지 않습니다.");
-        }
+//        } else {
+//            throw new AuthenticationException("Key가 일치하지 않습니다.");
+//        }
     }
 
     @PostMapping("/thumbnail/image")

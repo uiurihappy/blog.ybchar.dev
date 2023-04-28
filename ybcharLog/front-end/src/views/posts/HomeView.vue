@@ -102,13 +102,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
-import type { PostList, Posts } from '../../common/posts/posts.interface';
+import type { PostList } from '../../common/posts/posts.interface';
 import { useRouter } from 'vue-router';
 import { getFormattedDate } from '../../common/tools/dateFormat.tool';
 import { truncateText } from '../../common/tools/truncateText.tool';
-import { marked } from 'marked';
+// import { marked } from 'marked';
 
 const router = useRouter();
 const PAGE_SIZE = 12;
@@ -156,19 +156,19 @@ const moveToRead = (postId: number) => {
   router.push({ name: 'read', params: { postId } });
 };
 
-const pagedPostsHtml = computed(() => {
-  const startIndex = (currentPage.value - 1) * PAGE_SIZE;
-  const endIndex = Math.min(posts.value.list.length, startIndex + PAGE_SIZE);
-  const pagedPostsHtmlArray = posts.value.list
-    .slice(startIndex, endIndex)
-    .map(post => {
-      return {
-        ...post,
-        content: marked(post.content),
-      };
-    });
-  return pagedPostsHtmlArray;
-});
+// const pagedPostsHtml = computed(() => {
+//   const startIndex = (currentPage.value - 1) * PAGE_SIZE;
+//   const endIndex = Math.min(posts.value.list.length, startIndex + PAGE_SIZE);
+//   const pagedPostsHtmlArray = posts.value.list
+//     .slice(startIndex, endIndex)
+//     .map(post => {
+//       return {
+//         ...post,
+//         content: marked(post.content),
+//       };
+//     });
+//   return pagedPostsHtmlArray;
+// });
 
 onMounted(() => {
   axios

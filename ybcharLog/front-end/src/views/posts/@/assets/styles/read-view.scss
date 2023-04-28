@@ -82,7 +82,10 @@
 
 .content {
   margin-top: 12px;
+  white-space: pre-wrap;
   /* 일반적인 content 스타일 */
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 

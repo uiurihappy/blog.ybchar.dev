@@ -1,6 +1,7 @@
 package com.ybcharlog.api.repository.comment;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ybcharlog.api.Common.repository.BasicRepoSupport;
 import com.ybcharlog.api.RequestDto.comment.CommentEditDto;
 import com.ybcharlog.api.RequestDto.comment.CommentSearchDto;
 import com.ybcharlog.api.domain.comment.Comment;
@@ -8,15 +9,19 @@ import com.ybcharlog.api.domain.comment.QComment;
 import com.ybcharlog.api.domain.post.QPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.ybcharlog.api.domain.comment.QComment.*;
 
 
-@RequiredArgsConstructor
-public class CommentRepositoryImpl implements CommentRepositoryCustom{
-    private final JPAQueryFactory jpaQueryFactory;
+@Repository
+public class CommentRepositoryImpl extends BasicRepoSupport implements CommentRepositoryCustom{
+    protected CommentRepositoryImpl(JPAQueryFactory jpaQueryFactory, EntityManager em) {
+        super(jpaQueryFactory, em);
+    }
 
     @Override
     public List<Comment> getList(Long postId, CommentSearchDto commentSearchDto) {
@@ -37,5 +42,6 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom{
                 .where(comment.display.eq(1))
                 .where(comment.id.eq(commentId))
                 .execute();
+        em.clear();
     }
 }

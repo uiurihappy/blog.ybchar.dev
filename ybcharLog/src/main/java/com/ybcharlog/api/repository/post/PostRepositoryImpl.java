@@ -47,6 +47,7 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
                     .set(QPost.post.viewCount, QPost.post.viewCount.add(1))
                     .where(QPost.post.id.eq(postId))
                     .execute();
+            em.clear();
         }
         return post;
     }
@@ -71,6 +72,7 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
                 .set(post.display, postEditDto.getDisplay())
                 .where(post.id.eq(postId))
                 .execute();
+        em.clear();
     }
 
     @Override
@@ -98,6 +100,7 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
                 .set(post.isDeleted, 1)
                 .where(post.id.eq(postId))
                 .execute();
+        em.clear();
     }
 
     @Override
@@ -107,7 +110,6 @@ public class PostRepositoryImpl extends BasicRepoSupport implements PostReposito
                 .set(post.thumbnailImage, imagePath)
                 .where(post.id.eq(postId))
                 .execute();
-        em.flush();
         em.clear();
     }
 }

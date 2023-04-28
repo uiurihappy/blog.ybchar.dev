@@ -5,6 +5,7 @@ import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.InvalidRequest;
 import com.ybcharlog.api.exception.InvalidSigninInformation;
 import com.ybcharlog.api.repository.user.UserRepository;
+import com.ybcharlog.api.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,16 +21,15 @@ import java.util.Optional;
 @RequestMapping("/auth")
 public class AuthController {
 
-	private final UserRepository userRepository;
-
+//	private final UserRepository userRepository;
+	private final AuthService authService;
 	@PostMapping("/login")
 	public User login(@RequestBody LoginDto loginDto) {
 		// json 아이디/ 비밀번호
 		log.info(">>> login {} ", loginDto);
 
 		// DB 에서 조회
-		User user = userRepository.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword())
-				.orElseThrow(InvalidSigninInformation::new);
+		User user = authService.signIn(loginDto);
 		// 토근을 응답
 		return user;
 	}

@@ -1,9 +1,12 @@
 package com.ybcharlog.api.domain.user;
 
 import com.ybcharlog.api.Common.BaseTimeEntity;
+import com.ybcharlog.api.domain.auth.Session;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,11 +31,20 @@ public class User extends BaseTimeEntity {
 	@Column(columnDefinition = "varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci not null default 'USER' COMMENT '사용자 권한'")
 	private Role role;
 
+	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+	private List<Session> sessions = new ArrayList<>();
+
 	@Builder
 	public User(String email, String nickname, String password, Role role) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
 		this.role = role;
+	}
+
+	public void addSession() {
+		sessions.add(Session.builder()
+						.user(this)
+						.build());
 	}
 }

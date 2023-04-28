@@ -1,3 +1,4 @@
+-- Test User
 INSERT INTO `user` SET email='ybchar@test.com', nickname='hi', password='qwer1234', role='ADMIN'
     ON DUPLICATE KEY UPDATE email='ybchar@test.com', nickname='hi', password='qwer1234', role='ADMIN';
 INSERT INTO `user` SET email='tester1@test.com', nickname='test1', password='qwer1234', role='USER'

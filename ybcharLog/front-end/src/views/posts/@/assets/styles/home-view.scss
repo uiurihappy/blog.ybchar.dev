@@ -121,7 +121,6 @@ $tertiary-color: #2d2d2d;
         }
         .post-else-title {
           padding-top: 1.2rem;
-          margin-bottom: 10px;
           a {
             color: var(--primary-color);
             text-decoration: none;
@@ -135,7 +134,8 @@ $tertiary-color: #2d2d2d;
       
 
       .post-sub {
-        justify-content: flex-end;
+        .post-if-sub{
+          justify-content: flex-end;
         display: flex;
         font-size: 0.7rem;
         padding-bottom: 10px;
@@ -155,9 +155,32 @@ $tertiary-color: #2d2d2d;
         .post-date {
           color: var(--secondary-color);
         }
+        }
+        .post-else-sub{
+          justify-content: flex-end;
+        display: flex;
+        font-size: 0.7rem;
+        margin-right: 8px;
+        margin-left: 0.3rem;
+        --tw-border-opacity: 0.5;
+        border-color: rgb(229 231 235 / var(--tw-border-opacity));
+        border-top: 1.2px solid #ccc;
+        padding-top: 10px;
+
+        .post-category {
+          font-weight: bold;
+          color: var(--tertiary-color);
+          margin-right: 6px;
+        }
+
+        .post-date {
+          color: var(--secondary-color);
+        }
+        }
       }
       .post-content-box {
         overflow: hidden;
+        word-wrap: break-word;
         .post-content {
           
           color: var(--secondary-color);

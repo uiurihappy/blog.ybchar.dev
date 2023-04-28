@@ -40,8 +40,18 @@
             </div>
           </div>
           <div class="post-sub">
-            <div class="post-category">작성일:</div>
-            <div class="post-date">{{ getFormattedDate(post.createdAt) }}</div>
+            <div v-if="post.thumbnailImage" class="post-if-sub">
+              <div class="post-category">작성일:</div>
+              <div class="post-date">
+                {{ getFormattedDate(post.createdAt) }}
+              </div>
+            </div>
+            <div v-else class="post-else-sub">
+              <div class="post-category">작성일:</div>
+              <div class="post-date">
+                {{ getFormattedDate(post.createdAt) }}
+              </div>
+            </div>
           </div>
         </div>
       </div>

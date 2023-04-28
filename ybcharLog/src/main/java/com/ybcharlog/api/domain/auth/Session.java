@@ -2,16 +2,14 @@ package com.ybcharlog.api.domain.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ybcharlog.api.domain.user.User;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Session {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +20,7 @@ public class Session {
 	private String revokeToken;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "sessionId")
+	@JoinColumn(name = "userId")
 	@JsonIgnore
 	private User user;
 

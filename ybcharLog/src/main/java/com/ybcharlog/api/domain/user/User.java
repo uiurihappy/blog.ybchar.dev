@@ -42,9 +42,11 @@ public class User extends BaseTimeEntity {
 		this.role = role;
 	}
 
-	public void addSession() {
-		sessions.add(Session.builder()
-						.user(this)
-						.build());
+	public Session addSession() {
+		Session session = Session.builder()
+				.user(this)
+				.build();
+		sessions.add(session);
+		return session;
 	}
 }

@@ -1,6 +1,7 @@
 package com.ybcharlog.api.controller.user;
 
 import com.ybcharlog.api.RequestDto.auth.LoginDto;
+import com.ybcharlog.api.ResponseDto.auth.SessionResponse;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.InvalidRequest;
 import com.ybcharlog.api.exception.InvalidSigninInformation;
@@ -24,13 +25,13 @@ public class AuthController {
 //	private final UserRepository userRepository;
 	private final AuthService authService;
 	@PostMapping("/login")
-	public User login(@RequestBody LoginDto loginDto) {
+	public SessionResponse login(@RequestBody LoginDto loginDto) {
 		// json 아이디/ 비밀번호
 		log.info(">>> login {} ", loginDto);
 
 		// DB 에서 조회
-		User user = authService.signIn(loginDto);
+
 		// 토근을 응답
-		return user;
+		return authService.signIn(loginDto);
 	}
 }

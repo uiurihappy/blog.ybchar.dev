@@ -3,6 +3,7 @@ package com.ybcharlog.api.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ybcharlog.api.RequestDto.auth.LoginDto;
 import com.ybcharlog.api.RequestDto.post.PostCreateDto;
+import com.ybcharlog.api.domain.auth.Session;
 import com.ybcharlog.api.domain.user.Role;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.UserNotFound;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -136,6 +138,50 @@ class AuthControllerTest {
 				.andExpect(jsonPath("$.accessToken", Matchers.notNullValue()))
 				.andDo(print());
 
+	}
+
+	@Test
+	@DisplayName("로그인 후 권한이 필요한 페이지 접속한다.")
+	void authorizationAccess() throws Exception {
+		// given
+		User user = User.builder()
+				.email("ybchar@test.com")
+				.password("qwer1234")
+				.nickname("hi")
+				.role(Role.valueOf("ADMIN"))
+				.build();
+		Session session = user.addSession();
+		userRepository.save(user);
+
+		// expected
+		mockMvc.perform(get("/posts/authTest")
+						.header("authorization", session.getAccessToken())
+						.contentType(APPLICATION_JSON)
+				)
+				.andExpect(status().isOk())
+				.andDo(print());
+	}
+
+	@Test
+	@DisplayName("로그인 후 검증되지 않은 세션값으로 권한이 필요한 페이지에 접속할 수 없다.")
+	void NotValidationSessionValueIsAccess() throws Exception {
+		// given
+		User user = User.builder()
+				.email("ybchar@test.com")
+				.password("qwer1234")
+				.nickname("hi")
+				.role(Role.valueOf("ADMIN"))
+				.build();
+		Session session = user.addSession();
+		userRepository.save(user);
+
+		// expected
+		mockMvc.perform(get("/posts/authTest")
+						.header("authorization", session.getAccessToken() + "tewtg")
+						.contentType(APPLICATION_JSON)
+				)
+				.andExpect(status().isUnauthorized())
+				.andDo(print());
 	}
 
 }

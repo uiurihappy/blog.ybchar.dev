@@ -12,8 +12,9 @@ import Content from './components/Content.vue';
 
 <style>
 body {
-  margin: 0;
+  margin: auto;
   width: 100%;
+  padding-top: 1rem;
 
   font-family: 'Pretendard Variable', Pretendard, -apple-system,
     BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',

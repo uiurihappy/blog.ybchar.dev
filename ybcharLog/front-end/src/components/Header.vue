@@ -43,12 +43,12 @@
   src: url('../../public/fonts/BMDOHYEON_ttf.ttf');
 }
 .container {
+  border: 0.7px solid #666;
   background-color: #fff;
   max-width: 1100px;
   margin: 0 auto;
   position: sticky;
-  top: -20px;
-  padding-top: 32px;
+  top: 0px;
   z-index: 1;
   padding {
     opacity: 0.2;
@@ -61,7 +61,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 24px;
+  padding: 0 35px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   height: 64px;

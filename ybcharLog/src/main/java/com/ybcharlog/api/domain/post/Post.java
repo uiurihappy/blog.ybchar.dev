@@ -15,7 +15,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ybcharlog.api.domain.post.PostEditor.PostEditorBuilder;
 
 @Entity
 @Getter
@@ -86,11 +85,6 @@ public class Post extends BaseEntity {
 		this.content = content;
 	}
 
-	public PostEditorBuilder toEditor() {
-		return PostEditor.builder()
-				.title(title)
-				.content(content);
-	}
 
 	public void edit(PostEditDto postEditDto, Post post) {
 		this.title = postEditDto.getTitle() != null ? postEditDto.getTitle() : post.getTitle();

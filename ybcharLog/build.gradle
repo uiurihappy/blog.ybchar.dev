@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.10'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id "org.asciidoctor.jvm.convert" version "3.3.2"
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.ybcharLog'
@@ -13,6 +14,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    querydsl.extendsFrom compileClasspath
     asciidoctorExt
 }
 
@@ -38,11 +40,11 @@ dependencies {
     implementation 'com.querydsl:querydsl-core'
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor('org.projectlombok:lombok')
 
-    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
@@ -97,11 +99,21 @@ jar {
 
 clean {
     delete file("$buildDir/generated/*")
-    delete file("src/main/generated/*")
+    delete file("src/main/generated")
 }
 
-
 def querydslDir = "$buildDir/generated/sources/annotationProcessor/java/main"
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
 
 tasks.withType(JavaCompile) {
     options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
@@ -112,9 +124,7 @@ tasks.withType(AbstractCompile) {
         fork = true
     }
 }
-sourceSets {
-    main.java.srcDir querydslDir
-}
+
 //gradle clean 시, Q Class 디렉토리까지 삭제하도록 설정
 
 

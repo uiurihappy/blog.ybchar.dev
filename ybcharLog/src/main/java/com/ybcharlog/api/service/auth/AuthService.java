@@ -25,7 +25,6 @@ public class AuthService {
 				.orElseThrow(InvalidSigninInformation::new);
 		return SessionResponse.builder()
 				.accessToken(user.addSession().getAccessToken())
-				.revokeToken(user.addSession().getRevokeToken())
 				.build();
 	}
 }

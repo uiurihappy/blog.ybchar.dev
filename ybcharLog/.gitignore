@@ -42,7 +42,7 @@ out/
 .DS_Store
 
 /src/main/generated
-
+./http
 
 ## ybchar log
 nodeenv-16

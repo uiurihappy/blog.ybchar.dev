@@ -2,6 +2,7 @@ package com.ybcharlog.api.controller.user;
 
 import com.ybcharlog.api.RequestDto.auth.LoginDto;
 import com.ybcharlog.api.ResponseDto.auth.SessionResponse;
+import com.ybcharlog.api.config.AppConfig;
 import com.ybcharlog.api.service.auth.AuthService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,6 +22,7 @@ import javax.crypto.SecretKey;
 import java.security.Key;
 import java.time.Duration;
 import java.util.Base64;
+import java.util.Date;
 
 @Slf4j
 @RestController
@@ -31,33 +33,21 @@ public class AuthController {
 	@Value("${ybchar.host}")
 	private String hostname;
 
-	private static final String KEY = "xmJ7Jufnkof80jJgmMrDEfsVjg5UVhx35S2327uJbiI=";
-
-
 	private final AuthService authService;
+	private final AppConfig appConfig;
 
 	@PostMapping("/login")
 	public SessionResponse login(@RequestBody LoginDto loginDto) {
 		Long userId = authService.signIn(loginDto);
-//		ResponseCookie responseCookie = ResponseCookie.from("SESSION", sessionResponse.getAccessToken())
-//				.domain(hostname)
-//				.path("/")
-//				.httpOnly(true)
-//				.secure(false)
-//				.maxAge(Duration.ofDays(30))
-//				.sameSite("Strict")
-//				.build();
 
-		SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(KEY));
+		SecretKey key = Keys.hmacShaKeyFor(appConfig.getSecretKey());
 		String jwts = Jwts.builder()
 				.setSubject(String.valueOf(userId))
 				.signWith(key)
+				.setIssuedAt(new Date(System.currentTimeMillis())) // 토큰발행일자
+				.setExpiration(new Date(System.currentTimeMillis()+ 60 * 10000 * 6)) // 토큰유효기간(1시간)
 				.compact();
 
 		return new SessionResponse(jwts);
-//		log.info(">>>> cookie = {}", responseCookie);
-//		return jwts;
-//		return ResponseEntity.ok()
-//				.header(HttpHeaders.SET_COOKIE, responseCookie.toString()).build();
 	}
 }

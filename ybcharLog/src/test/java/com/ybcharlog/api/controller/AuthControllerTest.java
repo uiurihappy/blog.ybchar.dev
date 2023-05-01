@@ -41,7 +41,7 @@ class AuthControllerTest {
 	@Autowired
 	private SessionRepository sessionRepository;
 
-	@Value("${auth.ybcharConfig.key}")
+	@Value("${auth.key}")
 	private String authKey;
 
 	// 다른 테스트에 영향이 가지 않도록 사전에 deleteAll한다.

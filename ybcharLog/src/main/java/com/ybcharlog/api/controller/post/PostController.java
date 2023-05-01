@@ -44,7 +44,7 @@ public class PostController {
                     // 세 번 이상이면 적어도 자동화를 고려해볼 것
     */
 
-    @Value("${auth.ybcharConfig.key}")
+    @Value("${auth.key}")
     private String headerAuthkey;
 
     private final PostService postService;

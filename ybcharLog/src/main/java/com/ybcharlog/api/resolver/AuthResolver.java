@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthResolver implements HandlerMethodArgumentResolver {
 
 	private final SessionRepository sessionRepository;
-	private static final String KEY = "xmJ7Jufnkof80jJgmMrDEfsVjg5UVhx35S2327uJbiI=";
 	private final AppConfig appConfig;
 
 	@Override
@@ -37,35 +36,14 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
 	@Override
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 		log.info(">>> {}", appConfig.toString());
-		// cookie 사용
-//		HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
-//		if (servletRequest == null) {
-//			log.error("servletRequest is null");
-//			throw new UnauthorizedRequest();
-//		}
-//		Cookie[] cookies = servletRequest.getCookies();
-//
-//		if (cookies.length == 0) {
-//			log.error("cookies is null");
-//			throw new UnauthorizedRequest();
-//		}
-//
-//		String accessToken = cookies[0].getValue();
-//
-//		Session userSession = sessionRepository.findByAccessToken(accessToken)
-//				.orElseThrow(UnauthorizedRequest::new);
-//
-//		return new UserSession(userSession.getUser().getId());
 
 		String accessToken = webRequest.getHeader("token");
 		if (accessToken == null || accessToken.equals(""))
 			throw new UnauthorizedRequest();
 
-		byte[] decodedKey = Base64.decodeBase64(KEY);
-
 		try {
 			Jws<Claims> claims = Jwts.parserBuilder()
-					.setSigningKey(decodedKey)
+					.setSigningKey(appConfig.getSecretKey())
 					.build()
 					.parseClaimsJws(accessToken);
 			String userId = claims.getBody().getSubject();

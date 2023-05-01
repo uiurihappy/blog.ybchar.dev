@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class AuthInterceptor implements HandlerInterceptor {
 
-	@Value("${auth.ybcharConfig.key}")
+	@Value("${auth.key}")
 	private String authKey;
 
 	@Override

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,10 +51,19 @@ public class AuthController {
 			throw new AlreadyExistsEmailException();
 		}
 
+		SCryptPasswordEncoder encoder = new SCryptPasswordEncoder(
+				16
+				, 8
+				, 1
+				, 32
+				, 64);
+
+		String encryptedPassword = encoder.encode(signUpDto.getPassword());
+
 		User user = User.builder()
 				.nickname(signUpDto.getNickname())
 				.email(signUpDto.getEmail())
-				.password(signUpDto.getPassword())
+				.password(encryptedPassword)
 				.role(signUpDto.getRole())
 				.build();
 		userRepository.save(user);

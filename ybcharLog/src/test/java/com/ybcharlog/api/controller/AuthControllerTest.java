@@ -213,7 +213,8 @@ class AuthControllerTest {
 
 		User user = userRepository.findAll().iterator().next();
 		assertEquals("tester1", user.getNickname());
-		assertEquals("qwer1234", user.getPassword());
+		assertNotNull(user.getPassword());
+		assertNotEquals("qwer1234", user.getPassword());
 		assertEquals("ybchar@test.com", user.getEmail());
 	}
 

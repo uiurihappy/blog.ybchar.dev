@@ -24,7 +24,8 @@ public class User extends BaseTimeEntity {
 	@Column(columnDefinition = "varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci not null COMMENT '사용자 닉네임'")
 	private String nickname;
 
-	@Column(columnDefinition = "varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci not null COMMENT '사용자 비밀번호'")
+	@Column(columnDefinition = "text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci not null COMMENT '사용자 비밀번호'")
+	@Lob
 	private String password;
 
 	@Enumerated(EnumType.STRING)

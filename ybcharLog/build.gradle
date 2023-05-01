@@ -47,6 +47,8 @@ dependencies {
         exclude group: 'org.json', module: 'json' //provided by Android natively
     }
 
+    implementation 'org.springframework.security:spring-security-crypto'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
 
     implementation 'com.querydsl:querydsl-core'
     implementation 'com.querydsl:querydsl-jpa'

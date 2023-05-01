@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class AuthInterceptor implements HandlerInterceptor {
 
-	@Value("${auth.key}")
+	@Value("${auth.ybcharConfig.key}")
 	private String authKey;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		log.info(">> preHandle");
-		String accessToken = request.getParameter("accessToken");
+		String accessToken = request.getParameter("token");
 		if (accessToken != null && !accessToken.equals("")) {
 			request.setAttribute("username", accessToken);
 			return true;

@@ -1,5 +1,6 @@
 package com.ybcharlog.api.resolver;
 
+import com.ybcharlog.api.config.AppConfig;
 import com.ybcharlog.api.config.data.UserSession;
 import com.ybcharlog.api.domain.auth.Session;
 import com.ybcharlog.api.exception.UnauthorizedRequest;
@@ -26,6 +27,8 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
 
 	private final SessionRepository sessionRepository;
 	private static final String KEY = "xmJ7Jufnkof80jJgmMrDEfsVjg5UVhx35S2327uJbiI=";
+	private final AppConfig appConfig;
+
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
 		return parameter.getParameterType().equals(UserSession.class);
@@ -33,7 +36,7 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
 
 	@Override
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-
+		log.info(">>> {}", appConfig.toString());
 		// cookie 사용
 //		HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
 //		if (servletRequest == null) {

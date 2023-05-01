@@ -10,10 +10,8 @@ import lombok.Getter;
 public class SessionResponse {
 
 	private final String accessToken;
-	private final String revokeToken;
 
-	public SessionResponse(String accessToken, String revokeToken) {
+	public SessionResponse(String accessToken) {
 		this.accessToken = accessToken;
-		this.revokeToken = revokeToken;
 	}
 }

@@ -17,7 +17,6 @@ public class Session {
 
 	private String accessToken;
 
-	private String revokeToken;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId")
@@ -27,7 +26,6 @@ public class Session {
 	@Builder
 	public Session(User user) {
 		this.accessToken = UUID.randomUUID().toString();
-		this.revokeToken = UUID.randomUUID().toString();
 		this.user = user;
 	}
 }

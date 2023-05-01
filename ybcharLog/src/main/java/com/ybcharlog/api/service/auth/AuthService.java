@@ -20,11 +20,9 @@ public class AuthService {
 	private final UserRepository userRepository;
 
 	@Transactional
-	public SessionResponse signIn(LoginDto loginDto) {
+	public Long signIn(LoginDto loginDto) {
 		User user = userRepository.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword())
 				.orElseThrow(InvalidSigninInformation::new);
-		return SessionResponse.builder()
-				.accessToken(user.addSession().getAccessToken())
-				.build();
+		return user.getId();
 	}
 }

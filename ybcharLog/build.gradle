@@ -37,9 +37,13 @@ dependencies {
 
     implementation group: 'org.javassist', name: 'javassist', version: '3.29.0-GA'
 
+    implementation 'org.json:json:20220320'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    runtimeOnly 'io.jsonwebtoken.jjwt-impl:0.11.5'
-    runtimeOnly 'io.jsonwebtoken.jjwt-jackson:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly('io.jsonwebtoken:jjwt-orgjson:0.11.5') {
+        exclude group: 'org.json', module: 'json' //provided by Android natively
+    }
+
     implementation 'com.querydsl:querydsl-core'
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'

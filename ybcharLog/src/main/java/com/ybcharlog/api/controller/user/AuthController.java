@@ -1,8 +1,13 @@
 package com.ybcharlog.api.controller.user;
 
 import com.ybcharlog.api.RequestDto.auth.LoginDto;
+import com.ybcharlog.api.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.ResponseDto.auth.SessionResponse;
 import com.ybcharlog.api.config.AppConfig;
+import com.ybcharlog.api.domain.user.User;
+import com.ybcharlog.api.exception.AlreadyExistsEmailException;
+import com.ybcharlog.api.exception.InvalidRequest;
+import com.ybcharlog.api.repository.user.UserRepository;
 import com.ybcharlog.api.service.auth.AuthService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,6 +28,7 @@ import java.security.Key;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -35,6 +41,23 @@ public class AuthController {
 
 	private final AuthService authService;
 	private final AppConfig appConfig;
+	private final UserRepository userRepository;
+
+	@PostMapping("/join")
+	public void signUp(@RequestBody SignUpDto signUpDto) {
+		Optional<User> isUser = userRepository.findByEmail(signUpDto.getEmail());
+		if (isUser.isPresent()) {
+			throw new AlreadyExistsEmailException();
+		}
+
+		User user = User.builder()
+				.nickname(signUpDto.getNickname())
+				.email(signUpDto.getEmail())
+				.password(signUpDto.getPassword())
+				.role(signUpDto.getRole())
+				.build();
+		userRepository.save(user);
+	}
 
 	@PostMapping("/login")
 	public SessionResponse login(@RequestBody LoginDto loginDto) {

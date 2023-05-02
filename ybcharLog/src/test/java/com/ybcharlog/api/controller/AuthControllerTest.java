@@ -12,6 +12,7 @@ import com.ybcharlog.api.exception.AlreadyExistsEmailException;
 import com.ybcharlog.api.exception.UserNotFound;
 import com.ybcharlog.api.repository.user.SessionRepository;
 import com.ybcharlog.api.repository.user.UserRepository;
+import com.ybcharlog.api.service.auth.AuthService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
@@ -45,6 +46,9 @@ class AuthControllerTest {
 
 	@Autowired
 	private AuthController authController;
+
+	@Autowired
+	private AuthService authService;
 
 	@Value("${auth.key}")
 	private String authKey;
@@ -260,6 +264,28 @@ class AuthControllerTest {
 				.andDo(print());
 	}
 
+	@Test
+	@DisplayName("로그인 서비스 테스트")
+	void signInEncryptTest() throws Exception {
+		// given
+		SignUpDto signUpDto = SignUpDto.builder()
+				.nickname("tester1")
+				.password("qwer1234")
+				.email("ybchar@test.com")
+				.role(Role.ADMIN)
+				.build();
+		authController.signUp(signUpDto);
+		LoginDto loginDto = LoginDto.builder()
+				.email("ybchar@test.com")
+				.password("qwer1234")
+				.build();
+
+		// when
+		authService.signIn(loginDto);
+
+		// then
+
+	}
 
 
 }

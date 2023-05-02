@@ -5,12 +5,15 @@ import com.ybcharlog.api.ResponseDto.auth.SessionResponse;
 import com.ybcharlog.api.domain.auth.Session;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.InvalidSigninInformation;
+import com.ybcharlog.api.exception.UserNotFound;
 import com.ybcharlog.api.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -21,8 +24,21 @@ public class AuthService {
 
 	@Transactional
 	public Long signIn(LoginDto loginDto) {
-		User user = userRepository.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword())
-				.orElseThrow(InvalidSigninInformation::new);
+		User user = userRepository.findByEmail(loginDto.getEmail())
+				.orElseThrow(UserNotFound::new);
+
+		SCryptPasswordEncoder encoder = new SCryptPasswordEncoder(
+				16
+				, 8
+				, 1
+				, 32
+				, 64);
+
+		boolean isMatch = encoder.matches(loginDto.getPassword(), user.getPassword());
+		if (!isMatch){
+			throw new InvalidSigninInformation();
+		}
+
 		return user.getId();
 	}
 }

@@ -6,7 +6,7 @@ plugins {
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
-group = 'com.ybcharLog'
+group = 'ybcharLog'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -101,6 +101,7 @@ bootJar {
     }
 }
 jar {
+    baseName = "ybcharLog"
     enabled = false
 }
 //ForkOptions {
@@ -116,6 +117,7 @@ clean {
 }
 
 def querydslDir = "$buildDir/generated/sources/annotationProcessor/java/main"
+def generated = "src/main/generated"
 querydsl {
     jpa = true
     querydslSourcesDir = querydslDir
@@ -129,7 +131,7 @@ compileQuerydsl {
 }
 
 tasks.withType(JavaCompile) {
-    options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+    options.getGeneratedSourceOutputDirectory().set(file(generated))
 }
 
 tasks.withType(AbstractCompile) {

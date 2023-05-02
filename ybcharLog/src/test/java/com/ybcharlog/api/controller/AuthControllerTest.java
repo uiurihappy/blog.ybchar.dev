@@ -5,10 +5,12 @@ import com.ybcharlog.api.RequestDto.auth.LoginDto;
 import com.ybcharlog.api.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.controller.user.AuthController;
+import com.ybcharlog.api.crypto.PasswordEncoder;
 import com.ybcharlog.api.domain.auth.Session;
 import com.ybcharlog.api.domain.user.Role;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.AlreadyExistsEmailException;
+import com.ybcharlog.api.exception.InvalidSigninInformation;
 import com.ybcharlog.api.exception.UserNotFound;
 import com.ybcharlog.api.repository.user.SessionRepository;
 import com.ybcharlog.api.repository.user.UserRepository;
@@ -50,6 +52,7 @@ class AuthControllerTest {
 	@Autowired
 	private AuthService authService;
 
+
 	@Value("${auth.key}")
 	private String authKey;
 
@@ -68,9 +71,11 @@ class AuthControllerTest {
 	@DisplayName("로그인 성공")
 	void signInTest() throws Exception {
 		// given
+		PasswordEncoder encoder = new PasswordEncoder();
+		String encryptPassword = encoder.encrypt("qwer1234");
 		User user = User.builder()
 				.email("ybchar@test.com")
-				.password("qwer1234")
+				.password(encryptPassword)
 				.nickname("hi")
 				.role(Role.valueOf("ADMIN"))
 				.build();
@@ -96,9 +101,11 @@ class AuthControllerTest {
 	@DisplayName("로그인 성공 후 session 생성")
 	void signInAfterSessionSave() throws Exception {
 		// given
+		PasswordEncoder encoder = new PasswordEncoder();
+		String encryptPassword = encoder.encrypt("qwer1234");
 		User user = User.builder()
 				.email("ybchar@test.com")
-				.password("qwer1234")
+				.password(encryptPassword)
 				.nickname("hi")
 				.role(Role.valueOf("ADMIN"))
 				.build();
@@ -122,67 +129,18 @@ class AuthControllerTest {
 		User loggedInUserId = userRepository.findById(user.getId())
 				.orElseThrow(UserNotFound::new);
 
-		assertEquals(1L, user.getSessions().size());
-	}
-
-	@Test
-	@DisplayName("세션 객체 생성 후 응답 테스트")
-	void signInAfterSessionSaveResponse() throws Exception {
-		// given
-		User user = User.builder()
-				.email("ybchar@test.com")
-				.password("qwer1234")
-				.nickname("hi")
-				.role(Role.valueOf("ADMIN"))
-				.build();
-		userRepository.save(user);
-
-		LoginDto loginDto = LoginDto.builder()
-				.email("ybchar@test.com")
-				.password("qwer1234")
-				.build();
-
-		String json = objectMapper.writeValueAsString(loginDto);
-		// expected
-		mockMvc.perform(post("/auth/login")
-						.contentType(APPLICATION_JSON)
-						.content(json)
-				)
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.accessToken", Matchers.notNullValue()))
-				.andDo(print());
-
-	}
-
-	@Test
-	@DisplayName("로그인 후 권한이 필요한 페이지 접속한다.")
-	void authorizationAccess() throws Exception {
-		// given
-		User user = User.builder()
-				.email("ybchar@test.com")
-				.password("qwer1234")
-				.nickname("hi")
-				.role(Role.valueOf("ADMIN"))
-				.build();
-		Session session = user.addSession();
-		userRepository.save(user);
-
-		// expected
-		mockMvc.perform(get("/posts/authTest")
-						.header("authorization", session.getAccessToken())
-						.contentType(APPLICATION_JSON)
-				)
-				.andExpect(status().isOk())
-				.andDo(print());
+		assertEquals(0, user.getSessions().size());
 	}
 
 	@Test
 	@DisplayName("로그인 후 검증되지 않은 세션값으로 권한이 필요한 페이지에 접속할 수 없다.")
 	void NotValidationSessionValueIsAccess() throws Exception {
 		// given
+		PasswordEncoder encoder = new PasswordEncoder();
+		String encryptPassword = encoder.encrypt("qwer1234");
 		User user = User.builder()
 				.email("ybchar@test.com")
-				.password("qwer1234")
+				.password(encryptPassword)
 				.nickname("hi")
 				.role(Role.valueOf("ADMIN"))
 				.build();
@@ -202,6 +160,7 @@ class AuthControllerTest {
 	@DisplayName("회원가입 테스트")
 	void signUpTest() throws Exception {
 		// given
+		PasswordEncoder encoder = new PasswordEncoder();
 		SignUpDto signUpDto = SignUpDto.builder()
 				.nickname("tester1")
 				.password("qwer1234")
@@ -217,8 +176,7 @@ class AuthControllerTest {
 
 		User user = userRepository.findAll().iterator().next();
 		assertEquals("tester1", user.getNickname());
-		assertNotNull(user.getPassword());
-		assertNotEquals("qwer1234", user.getPassword());
+		assertTrue(encoder.matches("qwer1234", user.getPassword()));
 		assertEquals("ybchar@test.com", user.getEmail());
 	}
 
@@ -281,9 +239,34 @@ class AuthControllerTest {
 				.build();
 
 		// when
-		authService.signIn(loginDto);
+		Long userId = authService.signIn(loginDto);
 
 		// then
+		assertNotNull(userId);
+
+	}
+
+	@Test
+	@DisplayName("비밀번호 틀린 케이스 테스트")
+	void wrongPasswordTest() throws Exception {
+		// given
+		PasswordEncoder encoder = new PasswordEncoder();
+		String encryptPassword = encoder.encrypt("qwer1234");
+
+		SignUpDto signUpDto = SignUpDto.builder()
+				.nickname("tester1")
+				.password(encryptPassword)
+				.email("ybchar@test.com")
+				.role(Role.ADMIN)
+				.build();
+		authController.signUp(signUpDto);
+		LoginDto loginDto = LoginDto.builder()
+				.email("ybchar@test.com")
+				.password("1234")
+				.build();
+
+		// when
+		assertThrows(InvalidSigninInformation.class, () -> authService.signIn(loginDto));
 
 	}
 

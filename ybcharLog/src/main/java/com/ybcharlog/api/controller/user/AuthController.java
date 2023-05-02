@@ -4,6 +4,7 @@ import com.ybcharlog.api.RequestDto.auth.LoginDto;
 import com.ybcharlog.api.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.ResponseDto.auth.SessionResponse;
 import com.ybcharlog.api.config.AppConfig;
+import com.ybcharlog.api.crypto.PasswordEncoder;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.AlreadyExistsEmailException;
 import com.ybcharlog.api.exception.InvalidRequest;
@@ -50,15 +51,8 @@ public class AuthController {
 		if (isUser.isPresent()) {
 			throw new AlreadyExistsEmailException();
 		}
-
-		SCryptPasswordEncoder encoder = new SCryptPasswordEncoder(
-				16
-				, 8
-				, 1
-				, 32
-				, 64);
-
-		String encryptedPassword = encoder.encode(signUpDto.getPassword());
+		PasswordEncoder encoder = new PasswordEncoder();
+		String encryptedPassword = encoder.encrypt(signUpDto.getPassword());
 
 		User user = User.builder()
 				.nickname(signUpDto.getNickname())

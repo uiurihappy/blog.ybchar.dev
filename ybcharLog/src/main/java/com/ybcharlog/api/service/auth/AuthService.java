@@ -2,6 +2,7 @@ package com.ybcharlog.api.service.auth;
 
 import com.ybcharlog.api.RequestDto.auth.LoginDto;
 import com.ybcharlog.api.ResponseDto.auth.SessionResponse;
+import com.ybcharlog.api.crypto.PasswordEncoder;
 import com.ybcharlog.api.domain.auth.Session;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.InvalidSigninInformation;
@@ -27,12 +28,7 @@ public class AuthService {
 		User user = userRepository.findByEmail(loginDto.getEmail())
 				.orElseThrow(UserNotFound::new);
 
-		SCryptPasswordEncoder encoder = new SCryptPasswordEncoder(
-				16
-				, 8
-				, 1
-				, 32
-				, 64);
+		PasswordEncoder encoder = new PasswordEncoder();
 
 		boolean isMatch = encoder.matches(loginDto.getPassword(), user.getPassword());
 		if (!isMatch){

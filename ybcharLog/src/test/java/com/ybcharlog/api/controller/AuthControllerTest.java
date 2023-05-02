@@ -3,9 +3,8 @@ package com.ybcharlog.api.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ybcharlog.api.RequestDto.auth.LoginDto;
 import com.ybcharlog.api.RequestDto.auth.SignUpDto;
-import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.controller.user.AuthController;
-import com.ybcharlog.api.crypto.PasswordEncoder;
+import com.ybcharlog.api.crypto.ScryptPasswordEncoder;
 import com.ybcharlog.api.domain.auth.Session;
 import com.ybcharlog.api.domain.user.Role;
 import com.ybcharlog.api.domain.user.User;
@@ -15,13 +14,12 @@ import com.ybcharlog.api.exception.UserNotFound;
 import com.ybcharlog.api.repository.user.SessionRepository;
 import com.ybcharlog.api.repository.user.UserRepository;
 import com.ybcharlog.api.service.auth.AuthService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,6 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest
 class AuthControllerTest {
@@ -71,7 +70,7 @@ class AuthControllerTest {
 	@DisplayName("로그인 성공")
 	void signInTest() throws Exception {
 		// given
-		PasswordEncoder encoder = new PasswordEncoder();
+		ScryptPasswordEncoder encoder = new ScryptPasswordEncoder();
 		String encryptPassword = encoder.encrypt("qwer1234");
 		User user = User.builder()
 				.email("ybchar@test.com")
@@ -101,7 +100,7 @@ class AuthControllerTest {
 	@DisplayName("로그인 성공 후 session 생성")
 	void signInAfterSessionSave() throws Exception {
 		// given
-		PasswordEncoder encoder = new PasswordEncoder();
+		ScryptPasswordEncoder encoder = new ScryptPasswordEncoder();
 		String encryptPassword = encoder.encrypt("qwer1234");
 		User user = User.builder()
 				.email("ybchar@test.com")
@@ -136,7 +135,7 @@ class AuthControllerTest {
 	@DisplayName("로그인 후 검증되지 않은 세션값으로 권한이 필요한 페이지에 접속할 수 없다.")
 	void NotValidationSessionValueIsAccess() throws Exception {
 		// given
-		PasswordEncoder encoder = new PasswordEncoder();
+		ScryptPasswordEncoder encoder = new ScryptPasswordEncoder();
 		String encryptPassword = encoder.encrypt("qwer1234");
 		User user = User.builder()
 				.email("ybchar@test.com")
@@ -160,7 +159,6 @@ class AuthControllerTest {
 	@DisplayName("회원가입 테스트")
 	void signUpTest() throws Exception {
 		// given
-		PasswordEncoder encoder = new PasswordEncoder();
 		SignUpDto signUpDto = SignUpDto.builder()
 				.nickname("tester1")
 				.password("qwer1234")
@@ -176,7 +174,8 @@ class AuthControllerTest {
 
 		User user = userRepository.findAll().iterator().next();
 		assertEquals("tester1", user.getNickname());
-		assertTrue(encoder.matches("qwer1234", user.getPassword()));
+		assertNotNull(user.getPassword());
+		assertEquals("qwer1234", user.getPassword());
 		assertEquals("ybchar@test.com", user.getEmail());
 	}
 
@@ -250,7 +249,7 @@ class AuthControllerTest {
 	@DisplayName("비밀번호 틀린 케이스 테스트")
 	void wrongPasswordTest() throws Exception {
 		// given
-		PasswordEncoder encoder = new PasswordEncoder();
+		ScryptPasswordEncoder encoder = new ScryptPasswordEncoder();
 		String encryptPassword = encoder.encrypt("qwer1234");
 
 		SignUpDto signUpDto = SignUpDto.builder()

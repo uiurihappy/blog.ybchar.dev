@@ -106,6 +106,20 @@ onMounted(() => {
 
     <el-row>
       <el-col>
+        <div class="mt-2">
+          <h2 class="title">{{ post.title }}</h2>
+          <div class="sub d-flex">
+            <div class="regDate">
+              조회 수:
+              {{ post.viewCount }}
+            </div>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col>
         <div class="content">
           <div v-if="isCodeBlock">
             <pre>

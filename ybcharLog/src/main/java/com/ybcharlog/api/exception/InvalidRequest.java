@@ -1,8 +1,6 @@
 package com.ybcharlog.api.exception;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 /**
  * status: 400

@@ -2,7 +2,6 @@ package com.ybcharlog.api.controller.comment;
 
 import com.ybcharlog.api.RequestDto.comment.CommentCreateDto;
 import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
-import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

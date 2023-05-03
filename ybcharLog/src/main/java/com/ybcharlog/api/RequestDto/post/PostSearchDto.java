@@ -1,12 +1,10 @@
 package com.ybcharlog.api.RequestDto.post;
 
-import com.ybcharlog.api.Common.dto.BasicConditionRequest;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
-import static java.lang.Math.*;
+import static java.lang.Math.max;
 
 @Getter
 @Builder

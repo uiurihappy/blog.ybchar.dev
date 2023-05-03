@@ -99,17 +99,7 @@ onMounted(() => {
                   : dayjs(post.createdAt).format('YYYY년 MM월 DD일 A H:mm')
               }}
             </div>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
-
-    <el-row>
-      <el-col>
-        <div class="mt-2">
-          <h2 class="title">{{ post.title }}</h2>
-          <div class="sub d-flex">
-            <div class="regDate">
+            <div class="viewCount">
               조회 수:
               {{ post.viewCount }}
             </div>

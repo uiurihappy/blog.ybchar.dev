@@ -15,6 +15,7 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ public class AuthController {
 	private final PasswordEncoder passwordEncoder;
 
 	@PostMapping("/join")
-	public void signUp(@RequestBody SignUpDto signUpDto) {
+	public ResponseEntity<String> signUp(@RequestBody SignUpDto signUpDto) {
 		Optional<User> isUser = userRepository.findByEmail(signUpDto.getEmail());
 		if (isUser.isPresent()) {
 			throw new AlreadyExistsEmailException();
@@ -53,6 +54,7 @@ public class AuthController {
 				.role(signUpDto.getRole())
 				.build();
 		userRepository.save(user);
+		return ResponseEntity.ok("SUCCESS");
 	}
 
 	@PostMapping("/login")

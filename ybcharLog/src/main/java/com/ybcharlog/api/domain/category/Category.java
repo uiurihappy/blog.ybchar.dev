@@ -3,6 +3,7 @@ package com.ybcharlog.api.domain.category;
 import com.ybcharlog.api.Common.BaseEntity;
 import com.ybcharlog.api.domain.post.Post;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,5 +30,13 @@ public class Category extends BaseEntity {
 
 	@Column(columnDefinition = "varchar(30) COMMENT '카테고리 depth3'")
 	private String depth3;
+
+	@Builder
+	public Category(List<Post> posts, String depth1, String depth2, String depth3) {
+		this.posts = posts;
+		this.depth1 = depth1;
+		this.depth2 = depth2;
+		this.depth3 = depth3;
+	}
 
 }

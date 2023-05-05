@@ -39,4 +39,12 @@ public class Category extends BaseEntity {
 		this.depth3 = depth3;
 	}
 
+	public static Category initCategory(String depth1, String depth2, String depth3, List<Post> posts) {
+		return Category.builder()
+				.depth1(depth1)
+				.depth2(depth2)
+				.depth3(depth3)
+				.posts(posts)
+				.build();
+	}
 }

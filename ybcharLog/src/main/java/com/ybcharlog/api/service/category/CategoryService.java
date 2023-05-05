@@ -1,5 +1,6 @@
 package com.ybcharlog.api.service.category;
 
+import com.ybcharlog.api.RequestDto.category.CategoryCreateDto;
 import com.ybcharlog.api.domain.category.Category;
 import com.ybcharlog.api.repository.category.CategoryRepository;
 import com.ybcharlog.api.repository.post.PostRepository;
@@ -14,5 +15,14 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final PostRepository postRepository;
+
+    public Category save(CategoryCreateDto categoryCreateDto) {
+        return categoryRepository.save(Category.initCategory(
+                categoryCreateDto.getDepth1(),
+                categoryCreateDto.getDepth2(),
+                categoryCreateDto.getDepth3(),
+                categoryCreateDto.getPosts()
+        ));
+    }
 
 }

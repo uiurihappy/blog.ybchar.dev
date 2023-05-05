@@ -21,7 +21,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete/{categoryId}")
-    public Category delete(@PathVariable Long categoryId) {
+    public void delete(@PathVariable Long categoryId) {
         categoryService.deleteCategory(categoryId);
     }
 }

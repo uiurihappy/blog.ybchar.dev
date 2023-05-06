@@ -3,7 +3,7 @@ package com.ybcharlog.api.RequestDto.post;
 import com.ybcharlog.api.exception.InvalidRequest;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @Data
 @Getter

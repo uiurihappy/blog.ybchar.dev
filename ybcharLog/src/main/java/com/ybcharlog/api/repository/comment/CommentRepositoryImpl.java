@@ -8,7 +8,7 @@ import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.domain.post.QPost;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.util.List;
 
 import static com.ybcharlog.api.domain.comment.QComment.comment;

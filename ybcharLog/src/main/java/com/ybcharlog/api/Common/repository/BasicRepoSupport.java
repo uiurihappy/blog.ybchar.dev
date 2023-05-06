@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 @SuppressWarnings("unchecked")
 public abstract class BasicRepoSupport extends QuerydslRepositorySupport {

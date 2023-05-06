@@ -3,7 +3,7 @@ package com.ybcharlog.api.RequestDto.post;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @Getter
 @ToString

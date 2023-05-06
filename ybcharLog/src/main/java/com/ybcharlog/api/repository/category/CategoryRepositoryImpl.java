@@ -5,7 +5,7 @@ import com.ybcharlog.api.Common.repository.BasicRepoSupport;
 import com.ybcharlog.api.domain.category.QCategory;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 @Repository
 public class CategoryRepositoryImpl extends BasicRepoSupport implements CategoryRepositoryCustom {

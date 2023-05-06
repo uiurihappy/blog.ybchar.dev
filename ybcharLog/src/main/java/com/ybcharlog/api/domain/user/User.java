@@ -3,9 +3,7 @@ package com.ybcharlog.api.domain.user;
 import com.ybcharlog.api.Common.BaseTimeEntity;
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
 @Getter

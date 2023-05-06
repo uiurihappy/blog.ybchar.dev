@@ -3,7 +3,7 @@ package com.ybcharlog.api.RequestDto.category;
 import com.ybcharlog.api.domain.post.Post;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data

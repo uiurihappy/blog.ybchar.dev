@@ -1,11 +1,13 @@
 package com.ybcharlog.api.service.AWS;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +18,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
+
 @Slf4j
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 @Service
 public class S3UploaderService {
 
-	private final AmazonS3Client amazonS3Client;
+	private AmazonS3Client amazonS3Client;
 
 	@Value("${aws.s3.bucketName}")
 	private String bucket;

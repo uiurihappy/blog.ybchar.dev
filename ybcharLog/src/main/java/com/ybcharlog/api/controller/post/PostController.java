@@ -5,7 +5,6 @@ import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.ResponseDto.post.PostResponse.GetPostPageReq;
-import com.ybcharlog.api.config.data.UserSession;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.service.AWS.S3UploaderService;
 import com.ybcharlog.api.service.post.PostService;
@@ -58,11 +57,6 @@ public class PostController {
 		개발하면서 당연히 "반드시 fix"라는 것이 없기에 유연하게 반응할 수 있도록 대응하는 것이 좋다.
 			- 즉, 잘 관리하는 형태로 구현하는 것이 좋다.
 	*/
-
-    @GetMapping("/authTest")
-    public Long test(UserSession userSession){
-        return userSession.id;
-    }
 
     @PostMapping("/save")
     public Post post(@RequestBody @Valid PostCreateDto request) {

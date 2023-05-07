@@ -3,7 +3,7 @@ package com.ybcharlog.api.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ybcharlog.api.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.controller.user.AuthController;
-import com.ybcharlog.api.domain.user.Role;
+import com.ybcharlog.api.domain.user.UserRole;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.AlreadyExistsEmailException;
 import com.ybcharlog.api.repository.user.UserRepository;
@@ -67,7 +67,7 @@ class AuthControllerTest {
 				.nickname("tester1")
 				.password("qwer1234")
 				.email("ybchar@test.com")
-				.role(Role.ADMIN)
+				.role(UserRole.ADMIN)
 				.build();
 
 		// when
@@ -91,7 +91,7 @@ class AuthControllerTest {
 				.email("ybchar@test.com")
 				.nickname("ybchar")
 				.password("qwer1234")
-				.role(Role.ADMIN)
+				.role(UserRole.ADMIN)
 				.build();
 		userRepository.save(user);
 
@@ -99,7 +99,7 @@ class AuthControllerTest {
 				.nickname("tester1")
 				.password("qwer1234")
 				.email("ybchar@test.com")
-				.role(Role.ADMIN)
+				.role(UserRole.ADMIN)
 				.build();
 
 		// expected
@@ -114,7 +114,7 @@ class AuthControllerTest {
 				.nickname("tester1")
 				.password("qwer1234")
 				.email("ybchar@test.com")
-				.role(Role.ADMIN)
+				.role(UserRole.ADMIN)
 				.build();
 
 		// expected

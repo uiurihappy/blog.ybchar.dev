@@ -5,17 +5,15 @@ import com.ybcharlog.api.Common.converter.UserRoleConverter;
 import lombok.*;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseTimeEntity {
 
@@ -36,14 +34,14 @@ public class User extends BaseTimeEntity {
 	@Column(columnDefinition = "tinytext not null COMMENT '권한'")
 	@Builder.Default
 	@Convert(converter = UserRoleConverter.class)
-	private List<Role> role = new ArrayList<>();
+	private List<UserRole> userRole = new ArrayList<>();
 
 	@Builder
-	public User(String email, String nickname, String password, List<Role> role) {
+	public User(String email, String nickname, String password, List<UserRole> userRole) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
-		this.role = role;
+		this.userRole = userRole;
 	}
 
 	public static User initEmailUser(String email, String password, String nickname) {
@@ -51,7 +49,12 @@ public class User extends BaseTimeEntity {
 				.email(email)
 				.password(password)
 				.nickname(nickname)
-				.role(List.of(Role.USER))
+				.userRole(List.of(UserRole.ROLE_USER))
 				.build();
+	}
+
+	public String rolesToString() {
+		return this.userRole.stream().map(UserRole::getValue)
+				.collect(Collectors.joining(","));
 	}
 }

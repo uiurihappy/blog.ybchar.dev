@@ -7,6 +7,10 @@ public class UnauthorizedRequest extends YbcharLogException{
 		super(MESSAGE);
 	}
 
+	public UnauthorizedRequest(String fieldName) {
+		super(MESSAGE);
+	}
+
 	public UnauthorizedRequest(String fieldName, String message) {
 		super(MESSAGE);
 		addValidations(fieldName, message);

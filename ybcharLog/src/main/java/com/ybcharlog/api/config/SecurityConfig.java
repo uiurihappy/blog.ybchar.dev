@@ -44,6 +44,10 @@ public class SecurityConfig {
                     .passwordParameter("password")
                     .defaultSuccessUrl("/posts/list?page=1&size=12")
                 .and()
+                .rememberMe(rm -> rm.rememberMeParameter("remember")
+                        .alwaysRemember(false)
+                        .tokenValiditySeconds(2592000)
+                )
                 .userDetailsService(userDetailsService())
                     .csrf(AbstractHttpConfigurer::disable)
                 .build();

@@ -24,6 +24,9 @@ public class TokenService {
 
     private static Long defaultExpirationMinutes;
 
+    @Value("${auth.secretKey}")
+    private static String secretKey;
+
     @Value("${util.jwt.defaultExpirationMinutes}")
     public void setDefaultExpirationMinutes(Long defaultExpirationMinutes) {
         TokenService.defaultExpirationMinutes = defaultExpirationMinutes;
@@ -47,7 +50,7 @@ public class TokenService {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("sub", "access-token");
-        claims.put("iss", "ybchar");
+        claims.put("iss", secretKey);
         claims.put("iat", Timestamp.valueOf(now));
         claims.put("exp", Timestamp.valueOf(now.plusMinutes(plusExpMinutes)).getTime() / 1000);
         claims.put("userId", user.getId());
@@ -65,7 +68,7 @@ public class TokenService {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("sub", "refresh-token");
-        claims.put("iss", "ybchar");
+        claims.put("iss", secretKey);
         claims.put("userId", user.getId());
         claims.put("iat", Timestamp.valueOf(now));
         claims.put("exp", Timestamp.valueOf(now.plusMinutes(plusExpMinutes)).getTime() / 1000);
@@ -144,7 +147,7 @@ public class TokenService {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("sub", "mail-verification");
-        claims.put("iss", "ybchar");
+        claims.put("iss", secretKey);
         claims.put("iat", Timestamp.valueOf(now));
         claims.put("exp", Timestamp.valueOf(now.plusMinutes(plusExpMinutes)).getTime() / 1000);
         claims.put("userId", user.getId());
@@ -172,7 +175,7 @@ public class TokenService {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("sub", "mail-user-change-password");
-        claims.put("iss", "ybchar");
+        claims.put("iss", secretKey);
         claims.put("iat", Timestamp.valueOf(now));
         claims.put("exp", Timestamp.valueOf(now.plusMinutes(plusExpMinutes)).getTime() / 1000);
         claims.put("userId", user.getId());

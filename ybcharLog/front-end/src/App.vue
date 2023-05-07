@@ -4,10 +4,8 @@ import Content from './components/Content.vue';
 </script>
 
 <template>
-  <div style="background-color: #ffdddd">
-    <Header />
-    <Content />
-  </div>
+  <Header />
+  <Content />
 </template>
 
 <style>

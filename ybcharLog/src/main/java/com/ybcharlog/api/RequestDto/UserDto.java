@@ -23,6 +23,8 @@ public class UserDto {
         @NotBlank
         @UserNicknameValid
         private String nickname;
+
+        private String role;
     }
     @Data
     public static class SignInReq {

@@ -31,21 +31,19 @@ public class JwtUtil {
      * @return
      */
     public static String generateToken(Map<String, Object> claims) {
-        String token = Jwts.builder()
-            .setClaims(claims)
-            .signWith(SignatureAlgorithm.HS512, secretBytes)
-            .compact();
 
-        return token;
+        return Jwts.builder()
+            .setClaims(claims)
+            .signWith(SignatureAlgorithm.HS256, secretBytes)
+            .compact();
     }
 
     public static String generateRefreshToken(Map<String, Object> claims) {
-        String token = Jwts.builder()
-            .setClaims(claims)
-            .signWith(SignatureAlgorithm.HS512, refreshBytes)
-            .compact();
 
-        return token;
+        return Jwts.builder()
+            .setClaims(claims)
+            .signWith(SignatureAlgorithm.HS256, refreshBytes)
+            .compact();
     }
 
     public static String generateToken(Map<String, Object> header,

@@ -3,13 +3,18 @@ package com.ybcharlog.api.service.user;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.UnauthorizedRequest;
 import com.ybcharlog.api.repository.user.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CommonUserService {
@@ -18,6 +23,8 @@ public class CommonUserService {
     PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
+
+    @Transactional
     public String encryptPassword(String password) {
         return passwordEncoder.encode(password);
     }
@@ -44,6 +51,8 @@ public class CommonUserService {
                 .orElseThrow(() -> new EntityNotFoundException("Not exists user. id: " + id));
     }
 
+
+    @Transactional
     public User getUser(String email, String password) {
         User user = this.getUserByEmail(email);
 
@@ -51,7 +60,7 @@ public class CommonUserService {
             throw new UnauthorizedRequest(
                     String.format("Not Authorized.(email: %s)", email));
         }
-
+        log.info(user.getEmail(), user.getUserRole(), user.getPassword());
         return user;
     }
 }

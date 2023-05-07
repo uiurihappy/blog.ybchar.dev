@@ -2,7 +2,9 @@ package com.ybcharlog.api.service.user;
 
 import com.ybcharlog.api.Common.constant.ResultCode;
 import com.ybcharlog.api.RequestDto.UserDto;
+import com.ybcharlog.api.RequestDto.UserDto.SignInReq;
 import com.ybcharlog.api.RequestDto.UserDto.SignInRes;
+import com.ybcharlog.api.RequestDto.UserDto.SignUpReq;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.AlreadyExistsEmailException;
 import com.ybcharlog.api.exception.CustomException;
@@ -10,6 +12,7 @@ import com.ybcharlog.api.security.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,22 +33,22 @@ public class UserService {
     private final CommonUserService commonUserService;
 
     @Transactional
-    public void signUp(UserDto.SignUpReq req) {
+    public void signUp(SignUpReq req) {
         boolean exists = commonUserService.existsEmail(req.getEmail());
         if (exists) {
             throw new CustomException(ResultCode.EXISTS_EMAIL);
         }
 
         User user = User.initEmailUser(req.getEmail(),
-                commonUserService.encryptPassword(req.getPassword()), req.getNickname());
+                commonUserService.encryptPassword(req.getPassword()), req.getNickname(), req.getRole());
         commonUserService.add(user);
     }
 
     @Transactional
-    public SignInRes signIn(UserDto.SignInReq req) {
+    public SignInRes signIn(SignInReq req) {
         boolean exists = commonUserService.existsEmail(req.getEmail());
         if (!exists) {
-            throw new AlreadyExistsEmailException(ResultCode.NOT_EXISTS_EMAIL);
+            throw new CustomException(ResultCode.NOT_EXISTS_EMAIL);
         }
 
         User user = commonUserService.getUser(req.getEmail(), req.getPassword());

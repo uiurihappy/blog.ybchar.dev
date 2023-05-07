@@ -1,9 +1,17 @@
 package com.ybcharlog.api.domain.user;
 
 import com.ybcharlog.api.Common.BaseTimeEntity;
+import com.ybcharlog.api.Common.converter.UserRoleConverter;
 import lombok.*;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -25,15 +33,25 @@ public class User extends BaseTimeEntity {
 	@Lob
 	private String password;
 
-	@Enumerated(EnumType.STRING)
-	@Column(columnDefinition = "varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci not null default 'USER' COMMENT '사용자 권한'")
-	private Role role;
+	@Column(columnDefinition = "tinytext not null COMMENT '권한'")
+	@Builder.Default
+	@Convert(converter = UserRoleConverter.class)
+	private List<Role> role = new ArrayList<>();
 
 	@Builder
-	public User(String email, String nickname, String password, Role role) {
+	public User(String email, String nickname, String password, List<Role> role) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
 		this.role = role;
+	}
+
+	public static User initEmailUser(String email, String password, String nickname) {
+		return User.builder()
+				.email(email)
+				.password(password)
+				.nickname(nickname)
+				.role(List.of(Role.USER))
+				.build();
 	}
 }

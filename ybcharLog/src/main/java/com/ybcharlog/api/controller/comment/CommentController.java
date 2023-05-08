@@ -24,14 +24,12 @@ public class CommentController {
     }
 
     // 댓글 등록
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("/posts/{postId}/comments")
     public CommentResponse save(@RequestBody @Valid CommentCreateDto request, @PathVariable Long postId) {
         return commentService.write(request, postId);
     }
 
     // 댓글 단건 삭제
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @DeleteMapping("/delete/{commentId}")
     public void deleteOneComment(@PathVariable Long commentId) {
         commentService.deleteOneComment(commentId);

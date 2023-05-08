@@ -74,7 +74,6 @@ public class PostController {
         /posts -> 글 전체 조회 (검색 + 페이징)
         /posts/{postId} -> 글 한개만 조회
      */
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/list")
     public ResponseEntity<CustomPage<PostResponse>> getPostList(GetPostPageReq req, Pageable pageable) {
         // 페이징 처리가 필요 -> response 비용이 많이 들기 때문이다.
@@ -82,7 +81,6 @@ public class PostController {
         return ResponseEntity.ok(postService.getListByPage(req, pageable));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{postId}")
     public PostResponse getOne(@PathVariable Long postId) {
         // 서비스 정책에 맞는 응답 클래스를 분리하는 것이 옳다.

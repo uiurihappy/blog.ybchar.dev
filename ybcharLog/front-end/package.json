@@ -37,6 +37,7 @@
     "vue3-code-block": "^2.1.0",
     "vue3-dropzone": "^2.0.1",
     "vue3-markdown-it": "^1.0.10",
+    "vuex": "^4.1.0",
     "web3": "^0.20.7"
   },
   "devDependencies": {

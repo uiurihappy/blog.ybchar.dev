@@ -29,6 +29,12 @@ const router = createRouter({
       component: EditPostView,
       props: true,
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
+      meta: { unauthorize: true },
+    },
     //   {
     //     path: '/about',
     //     name: 'about',

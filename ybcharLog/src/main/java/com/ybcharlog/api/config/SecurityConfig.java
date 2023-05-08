@@ -29,7 +29,8 @@ public class SecurityConfig {
                 "/posts/**",
                 "/comments/**",
                 "/auth/join",
-                "/auth/login" // 임시
+                "/auth/login",
+                "/sound"
         );
     }
 
@@ -41,7 +42,7 @@ public class SecurityConfig {
         String[] permitAllUrl = {
                 "/favicon.ico", "/robots.txt", "/fonts/**", "/css/**", "/images/**", "/js/**",
                 //"/test/**",
-                "/enums/**", "/sign-up", "/sign-up/verification-url", "/sign-in",
+                "/enums/**", "/join", "/sign-up/verification-url", "/login",
                 "/users/nickname/exists",
                 "/view/users/change-password",
                 "/users/password",

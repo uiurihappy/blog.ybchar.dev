@@ -5,5 +5,5 @@ import com.ybcharlog.api.domain.AnimalType;
 public interface AnimalService {
     String getSound();
 
-    AnimalType getType();
+//    AnimalType getType();
 }

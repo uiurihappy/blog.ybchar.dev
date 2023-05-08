@@ -3,7 +3,6 @@ package com.ybcharlog.api.service.animal;
 import com.ybcharlog.api.domain.AnimalType;
 import org.springframework.stereotype.Component;
 
-@Component
 public class DogService implements AnimalService {
 
     @Override
@@ -11,8 +10,8 @@ public class DogService implements AnimalService {
         return "멍멍";
     }
 
-    @Override
-    public AnimalType getType() {
-        return AnimalType.DOG;
-    }
+//    @Override
+//    public AnimalType getType() {
+//        return AnimalType.DOG;
+//    }
 }

@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,6 +59,7 @@ public class PostController {
 			- 즉, 잘 관리하는 형태로 구현하는 것이 좋다.
 	*/
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/save")
     public Post post(@RequestBody @Valid PostCreateDto request) {
 //        if (authorization.equals(headerAuthkey)) {
@@ -72,6 +74,7 @@ public class PostController {
         /posts -> 글 전체 조회 (검색 + 페이징)
         /posts/{postId} -> 글 한개만 조회
      */
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/list")
     public ResponseEntity<CustomPage<PostResponse>> getPostList(GetPostPageReq req, Pageable pageable) {
         // 페이징 처리가 필요 -> response 비용이 많이 들기 때문이다.
@@ -79,12 +82,14 @@ public class PostController {
         return ResponseEntity.ok(postService.getListByPage(req, pageable));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{postId}")
     public PostResponse getOne(@PathVariable Long postId) {
         // 서비스 정책에 맞는 응답 클래스를 분리하는 것이 옳다.
         return postService.getOne(postId);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PatchMapping("/update/{postId}")
     public void editPost(@PathVariable Long postId, @RequestBody @Valid PostEditDto postEditDto) {
 //        if (authorization.equals(headerAuthkey)) {
@@ -94,6 +99,7 @@ public class PostController {
 //        }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{postId}")
     public void deletePost(@PathVariable Long postId) {
 //        if (authorization.equals(headerAuthkey)) {
@@ -103,6 +109,7 @@ public class PostController {
 //        }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/thumbnail/image")
     public ResponseEntity<?> postThumbnailImageUpload(
             @RequestParam("file") MultipartFile file, @RequestParam("path") String path, @RequestParam("postId") Long postId) throws IOException {

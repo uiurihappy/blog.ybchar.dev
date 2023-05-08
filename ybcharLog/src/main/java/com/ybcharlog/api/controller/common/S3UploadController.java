@@ -3,6 +3,7 @@ package com.ybcharlog.api.controller.common;
 import com.ybcharlog.api.service.AWS.S3UploaderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ public class S3UploadController {
 
 	private final S3UploaderService s3UploaderService;
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/files/images")
 	public ResponseEntity<String> uploadImageFile(
 			@RequestParam("file") MultipartFile file, @RequestParam("path") String dirName)

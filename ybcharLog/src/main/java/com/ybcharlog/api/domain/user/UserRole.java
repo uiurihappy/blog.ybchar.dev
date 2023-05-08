@@ -14,8 +14,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public enum UserRole {
 	ROLE_USER("일반 사용자"),
-	ROLE_ADMIN("관리자"),
-	ROLE_MASTER("마스터 관리자");
+	ROLE_ADMIN("관리자");
 
 	private final String desc;
 

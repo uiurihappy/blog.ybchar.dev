@@ -5,6 +5,7 @@ import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
 import com.ybcharlog.api.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -23,12 +24,14 @@ public class CommentController {
     }
 
     // 댓글 등록
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("/posts/{postId}/comments")
     public CommentResponse save(@RequestBody @Valid CommentCreateDto request, @PathVariable Long postId) {
         return commentService.write(request, postId);
     }
 
     // 댓글 단건 삭제
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @DeleteMapping("/delete/{commentId}")
     public void deleteOneComment(@PathVariable Long commentId) {
         commentService.deleteOneComment(commentId);

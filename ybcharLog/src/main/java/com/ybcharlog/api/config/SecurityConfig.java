@@ -21,7 +21,7 @@ import org.springframework.web.cors.CorsUtils;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity(securedEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
 
     private final TokenFilter tokenFilter;
@@ -30,8 +30,6 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring().requestMatchers(
-                "/posts/**",
-                "/comments/**",
                 "/auth/join",
                 "/auth/login",
                 "/sound"
@@ -42,18 +40,19 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         //String[] permitAllUrl = {"/**"};
-
+        // 참고 레퍼런스: https://velog.io/@pjh612/Deprecated%EB%90%9C-WebSecurityConfigurerAdapter-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8C%80%EC%B2%98%ED%95%98%EC%A7%80
         String[] permitAllUrl = {
                 "/favicon.ico", "/robots.txt", "/fonts/**", "/css/**", "/images/**", "/js/**",
                 //"/test/**",
-                "/enums/**", "/join", "/join/verification-url", "/login",
+                "/enums/**", "/auth/join", "/join/verification-url", "/auth/login",
+                "/posts/save",
                 "/users/nickname/exists",
                 "/view/users/change-password",
                 "/users/password",
         };
 
        return httpSecurity
-                .headers()
+               .headers()
                 .frameOptions()
                 .sameOrigin()
                 .and()
@@ -68,8 +67,8 @@ public class SecurityConfig {
                    .invalidateHttpSession(true)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()
-                .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(exceptionHandlerFilter, TokenFilter.class)
+               .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
+               .addFilterBefore(exceptionHandlerFilter, TokenFilter.class)
                .build();
     }
 

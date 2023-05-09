@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import axios from 'axios';
-
+import { useRouter } from 'vue-router';
 export default {
   data() {
     return {
@@ -39,9 +39,11 @@ export default {
         .then(response => {
           const accessToken = response.data.accessToken;
           sessionStorage.setItem('accessToken', accessToken);
+          window.location.href = '/';
         })
         .catch(err => {
-          alert(err + '로그인에 실패하였습니다.');
+          console.log(err);
+          alert('로그인에 실패하였습니다.');
         });
     },
   },

@@ -3,6 +3,7 @@ import HomeView from '../views/posts/HomeView.vue';
 import WriteView from '../views/posts/WriteView.vue';
 import ReadPostView from '../views/posts/ReadPostView.vue';
 import EditPostView from '../views/posts/EditPostView.vue';
+import LoginView from '../views/LoginView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

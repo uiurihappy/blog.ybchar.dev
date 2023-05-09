@@ -1,3 +1,44 @@
+<script lang="ts">
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+
+export default {
+  data() {
+    return {
+      accessToken: sessionStorage.getItem('accessToken'),
+      isAccessTokenValid: false,
+    };
+  },
+  created() {
+    this.checkAccessTokenValidity();
+  },
+  methods: {
+    checkAccessTokenValidity() {
+      if (!this.accessToken) {
+        this.isAccessTokenValid = false;
+        return;
+      }
+      const decodedToken = jwt_decode(this.accessToken);
+
+      const currentTime = Date.now() / 1000; // in seconds
+      if (decodedToken.exp < currentTime) {
+        this.isAccessTokenValid = false;
+      } else {
+        this.isAccessTokenValid = true;
+      }
+    },
+    logout() {
+      axios.get('/api/auth/logout').then(() => {
+        sessionStorage.removeItem('accessToken');
+        this.accessToken = null;
+        this.isAccessTokenValid = false;
+        this.$router.push({ name: 'Home' });
+      });
+    },
+  },
+};
+</script>
+
 <template>
   <div class="container">
     <el-header class="header">
@@ -7,29 +48,41 @@
         >
       </div>
       <el-menu class="menu" mode="horizontal" router>
-        <el-menu-item
-          class="menu-item"
-          index="/"
-          active-text-color="transparent"
-          >Home</el-menu-item
-        >
-        <el-menu-item
-          class="menu-item"
-          index="/write"
-          active-text-color="transparent"
-          >Write</el-menu-item
-        >
+        <div>
+          <el-menu-item
+            class="menu-item"
+            index="/"
+            active-text-color="transparent"
+            >Home</el-menu-item
+          >
+        </div>
+        <div v-if="isAccessTokenValid">
+          <el-menu-item
+            class="menu-item"
+            index="/write"
+            active-text-color="transparent"
+            >Write</el-menu-item
+          >
+        </div>
+        <div v-else>
+          <el-menu-item
+            class="menu-item"
+            index="/login"
+            active-text-color="transparent"
+            >Login</el-menu-item
+          >
+        </div>
+        <div v-if="isAccessTokenValid">
+          <el-menu-item
+            class="menu-item"
+            active-text-color="transparent"
+            @click="logout"
+          >
+            Logout
+          </el-menu-item>
+        </div>
       </el-menu>
     </el-header>
-    <!-- 페이지 컨텐츠 영역 -->
-    <!-- <h1>Welcome to my blog!</h1>
-      <p>This is my blog where I share my thoughts and ideas.</p>
-      <p>Here are some of my recent posts:</p>
-      <ul>
-        <li><a href="#">Post 1</a></li>
-        <li><a href="#">Post 2</a></li>
-        <li><a href="#">Post 3</a></li>
-      </ul> -->
   </div>
 </template>
 

@@ -64,7 +64,7 @@ public class SecurityConfig {
                    .and()
                    .logout()
                    .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-                   .logoutSuccessUrl("/posts/list?page=1&size=12")
+                   .logoutSuccessUrl("/api/posts/list?page=1&size=12")
                    .invalidateHttpSession(true)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()

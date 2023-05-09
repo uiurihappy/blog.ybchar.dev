@@ -2,9 +2,13 @@ package com.ybcharlog.api.config;
 
 import com.ybcharlog.api.filter.ExceptionHandlerFilter;
 import com.ybcharlog.api.filter.TokenFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,10 +18,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsUtils;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -35,6 +42,28 @@ public class SecurityConfig {
                 "/sound"
         );
     }
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        log.warn("accessDeniedHandler");
+        return (request, response, e) -> {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("text/plain;charset=UTF-8");
+            response.getWriter().write("ACCESS DENIED");
+            response.getWriter().flush();
+            response.getWriter().close();
+        };
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, e) -> {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("text/plain;charset=UTF-8");
+            response.getWriter().write("UNAUTHORIZED");
+            response.getWriter().flush();
+            response.getWriter().close();
+        };
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -51,25 +80,51 @@ public class SecurityConfig {
                 "/users/password",
         };
 
-       return httpSecurity
-               .headers()
-                .frameOptions()
-                .sameOrigin()
-                .and()
-                .authorizeRequests()
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .requestMatchers(permitAllUrl).permitAll()
+        httpSecurity.authorizeHttpRequests()
+                .requestMatchers("/auth/login", "/auth/join", "/posts/list", "/posts/{postId}").permitAll()
                 .anyRequest().authenticated()
-                   .and()
-                   .logout()
-                   .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-                   .logoutSuccessUrl("/api/posts/list?page=1&size=12")
-                   .invalidateHttpSession(true)
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().csrf().disable()
-               .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
-               .addFilterBefore(exceptionHandlerFilter, TokenFilter.class)
-               .build();
+                .and()
+                .formLogin()
+                .disable()
+                .csrf()
+                .disable()
+                .headers()
+                .disable()
+                .httpBasic()
+                .disable()
+                .rememberMe()
+                .disable()
+                .logout()
+                .disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler())
+                .authenticationEntryPoint(authenticationEntryPoint())
+                .and()
+                .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return httpSecurity.build();
+//       return httpSecurity
+//               .headers()
+//                .frameOptions()
+//                .sameOrigin()
+//                .and()
+//                .authorizeRequests()
+//                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+//                .requestMatchers(permitAllUrl).permitAll()
+//                .anyRequest().authenticated()
+//                   .and()
+//                   .logout()
+//                   .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
+//                   .logoutSuccessUrl("/api/posts/list?page=1&size=12")
+//                   .invalidateHttpSession(true)
+//                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and().csrf().disable()
+//               .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
+//               .addFilterBefore(exceptionHandlerFilter, TokenFilter.class)
+//               .build();
     }
 
 }

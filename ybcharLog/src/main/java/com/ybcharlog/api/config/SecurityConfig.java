@@ -37,9 +37,8 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring().requestMatchers(
-                "/auth/join",
-                "/auth/login",
-                "/sound"
+                "/auth/login", "/auth/join", "/auth/logout",
+                "/posts/list", "/posts/{postId}", "/posts/{postId}/comments"
         );
     }
     @Bean
@@ -81,7 +80,12 @@ public class SecurityConfig {
         };
 
         httpSecurity.authorizeHttpRequests()
-                .requestMatchers("/auth/login", "/auth/join", "/posts/list", "/posts/{postId}").permitAll()
+                .requestMatchers("/auth/login", "/auth/join", "/auth/logout",
+                        "/posts/list", "/posts/{postId}", "/posts/{postId}/comments").permitAll()
+//                .requestMatchers("/auth/login", "/auth/join", "/auth/logout",
+//                        "/posts/list", "/posts/{postId}", "/posts/{postId}/comments").hasRole("ROLE_USER")
+                .requestMatchers("/posts/save", "/posts/update/{postId}", "/posts/delete/{postId}",
+                        "/posts/thumbnail/image", "/files/images", "/category/save", "/category/delete/{categoryId}").hasAnyRole("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

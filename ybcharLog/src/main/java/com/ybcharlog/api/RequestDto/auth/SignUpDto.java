@@ -11,14 +11,14 @@ public class SignUpDto {
     private String email;
     private String nickname;
     private String password;
-    private UserRole userRole;
+//    private UserRole role;
 
     @Builder
-    public SignUpDto(String email, String nickname, String password, UserRole userRole) {
+    public SignUpDto(String email, String nickname, String password) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
-        this.userRole = userRole;
+//        this.role = role;
     }
 
 }

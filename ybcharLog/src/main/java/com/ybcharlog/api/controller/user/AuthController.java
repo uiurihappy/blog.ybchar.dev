@@ -1,5 +1,6 @@
 package com.ybcharlog.api.controller.user;
 
+import com.ybcharlog.api.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.config.AppConfig;
 import com.ybcharlog.api.crypto.PasswordEncoder;
 import com.ybcharlog.api.repository.user.UserRepository;
@@ -32,7 +33,7 @@ public class AuthController {
 	private final UserRepository userRepository;
 
 	@PostMapping("/join")
-	public ResponseEntity<?> signUp(@Valid @RequestBody SignUpReq req) {
+	public ResponseEntity<?> signUp(@Valid @RequestBody SignUpDto req) {
 		userService.signUp(req);
 
 		return ResponseEntity.ok().build();

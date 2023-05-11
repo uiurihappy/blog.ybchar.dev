@@ -5,6 +5,7 @@ import com.ybcharlog.api.RequestDto.UserDto;
 import com.ybcharlog.api.RequestDto.UserDto.SignInReq;
 import com.ybcharlog.api.RequestDto.UserDto.SignInRes;
 import com.ybcharlog.api.RequestDto.UserDto.SignUpReq;
+import com.ybcharlog.api.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.AlreadyExistsEmailException;
 import com.ybcharlog.api.exception.CustomException;
@@ -33,7 +34,7 @@ public class UserService {
     private final CommonUserService commonUserService;
 
     @Transactional
-    public void signUp(SignUpReq req) {
+    public void signUp(SignUpDto req) {
         boolean exists = commonUserService.existsEmail(req.getEmail());
         if (exists) {
             throw new CustomException(ResultCode.EXISTS_EMAIL);

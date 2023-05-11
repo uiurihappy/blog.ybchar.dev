@@ -19,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -67,7 +69,7 @@ class AuthControllerTest {
 				.nickname("tester1")
 				.password("qwer1234")
 				.email("ybchar@test.com")
-				.role(UserRole.ADMIN)
+//				.role(UserRole.ROLE_ADMIN)
 				.build();
 
 		// when
@@ -91,7 +93,7 @@ class AuthControllerTest {
 				.email("ybchar@test.com")
 				.nickname("ybchar")
 				.password("qwer1234")
-				.role(UserRole.ADMIN)
+				.roles(List.of(UserRole.ROLE_ADMIN))
 				.build();
 		userRepository.save(user);
 
@@ -99,7 +101,6 @@ class AuthControllerTest {
 				.nickname("tester1")
 				.password("qwer1234")
 				.email("ybchar@test.com")
-				.role(UserRole.ADMIN)
 				.build();
 
 		// expected
@@ -114,7 +115,6 @@ class AuthControllerTest {
 				.nickname("tester1")
 				.password("qwer1234")
 				.email("ybchar@test.com")
-				.role(UserRole.ADMIN)
 				.build();
 
 		// expected

@@ -59,7 +59,7 @@ public class PostController {
 			- 즉, 잘 관리하는 형태로 구현하는 것이 좋다.
 	*/
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/save")
     public Post post(@RequestBody @Valid PostCreateDto request) {
 //        if (authorization.equals(headerAuthkey)) {

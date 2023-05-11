@@ -59,7 +59,7 @@ public class PostController {
 			- 즉, 잘 관리하는 형태로 구현하는 것이 좋다.
 	*/
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/save")
     public Post post(@RequestBody @Valid PostCreateDto request) {
 //        if (authorization.equals(headerAuthkey)) {
@@ -87,7 +87,7 @@ public class PostController {
         return postService.getOne(postId);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/update/{postId}")
     public void editPost(@PathVariable Long postId, @RequestBody @Valid PostEditDto postEditDto) {
 //        if (authorization.equals(headerAuthkey)) {
@@ -97,7 +97,7 @@ public class PostController {
 //        }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{postId}")
     public void deletePost(@PathVariable Long postId) {
 //        if (authorization.equals(headerAuthkey)) {
@@ -107,7 +107,7 @@ public class PostController {
 //        }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/thumbnail/image")
     public ResponseEntity<?> postThumbnailImageUpload(
             @RequestParam("file") MultipartFile file, @RequestParam("path") String path, @RequestParam("postId") Long postId) throws IOException {

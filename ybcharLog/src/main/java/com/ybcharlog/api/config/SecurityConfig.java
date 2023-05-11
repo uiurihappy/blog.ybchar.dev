@@ -22,7 +22,12 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Slf4j
 @Configuration
@@ -34,13 +39,15 @@ public class SecurityConfig {
     private final TokenFilter tokenFilter;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
 
-    @Bean
-    public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring().requestMatchers(
-                "/auth/login", "/auth/join", "/auth/logout",
-                "/posts/list", "/posts/{postId}", "/posts/{postId}/comments"
-        );
-    }
+//    @Bean
+//    public WebSecurityCustomizer configure() {
+//        return (web) -> web.ignoring().requestMatchers(
+//                "/auth/login", "/auth/join", "/auth/logout",
+//                "/posts/list", "/posts/{postId}", "/posts/{postId}/comments"
+//        );
+//    }
+
+
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         log.warn("accessDeniedHandler");
@@ -72,34 +79,39 @@ public class SecurityConfig {
         String[] permitAllUrl = {
                 "/favicon.ico", "/robots.txt", "/fonts/**", "/css/**", "/images/**", "/js/**",
                 //"/test/**",
-                "/enums/**", "/auth/join", "/join/verification-url", "/auth/login",
-                "/posts/save",
-                "/users/nickname/exists",
+                "/enums/**", "/auth/join", "/join/verification-url",
+                "/auth/login", "/auth/logout",
+                "/posts/list", "/posts/{postId}", "/posts/{postId}/comments",
                 "/view/users/change-password",
-                "/users/password",
         };
 
         httpSecurity.authorizeHttpRequests()
-                .requestMatchers("/auth/login", "/auth/join", "/auth/logout",
-                        "/posts/list", "/posts/{postId}", "/posts/{postId}/comments").permitAll()
+                .requestMatchers(permitAllUrl).permitAll()
 //                .requestMatchers("/auth/login", "/auth/join", "/auth/logout",
 //                        "/posts/list", "/posts/{postId}", "/posts/{postId}/comments").hasRole("ROLE_USER")
                 .requestMatchers("/posts/save", "/posts/update/{postId}", "/posts/delete/{postId}",
-                        "/posts/thumbnail/image", "/files/images", "/category/save", "/category/delete/{categoryId}").hasAnyRole("ROLE_ADMIN")
+                        "/posts/thumbnail/image", "/files/images", "/category/save", "/category/delete/{categoryId}").hasRole("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .disable()
+//                .formLogin()
+//                .disable()
                 .csrf()
                 .disable()
                 .headers()
-                .disable()
-                .httpBasic()
-                .disable()
+                    .frameOptions()
+                    .sameOrigin()
+//                .disable()
+//                .httpBasic()
+//                .disable()
+                .and()
                 .rememberMe()
-                .disable()
+                .and()
+//                .disable()
                 .logout()
-                .disable()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
+                   .logoutSuccessUrl("/api/posts/list?page=1&size=12")
+                   .invalidateHttpSession(true)
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

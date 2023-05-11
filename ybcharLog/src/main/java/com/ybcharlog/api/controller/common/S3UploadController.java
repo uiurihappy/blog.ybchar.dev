@@ -18,7 +18,7 @@ public class S3UploadController {
 
 	private final S3UploaderService s3UploaderService;
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/files/images")
 	public ResponseEntity<String> uploadImageFile(
 			@RequestParam("file") MultipartFile file, @RequestParam("path") String dirName)

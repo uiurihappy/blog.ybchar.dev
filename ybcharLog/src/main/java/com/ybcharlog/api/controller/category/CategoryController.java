@@ -16,13 +16,13 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/save")
     public Category save(CategoryCreateDto categoryCreateDto) {
         return categoryService.save(categoryCreateDto);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{categoryId}")
     public void delete(@PathVariable Long categoryId) {
         categoryService.deleteCategory(categoryId);

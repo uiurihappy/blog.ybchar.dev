@@ -24,7 +24,7 @@ public class UserDto {
         @UserNicknameValid
         private String nickname;
 
-        private String role;
+//        private String role;
     }
     @Data
     public static class SignInReq {

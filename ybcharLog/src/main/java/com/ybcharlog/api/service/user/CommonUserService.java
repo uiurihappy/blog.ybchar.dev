@@ -60,7 +60,7 @@ public class CommonUserService {
             throw new UnauthorizedRequest(
                     String.format("Not Authorized.(email: %s)", email));
         }
-        log.info(user.getEmail(), user.getUserRole(), user.getPassword());
+        log.info(user.getEmail(), user.getRoles(), user.getPassword());
         return user;
     }
 }

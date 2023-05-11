@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.ybcharlog.api.Common.service.JsonService;
 import com.ybcharlog.api.domain.user.UserRole;
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.util.*;
 
 @Component
 @RequiredArgsConstructor
+@Converter
 public class UserRoleConverter implements AttributeConverter<List<UserRole>, String> {
 
     private final JsonService jsonService;

@@ -40,7 +40,7 @@ public class UserService {
         }
 
         User user = User.initEmailUser(req.getEmail(),
-                commonUserService.encryptPassword(req.getPassword()), req.getNickname(), req.getRole());
+                commonUserService.encryptPassword(req.getPassword()), req.getNickname());
         commonUserService.add(user);
     }
 
@@ -65,7 +65,7 @@ public class UserService {
         return SignInRes.builder()
                 .accessToken(TokenService.generateToken(user, accessTokenExpirationMinutes))
                 .refreshToken(TokenService.generateRefreshToken(user, refreshTokenExpirationMinutes))
-                .userRoles(user.getUserRole())
+                .userRoles(user.getRoles())
                 .expiresIn(expiresIn.toMillis())
                 .refreshExpiresIn(refreshExpiresIn.toMillis())
                 .build();

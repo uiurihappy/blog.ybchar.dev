@@ -34,32 +34,33 @@ public class User extends BaseTimeEntity {
 	@Column(columnDefinition = "tinytext not null COMMENT '권한'")
 	@Builder.Default
 	@Convert(converter = UserRoleConverter.class)
-	private List<UserRole> userRole = new ArrayList<>();
+	private List<UserRole> roles = new ArrayList<>();
 
 	@Builder
-	public User(String email, String nickname, String password, List<UserRole> userRole) {
+	public User(String email, String nickname, String password, List<UserRole> roles) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
-		this.userRole = userRole;
+		this.roles = roles;
 	}
 
-	public static User initEmailUser(String email, String password, String nickname, String userRole) {
-		String role = "ROLE_ADMIN";
-		if (!role.equals(userRole)) {
-			role = "ROLE_USER";
-		}
+	public static User initEmailUser(String email, String password, String nickname) {
+//		String role = "ROLE_ADMIN";
+//		if (!role.equals(userRole)) {
+//			role = "ROLE_USER";
+//		}
 
 		return User.builder()
 				.email(email)
 				.password(password)
 				.nickname(nickname)
-				.userRole(List.of(UserRole.valueOf(role)))
+//				.roles(List.of(UserRole.valueOf(userRole)))
+				.roles(List.of(UserRole.ROLE_USER))
 				.build();
 	}
 
 	public String rolesToString() {
-		return this.userRole.stream().map(UserRole::getValue)
+		return this.roles.stream().map(UserRole::getValue)
 				.collect(Collectors.joining(","));
 	}
 }

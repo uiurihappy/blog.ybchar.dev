@@ -51,8 +51,9 @@ public class SecurityConfig {
             "/favicon.ico", "/robots.txt", "/fonts/**", "/css/**", "/images/**", "/js/**",
             //"/test/**",
             "/enums/**", "/auth/join", "/join/verification-url",
-            "/auth/login", "/auth/logout",
-            "/posts/list", "/posts/{postId}", "/posts/{postId}/comments",
+            "/auth/login",
+//            "/posts/list", "/posts/{postId}", "/posts/{postId}/comments",
+            "/posts/**", "/comments/**",
             "/view/users/change-password",
     };
 
@@ -62,7 +63,6 @@ public class SecurityConfig {
                 permitAllUrl
         );
     }
-
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
@@ -94,7 +94,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> req
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                                 .requestMatchers(permitAllUrl).permitAll()
-                                .requestMatchers("/posts/save", "/posts/update/**", "/posts/delete/**",
+                                .requestMatchers("/posts/save", "/posts/update/{postId}", "/posts/delete/{postId}",
                                         "/posts/thumbnail/image", "/files/images", "/category/save", "/category/delete/**").hasRole("ROLE_ADMIN")
                                 .anyRequest().authenticated()
                 )
@@ -106,8 +106,8 @@ public class SecurityConfig {
                 .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-                   .logoutSuccessUrl("/api/posts/list?page=1&size=12")
-                   .invalidateHttpSession(true)
+                    .logoutSuccessUrl("/api/posts/list?page=1&size=12")
+                    .invalidateHttpSession(true)
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -118,23 +118,7 @@ public class SecurityConfig {
                 .and()
                 .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(exceptionHandlerFilter, TokenFilter.class);
-
-
         return httpSecurity.build();
-
-//        return httpSecurity
-//                .authorizeHttpRequests()
-//                .requestMatchers(permitAllUrl).permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .disable()
-//                .rememberMe(rm -> rm.rememberMeParameter("remember")
-//                        .alwaysRemember(false)
-//                        .tokenValiditySeconds(2592000)
-//                )
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .build();
     }
 
     @Bean

@@ -98,13 +98,21 @@ axios
     alert('글 조회에 실패하였습니다.');
   });
 
-const edit = () => {
-  axios
-    .patch(`/api/posts/update/${props.postId}`, {
-      title: updatePost.value.title,
-      content: updatePost.value.content,
-      display: Number(updatePost.value.display),
-    })
+const edit = async function () {
+  await axios
+    .patch(
+      `/api/posts/update/${props.postId}`,
+      {
+        title: updatePost.value.title,
+        content: updatePost.value.content,
+        display: Number(updatePost.value.display),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+        },
+      }
+    )
     .then(() => {
       alert('글 수정이 완료되었습니다.');
       router.replace({ name: 'Home' });

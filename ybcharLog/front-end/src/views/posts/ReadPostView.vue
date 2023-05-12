@@ -8,7 +8,6 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import type { Posts } from '../../common/posts/posts.interface';
 import { getFormattedDate } from '../../common/tools/dateFormat.tool';
-
 dayjs.extend(timezone);
 
 const username = ref('');
@@ -17,6 +16,7 @@ const secretStatus = ref(0);
 const commentContent = ref('');
 let isCodeBlock = ref(false);
 let codeBlockContent = ref('');
+
 const props = defineProps({
   postId: {
     type: [Number, String],
@@ -98,10 +98,10 @@ onMounted(() => {
                   ? dayjs().format('YYYY년 MM월 DD일 A H:mm')
                   : dayjs(post.createdAt).format('YYYY년 MM월 DD일 A H:mm')
               }}
-            </div>
-            <div class="viewCount">
-              조회 수:
-              {{ post.viewCount }}
+              <div class="regDate">
+                조회 수:
+                {{ post.viewCount }}
+              </div>
             </div>
           </div>
         </div>

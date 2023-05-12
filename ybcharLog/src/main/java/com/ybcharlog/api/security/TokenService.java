@@ -116,10 +116,9 @@ public class TokenService {
         Long userId = Long.parseLong(claims.get("userId").toString());
         String userEmail = claims.get("userEmail").toString();
         String userNickname = claims.get("userNickname").toString();
-        String userPhoneNumber = claims.get("userPhoneNumber").toString();
         String userRoles = claims.get("userRoles").toString();
 
-        return new CustomUserDetails(userId, userEmail, userNickname, userPhoneNumber, userRoles);
+        return new CustomUserDetails(userId, userEmail, userNickname, userRoles);
     }
 
     public static CustomUserDetails getUserDetailsByRefreshToken(String token)
@@ -139,7 +138,7 @@ public class TokenService {
 
         Long userId = Long.parseLong(claims.get("userId").toString());
 
-        return new CustomUserDetails(userId, null, null, null, null);
+        return new CustomUserDetails(userId, null, null,  null);
     }
 
     public static String generateMailVerificationToken(User user, Long plusExpMinutes) {

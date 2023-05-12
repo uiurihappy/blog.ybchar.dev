@@ -1,8 +1,10 @@
 package com.ybcharlog.api.config;
 
+import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.filter.ExceptionHandlerFilter;
 import com.ybcharlog.api.filter.TokenFilter;
 import com.ybcharlog.api.repository.user.UserRepository;
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -43,7 +46,6 @@ public class SecurityConfig {
 
     private final TokenFilter tokenFilter;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
-    private final UserRepository userRepository;
 
     private static final String[] permitAllUrl = {
             "/favicon.ico", "/robots.txt", "/fonts/**", "/css/**", "/images/**", "/js/**",
@@ -88,21 +90,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
-        //String[] permitAllUrl = {"/**"};
-        // 참고 레퍼런스: https://velog.io/@pjh612/Deprecated%EB%90%9C-WebSecurityConfigurerAdapter-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8C%80%EC%B2%98%ED%95%98%EC%A7%80
-
-
-        httpSecurity.authorizeHttpRequests()
-                .requestMatchers(permitAllUrl).permitAll()
-//                .requestMatchers("/auth/login", "/auth/join", "/auth/logout",
-//                        "/posts/list", "/posts/{postId}", "/posts/{postId}/comments").hasRole("ROLE_USER")
-                .requestMatchers("/posts/save", "/posts/update/**", "/posts/delete/**",
-                        "/posts/thumbnail/image", "/files/images", "/category/save", "/category/delete/**").hasRole("ROLE_ADMIN")
-                .anyRequest().authenticated()
-                .and()
+        httpSecurity.csrf().disable().cors().disable()
+                .authorizeHttpRequests(req -> req
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                                .requestMatchers(permitAllUrl).permitAll()
+                                .requestMatchers("/posts/save", "/posts/update/**", "/posts/delete/**",
+                                        "/posts/thumbnail/image", "/files/images", "/category/save", "/category/delete/**").hasRole("ROLE_ADMIN")
+                                .anyRequest().authenticated()
+                )
                 .formLogin()
                 .disable()
-                .csrf(AbstractHttpConfigurer::disable)
                 .headers()
                     .frameOptions()
                     .sameOrigin()
@@ -119,35 +116,34 @@ public class SecurityConfig {
                 .accessDeniedHandler(accessDeniedHandler())
                 .authenticationEntryPoint(authenticationEntryPoint())
                 .and()
-                .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(exceptionHandlerFilter, TokenFilter.class);
+
 
         return httpSecurity.build();
-//       return httpSecurity
-//               .headers()
-//                .frameOptions()
-//                .sameOrigin()
-//                .and()
-//                .authorizeRequests()
-//                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+
+//        return httpSecurity
+//                .authorizeHttpRequests()
 //                .requestMatchers(permitAllUrl).permitAll()
 //                .anyRequest().authenticated()
-//                   .and()
-//                   .logout()
-//                   .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-//                   .logoutSuccessUrl("/api/posts/list?page=1&size=12")
-//                   .invalidateHttpSession(true)
-//                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and().csrf().disable()
-//               .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
-//               .addFilterBefore(exceptionHandlerFilter, TokenFilter.class)
-//               .build();
+//                .and()
+//                .formLogin()
+//                .disable()
+//                .rememberMe(rm -> rm.rememberMeParameter("remember")
+//                        .alwaysRemember(false)
+//                        .tokenValiditySeconds(2592000)
+//                )
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .build();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//
-//        UserDetails user =
-//    }
+    @Bean
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return username -> {
+            User user = userRepository.findByEmail(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username + "을 찾을 수 없습니다."));
+            return new UserPrinciple(user);
+        };
+    }
 
 }

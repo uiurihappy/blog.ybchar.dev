@@ -16,18 +16,16 @@ public class CustomUserDetails implements UserDetails {
     private final Long userId;
     private final String userEmail;
     private final String userNickname;
-    private final String userPhoneNumber;
     private final List<String> userRoleList;
     private final List<GrantedAuthority> authorityList;
 
     public CustomUserDetails(Long userId, String userEmail, String userNickname,
-        String userPhoneNumber, String userRoles) {
+        String userRoles) {
         this.userId = userId;
         this.authorityList = new ArrayList<>();
         this.userRoleList = new ArrayList<>();
         this.userEmail = userEmail;
         this.userNickname = userNickname;
-        this.userPhoneNumber = userPhoneNumber;
         if (!Strings.isNullOrEmpty(userRoles)) {
             String[] roleNames = userRoles.split(",");
             for (String roleName : roleNames) {

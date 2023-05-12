@@ -15,13 +15,13 @@
           <div class="post-title">
             <div v-if="post.thumbnailImage" class="post-if-title">
               <router-link
-                :to="{ name: 'read', params: { postId: post.id } }"
+                :to="{ name: 'Read', params: { postId: post.id } }"
                 >{{ truncateText(post.title, 24) }}</router-link
               >
             </div>
             <div v-else class="post-else-title">
               <router-link
-                :to="{ name: 'read', params: { postId: post.id } }"
+                :to="{ name: 'Read', params: { postId: post.id } }"
                 >{{ truncateText(post.title, 24) }}</router-link
               >
             </div>
@@ -29,12 +29,12 @@
 
           <div class="post-content-box">
             <div v-if="post.thumbnailImage" class="post-content">
-              <router-link :to="{ name: 'read', params: { postId: post.id } }">
+              <router-link :to="{ name: 'Read', params: { postId: post.id } }">
                 <p v-html="truncateText(post.content, 100)"></p>
               </router-link>
             </div>
             <div v-else class="post-else-content">
-              <router-link :to="{ name: 'read', params: { postId: post.id } }">
+              <router-link :to="{ name: 'Read', params: { postId: post.id } }">
                 <p v-html="truncateText(post.content, 450)"></p>
               </router-link>
             </div>
@@ -61,7 +61,7 @@
         @click="moveToRead(post.id)"
       >
         <div class="post-title">
-          <router-link :to="{ name: 'read', params: { postId: post.id } }">{{
+          <router-link :to="{ name: 'Read', params: { postId: post.id } }">{{
             post.title
           }}</router-link>
         </div>
@@ -74,7 +74,7 @@
           <div class="post-date">{{ getFormattedDate(post.createdAt) }}</div>
         </div>
         <div class="post-content">
-          <router-link :to="{ name: 'read', params: { postId: post.id } }">
+          <router-link :to="{ name: 'Read', params: { postId: post.id } }">
             <p v-html="truncateText(post.content, 300)"></p>
           </router-link>
         </div>
@@ -163,7 +163,7 @@ const setCurrentPage = (page: number) => {
 };
 
 const moveToRead = (postId: number) => {
-  router.push({ name: 'read', params: { postId } });
+  router.push({ name: 'Read', params: { postId } });
 };
 
 // const pagedPostsHtml = computed(() => {

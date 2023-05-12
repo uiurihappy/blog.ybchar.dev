@@ -41,7 +41,7 @@ const post = ref({
 const router = useRouter();
 
 const moveToEdit = (postId: number) => {
-  router.push({ name: 'edit', params: { postId } });
+  router.push({ name: 'Edit', params: { postId } });
 };
 
 const writeComment = (post: Posts) => {

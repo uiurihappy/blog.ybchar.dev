@@ -23,10 +23,18 @@ const submitForm = async function () {
 
   try {
     if (props.post) {
-      await axios.patch(`/api/posts/${props.post.id}`, postData);
+      await axios.patch(`/api/posts/${props.post.id}`, postData, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+        },
+      });
       alert('게시글이 수정되었습니다.');
     } else {
-      await axios.post('/api/posts/save', postData);
+      await axios.post('/api/posts/save', postData, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+        },
+      });
       alert('게시글이 작성되었습니다.');
     }
     router.push({ name: 'Home' });

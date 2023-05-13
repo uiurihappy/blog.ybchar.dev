@@ -13,6 +13,7 @@ body {
   margin: auto;
   width: 100%;
   padding-top: 1rem;
+  background-color: #eeefff;
 
   font-family: 'Pretendard Variable', Pretendard, -apple-system,
     BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',

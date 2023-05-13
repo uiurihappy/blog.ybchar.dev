@@ -74,6 +74,7 @@ label {
 }
 input[type='email'],
 input[type='password'] {
+  justify-content: center;
   border-radius: 4px;
   border: 1px solid #ced4da;
   padding: 10px;
@@ -81,6 +82,7 @@ input[type='password'] {
   font-size: 16px;
 }
 button[type='submit'] {
+  justify-content: center;
   width: 100%;
   font-size: 18px;
   margin-top: 20px;

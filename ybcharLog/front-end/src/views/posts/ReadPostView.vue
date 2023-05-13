@@ -8,12 +8,41 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import type { Posts } from '../../common/posts/posts.interface';
 import { getFormattedDate } from '../../common/tools/dateFormat.tool';
+import jwt_decode from 'jwt-decode';
+interface AccessToken {
+  userRoles: string;
+  // 다른 프로퍼티가 있다면 추가 가능
+}
+
 dayjs.extend(timezone);
 
 const username = ref('');
 const password = ref('');
 const secretStatus = ref(0);
 const commentContent = ref('');
+let userRole = ref('');
+const accessToken: string | null = sessionStorage.getItem('accessToken');
+
+const isAccessTokenValid = () => {
+  if (accessToken) {
+    try {
+      const { userRoles }: AccessToken = jwt_decode(
+        accessToken,
+        import.meta.env.VITE_SECRET_KEY
+      );
+
+      userRole.value = userRoles === 'ROLE_ADMIN' ? userRoles : '';
+      return true;
+    } catch (error) {
+      console.error('Invalid access token:', error);
+      return false;
+    }
+  } else {
+    userRole.value = '';
+    return false;
+  }
+};
+
 let isCodeBlock = ref(false);
 let codeBlockContent = ref('');
 
@@ -60,16 +89,6 @@ const writeComment = (post: Posts) => {
     .catch(() => {
       alert('댓글 작성이 실패되었습니다.');
     });
-};
-
-const isCodeBlocking = () => {
-  const regex = /```([\w\W]+?)```/;
-  const matches = regex.exec(post.value.content);
-
-  if (matches && matches.length > 1) {
-    isCodeBlock.value = true;
-    codeBlockContent.value = matches[1];
-  }
 };
 
 onMounted(() => {
@@ -120,38 +139,19 @@ onMounted(() => {
         </div>
       </el-col>
     </el-row>
-    <!-- <el-row>
-      <el-col>
-        <div class="content">
-          <template v-if="post.content.includes('```')">
-            <pre
-              v-html="post.content.split('```')[0].replace(/\n/g, '<br>')"
-            ></pre>
-            <div
-              v-html="post.content.split('```')[1].replace(/\n/g, '<br>')"
-            ></div>
-          </template>
-          <template v-else>
-            <div
-              class="content"
-              v-html="post.content.replace(/\n/g, '<br>')"
-            ></div>
-          </template>
-        </div>
-      </el-col>
-    </el-row> -->
-
     <br />
 
-    <el-row>
-      <el-col>
-        <div class="d-flex justify-content-end">
-          <el-button type="warning" @click="moveToEdit(post.id)">
-            수정하기
-          </el-button>
-        </div>
-      </el-col>
-    </el-row>
+    <div v-if="isAccessTokenValid()">
+      <el-row>
+        <el-col>
+          <div class="d-flex justify-content-end">
+            <el-button type="warning" @click="moveToEdit(post.id)">
+              수정하기
+            </el-button>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
 
     <div>
       <h2 style="font-size: 1.5rem; margin-bottom: 1rem">

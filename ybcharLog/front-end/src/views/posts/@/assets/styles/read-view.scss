@@ -1,7 +1,10 @@
 .container {
-  max-width: 950px;
+  max-width: 1050px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  margin-top: 30px;
+  padding: 1rem 2rem;
+  background-color: #fff;
+  box-shadow: 0 0 7.5px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
 }
 
 .title {
@@ -14,7 +17,7 @@
 .sub {
   margin-top: 18px;
   margin-bottom: 30px;
-  font-size: .98rem;
+  font-size: 0.98rem;
   margin-left: 0;
   .regDate {
     color: #6b6b6b;
@@ -89,15 +92,14 @@
   word-wrap: break-word;
 }
 
-
 .code-block {
-    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-    font-size: 14px;
-    line-height: 1.5;
-    background-color: #1e1e1e;
-    color: #d4d4d4;
-    padding: 8px;
-    overflow-x: auto;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  padding: 8px;
+  overflow-x: auto;
 }
 .code-block > code {
   font-family: Consolas, 'Courier New', monospace;

@@ -98,7 +98,7 @@ export default {
 .container {
   border: 0.7px solid #666;
   background-color: #fff;
-  max-width: 1111px;
+  max-width: 1120px;
   margin: 0 auto;
   position: sticky;
   top: 0px;

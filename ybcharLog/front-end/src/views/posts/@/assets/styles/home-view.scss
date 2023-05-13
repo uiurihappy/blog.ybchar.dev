@@ -233,6 +233,8 @@ $tertiary-color: #2d2d2d;
     display: flex;
     justify-content: center;
     margin: 20px 0;
+    align-items: center;
+    padding-right: 2.6rem;
 
     li {
       cursor: pointer;
@@ -256,11 +258,10 @@ $tertiary-color: #2d2d2d;
       }
     }
   }
-
   .page-count,
   .post-count {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 7px;
     color: #888;
   }
 }

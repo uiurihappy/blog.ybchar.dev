@@ -14,11 +14,12 @@ Spring boot, Data JPA, Querydsl을 수강했으니 직접 블로그 프로젝트
 
 ```
 # application.yml
+# application.yml
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/{DB 스키마 이름}?serverTimezone=Asia/Seoul
-    username: {mysql 사용자 이름}
-    password: {mysql 비밀번호}
+    username: {DB 사용자 이름}
+    password: {DB 사용자 비밀번호}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -30,43 +31,72 @@ spring:
       hibernate:
         # show_sql: true
         format_sql: true
-
+    defer-datasource-initialization: true
   data:
     web:
       pageable:
         # page를 1부터 시작하는 옵션
         one-indexed-parameters: true
         # page 사이즈
-        # default-page-size: 10
+        #        default-page-size: 10
         # 최대 page 사이즈
         max-page-size: 2000
+  session:
+    timeout: 86400
+    jdbc:
+      initialize-schema: always
 
+
+#  sql:
+#    init:
+#      mode: always
 logging.level:
   org.hibernate.SQL: debug
+  com:
+    amazonaws:
+      util:
+        EC2MetadataUtils: error
 # org.hibernate.type: trace
 
+ybchar:
+  host: localhost
+
 server:
-  port: {사용할 port 번호}
+  port: 9000
+  servlet:
+    session:
+      cookie:
+        max-age: 172800
+
+util:
+  encrypt:
+    secretKey: {암호화 비밀 키}
+  jwt:
+    secretKey: {jwt secretKey}
+    refreshKey: {jwt refresh Key}
+    defaultExpirationMinutes: 60 # 1시간
+    defaultRefreshTokenMinutes: 43200 # 30일
 
 frontEnd:
-  port: {cors 해결을 위해 Front-end PORT 번호}
-  
+  port: 5173
+
 auth:
-  key: {key 값}
+  key: ybchar
+  secretKey: 
 
 cloud:
   aws:
     credentials:
-      accessKey: {aws IAM 사용자 accessKey}
-      secretKey: {aws IAM 사용자 secretKey}
+      accessKey: {AWS IAM 사용자 accessKey}
+      secretKey: {AWS IAM 사용자 secretKey}
     region:
-      static: {aws region}
+      static: {AWS region}
     stack:
       auto: false
 
 aws:
   s3:
-    bucketName: {aws 접근할 버킷 이름}
+    bucketName: {이미지 등록할 S3 버킷 이름}
 
 ```
 
@@ -77,6 +107,7 @@ aws:
 <h2> Front-end </h2>
 <ul>
   <li> Typescript </li>
+  <li> Javascript </li>
   <li> Vue.js </li>
   <li> scss </li>
 </ul>
@@ -90,6 +121,7 @@ aws:
 VITE_ENVIRONMENT=development
 VITE_SERVER_PORT=9000
 VITE_API_URL=http://localhost:9000
+VITE_SECRET_KEY={jwt decode용 비밀키}
 ```
 
 <h2> API Mapping </h2>

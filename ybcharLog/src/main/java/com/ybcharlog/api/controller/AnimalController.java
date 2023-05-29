@@ -9,8 +9,6 @@ package com.ybcharlog.api.controller;
 import com.ybcharlog.api.domain.AnimalType;
 import com.ybcharlog.api.service.animal.AnimalService;
 import com.ybcharlog.api.service.animal.AnimalServiceFinder;
-import com.ybcharlog.api.service.animal.CatService;
-import com.ybcharlog.api.service.animal.DogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

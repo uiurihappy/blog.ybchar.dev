@@ -8,16 +8,15 @@ import com.ybcharlog.api.ResponseDto.post.PostResponse.GetPostPageReq;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.service.AWS.S3UploaderService;
 import com.ybcharlog.api.service.post.PostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.Valid;
 import java.io.IOException;
 
 @Slf4j
@@ -44,9 +43,6 @@ public class PostController {
                     // 세 번 이상이면 적어도 자동화를 고려해볼 것
     */
 
-    @Value("${auth.key}")
-    private String headerAuthkey;
-
     private final PostService postService;
     private final S3UploaderService s3UploaderService;
 
@@ -62,12 +58,9 @@ public class PostController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/save")
     public Post post(@RequestBody @Valid PostCreateDto request) {
-//        if (authorization.equals(headerAuthkey)) {
-            request.titleValidate();
-            return postService.write(request);
-//        } else {
-//            throw new AuthenticationException("Key가 일치하지 않습니다.");
-//        }
+        // title validate test
+//        request.titleValidate();
+        return postService.write(request);
     }
 
     /*
@@ -77,7 +70,7 @@ public class PostController {
     @GetMapping("/list")
     public ResponseEntity<CustomPage<PostResponse>> getPostList(GetPostPageReq req, Pageable pageable) {
         // 페이징 처리가 필요 -> response 비용이 많이 들기 때문이다.
-        // -> 통신, 트래픽 비용이 많아지면 응답 속도 시간뿐만 아니라 직접 겪어봐서 아는데 DB까지 터진다.\
+        // -> 통신, 트래픽 비용이 많아지면 응답 속도 시간뿐만 아니라 직접 겪어봐서 아는데 DB까지 터진다.
         return ResponseEntity.ok(postService.getListByPage(req, pageable));
     }
 
@@ -90,31 +83,21 @@ public class PostController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/update/{postId}")
     public void editPost(@PathVariable Long postId, @RequestBody @Valid PostEditDto postEditDto) {
-//        if (authorization.equals(headerAuthkey)) {
-            postService.editPost(postId, postEditDto);
-//        } else {
-//            throw new AuthenticationException("Key가 일치하지 않습니다.");
-//        }
+        postService.editPost(postId, postEditDto);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{postId}")
     public void deletePost(@PathVariable Long postId) {
-//        if (authorization.equals(headerAuthkey)) {
-            postService.deletePost(postId);
-//        } else {
-//            throw new AuthenticationException("Key가 일치하지 않습니다.");
-//        }
+        postService.deletePost(postId);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/thumbnail/image")
     public ResponseEntity<?> postThumbnailImageUpload(
-            @RequestParam("file") MultipartFile file, @RequestParam("path") String path, @RequestParam("postId") Long postId) throws IOException {
-//		MultipartFile file = postThumbNailImageDto.getFile();
-//		String dirName = postThumbNailImageDto.getPath();
-//		Long postId = postThumbNailImageDto.getPostId();
-
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("path") String path,
+            @RequestParam("postId") Long postId) throws IOException {
         String uploadImagePath = s3UploaderService.upload(file, path);
         postService.updatePostThumbnailImage(uploadImagePath, postId);
         return ResponseEntity.ok().body("SUCCESS");

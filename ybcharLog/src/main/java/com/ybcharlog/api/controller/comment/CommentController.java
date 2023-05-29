@@ -3,12 +3,10 @@ package com.ybcharlog.api.controller.comment;
 import com.ybcharlog.api.RequestDto.comment.CommentCreateDto;
 import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
 import com.ybcharlog.api.service.comment.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.validation.Valid;
 
 @Slf4j
 @RestController

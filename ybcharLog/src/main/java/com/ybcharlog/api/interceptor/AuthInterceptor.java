@@ -24,7 +24,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		throw new UnauthorizedRequest();
-//		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
 
 	@Override

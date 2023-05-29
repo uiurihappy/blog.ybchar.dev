@@ -107,8 +107,8 @@ onMounted(() => {
   <div class="container">
     <el-row>
       <el-col>
+        <div class="title">{{ post.title }}</div>
         <div class="mt-2">
-          <h2 class="title">{{ post.title }}</h2>
           <div class="sub d-flex">
             <div class="regDate">
               작성일:
@@ -154,9 +154,9 @@ onMounted(() => {
     </div>
 
     <div>
-      <h2 style="font-size: 1.5rem; margin-bottom: 1rem">
+      <h3 style="font-size: 1.3rem; margin-bottom: 1.3rem">
         댓글 ({{ post.comments.length }})
-      </h2>
+      </h3>
     </div>
     <div class="comment">
       <div class="comment-list">

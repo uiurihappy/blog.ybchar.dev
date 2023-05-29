@@ -8,19 +8,20 @@
 }
 
 .title {
+  margin-top: 10px;
+  margin-right: 30px;
   font-size: 2.5rem;
   font-weight: 600;
   color: #383838;
-  margin: 0;
 }
 
 .sub {
-  margin-top: 18px;
+  margin-top: 12px;
   margin-bottom: 25px;
   font-size: 0.98rem;
   margin-left: 0;
   .regDate {
-    margin-top: 10px;
+    margin-top: 6px;
     font-size: small;
     color: #6b6b6b;
   }
@@ -87,6 +88,7 @@
 
 .content {
   margin-top: 12px;
+  margin-bottom: 30px;
   white-space: pre-wrap;
   /* 일반적인 content 스타일 */
   max-width: 100%;

@@ -1,19 +1,15 @@
 package com.ybcharlog.api.service.user;
 
 import com.ybcharlog.api.Common.constant.ResultCode;
-import com.ybcharlog.api.RequestDto.UserDto;
 import com.ybcharlog.api.RequestDto.UserDto.SignInReq;
 import com.ybcharlog.api.RequestDto.UserDto.SignInRes;
-import com.ybcharlog.api.RequestDto.UserDto.SignUpReq;
 import com.ybcharlog.api.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.domain.user.User;
-import com.ybcharlog.api.exception.AlreadyExistsEmailException;
 import com.ybcharlog.api.exception.CustomException;
 import com.ybcharlog.api.security.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

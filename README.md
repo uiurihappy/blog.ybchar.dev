@@ -124,7 +124,14 @@ VITE_API_URL=http://localhost:9000
 VITE_SECRET_KEY={jwt decode용 비밀키}
 ```
 
-<h2> API Mapping </h2>
+<h2> API Docs </h2>
+
+<h3> 인증 </h3>
+<ul>
+  <li> POST /auth/login ->             로그인 </li>
+  <li> POST /auth/join ->              회원가입 </li>
+  <li> GET /auth/logout ->             로그아웃 </li>
+</ul>
 
 <h3> 게시글 </h3>
 <ul> 

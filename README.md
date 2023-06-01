@@ -1,7 +1,7 @@
 <h1 style="background-color:gray;"> 📝 블로그 프로젝트 </h1>
-Spring boot, Data JPA, Querydsl을 수강했으니 직접 블로그 프로젝트를 개발하면서
+Spring boot, Data JPA, Querydsl을 학습하였고 실전으로 개발하고자 간단하게 풀스택으로 블로그를 개발
 <br>
-티스토리에 게시한 글과 학습한 내용을 기록하고자 한다.
+기존 티스토리에 게시한 글과 블로그를 개발하면서 트러블 슈팅했던 내용을 작성하고자 한다.
 <div>
 <h1> Tech Stack </h1>
 <h2> Back-end </h2>
@@ -9,6 +9,7 @@ Spring boot, Data JPA, Querydsl을 수강했으니 직접 블로그 프로젝트
   <li> Java 17 </li>
   <li> Spring boot </li>
   <li> Spring Data JPA </li>
+  <li> Spring Security </li>
   <li> Querydsl </li>
 </ul>
 
@@ -112,7 +113,6 @@ aws:
   <li> scss </li>
 </ul>
 </div>
-<br/>
 
 <h3> .env </h3>
 
@@ -124,14 +124,20 @@ VITE_API_URL=http://localhost:9000
 VITE_SECRET_KEY={jwt decode용 비밀키}
 ```
 
+<br/>
 <h2> API Docs </h2>
 
 <h3> 인증 </h3>
+
 <ul>
   <li> POST /auth/login ->             로그인 </li>
   <li> POST /auth/join ->              회원가입 </li>
   <li> GET /auth/logout ->             로그아웃 </li>
 </ul>
+
+<li> 인증은 Spring Security를 사용하였고, JWT 토큰을 사용 </li>
+<li> 프론트엔드에서는 토큰을 Session storage에 저장하여 토큰 값 유효성 체크를 한다. </li>
+<li> 로그아웃 시에는 토근 만료 및 Session storage 삭제 </li>
 
 <h3> 게시글 </h3>
 <ul> 
@@ -148,3 +154,12 @@ VITE_SECRET_KEY={jwt decode용 비밀키}
 <li> POST /comments ->                 댓글 저장 </li>
 <li> DELETE /comments/{commentId} ->   댓글 단건 삭제 </li>
 </ul>
+
+<br/>
+<h3> TODO </h3>
+<ul>
+  <li> AWS EC2 생성은 했으나 빌드가 안되서 mariadb 설치 및 빌드하도록 구축 </li>
+  <li> 배포 자동화 사용할 것 </li>
+  <li> 현재 백엔드 프로젝트 내에 하위 디렉토리로 프론트엔드 프로젝트가 존재하므로 고려해서 Route 53 활용하여 도메인 연결할 것 </li>
+</ul>
+

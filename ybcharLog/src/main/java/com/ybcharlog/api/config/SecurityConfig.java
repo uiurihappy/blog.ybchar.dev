@@ -99,6 +99,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 )
                 .formLogin()
+                .failureHandler(new LoginFailHandler())
                 .disable()
                 .headers()
                     .frameOptions()
@@ -112,10 +113,13 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler())
-                .authenticationEntryPoint(authenticationEntryPoint())
-                .and()
+                .exceptionHandling(e -> {
+                    e.accessDeniedHandler(new Http403Handler());
+                    e.authenticationEntryPoint(new Http401Handler());
+                })
+//                .accessDeniedHandler(accessDeniedHandler())
+//                .authenticationEntryPoint(authenticationEntryPoint())
+//                .and()
                 .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(exceptionHandlerFilter, TokenFilter.class);
         return httpSecurity.build();

@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { Editor } from '@toast-ui/vue-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
 export default {
   props: {
     post: {
@@ -12,7 +11,7 @@ export default {
     },
   },
   components: {
-    Editor,
+    editor: Editor,
   },
   setup(props) {
     const router = useRouter();
@@ -73,7 +72,6 @@ export default {
       form,
       loading,
       submitForm,
-      Editor,
       addImageBlobHook,
     };
   },
@@ -88,7 +86,7 @@ export default {
       </el-form-item>
 
       <el-form-item label="내용" class="form-item">
-        <Editor
+        <editor
           v-model="form.content"
           :initialEditType="'wysiwyg'"
           :previewStyle="'vertical'"
@@ -122,4 +120,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/write-view.scss';
+@import '@toast-ui/editor/dist/toastui-editor.css';
 </style>

@@ -16,13 +16,13 @@
         </el-form-item>
 
         <el-form-item label="내용" class="form-item">
-          <Editor
+          <editor
             v-model="updatePost.content"
-            :initialEditType="'wysiwyg'"
-            :previewStyle="'vertical'"
-            :height="'500px'"
             :initialValue="updatePost.content"
-            :hooks="{ addImageBlobHook: addImageBlobHook }"
+            :options="editorOptions"
+            height="500px"
+            initialEditType="wysiwyg"
+            previewStyle="vertical"
           />
         </el-form-item>
 
@@ -43,8 +43,10 @@
 import { defineComponent, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import 'tui-editor/dist/tui-editor.css';
+import 'tui-editor/dist/tui-editor-contents.css';
+import 'codemirror/lib/codemirror.css';
 import { Editor } from '@toast-ui/vue-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
 
 export default defineComponent({
   props: {
@@ -56,6 +58,14 @@ export default defineComponent({
   components: {
     Editor,
   },
+  data() {
+    return {
+      editorText: 'This is initialValue.',
+      editorOptions: {
+        hideModeSwitch: true,
+      },
+    };
+  },
   setup(props) {
     const router = useRouter();
     const checkDisplay = ref(0);
@@ -65,6 +75,22 @@ export default defineComponent({
       content: '',
       display: checkDisplay.value,
     });
+
+    const defaultOptions = {
+      minHeight: '200px',
+      language: 'en-US',
+      useCommandShortcut: true,
+      usageStatistics: true,
+      hideModeSwitch: false,
+      toolbarItems: [
+        ['heading', 'bold', 'italic', 'strike'],
+        ['hr', 'quote'],
+        ['ul', 'ol', 'task', 'indent', 'outdent'],
+        ['table', 'image', 'link'],
+        ['code', 'codeblock'],
+        ['scrollSync'],
+      ],
+    };
 
     axios
       .get(`/api/posts/${props.postId}`)
@@ -123,8 +149,8 @@ export default defineComponent({
     return {
       updatePost,
       edit,
-      Editor,
       addImageBlobHook,
+      defaultOptions,
     };
   },
 });

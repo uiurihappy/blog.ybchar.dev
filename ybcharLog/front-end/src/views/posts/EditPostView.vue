@@ -16,7 +16,7 @@
         </el-form-item>
 
         <el-form-item label="내용" class="form-item">
-          <load-md-editor
+          <MdEditor
             v-model="updatePost.content"
             :editable="true"
             :subfield="false"

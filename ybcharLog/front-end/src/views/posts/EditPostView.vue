@@ -50,7 +50,7 @@
 import { defineComponent, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import MdEditor from 'md-editor-v3';
+const { MdEditor } = require('md-editor-v3');
 import 'md-editor-v3/lib/style.css';
 
 export default defineComponent({

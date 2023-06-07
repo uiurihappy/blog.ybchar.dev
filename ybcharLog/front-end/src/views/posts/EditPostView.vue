@@ -2,7 +2,7 @@
   <div class="container">
     <div class="edit-header">
       <h2 class="edit-title">글 수정</h2>
-      <el-button type="warning" @click="edit()">수정 완료</el-button>
+      <el-button type="warning" @click="edit">수정 완료</el-button>
     </div>
     <hr class="edit-divider" />
 
@@ -16,20 +16,13 @@
         </el-form-item>
 
         <el-form-item label="내용" class="form-item">
-          <MdEditor
+          <editor
             v-model="updatePost.content"
-            :editable="true"
-            :subfield="false"
-            :defaultOpen="true"
-            :toolbarsFlag="true"
-            :previewMode="true"
-            :scrollStyle="{
-              height: '800px',
-              'max-height': '800px',
-              'min-height': '400px',
-            }"
-            placeholder="마크다운 내용을 입력해주세요."
-            style="height: 800px"
+            :initialEditType="'wysiwyg'"
+            :previewStyle="'vertical'"
+            :height="'500px'"
+            :initialValue="updatePost.content"
+            :hooks="{ addImageBlobHook: addImageBlobHook }"
           />
         </el-form-item>
 
@@ -50,7 +43,7 @@
 import { defineComponent, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-const { MdEditor } = require('md-editor-v3');
+import { Editor } from '@toast-ui/vue-editor';
 import 'md-editor-v3/lib/style.css';
 
 export default defineComponent({
@@ -59,6 +52,9 @@ export default defineComponent({
       type: [Number, String],
       required: true,
     },
+  },
+  components: {
+    editor: Editor,
   },
   setup(props) {
     const router = useRouter();
@@ -83,9 +79,9 @@ export default defineComponent({
         alert('글 조회에 실패하였습니다.');
       });
 
-    const edit = async function () {
-      await axios
-        .patch(
+    const edit = async () => {
+      try {
+        await axios.patch(
           `/api/posts/update/${props.postId}`,
           {
             title: updatePost.value.title,
@@ -97,18 +93,38 @@ export default defineComponent({
               Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
             },
           }
-        )
-        .then(() => {
-          alert('글 수정이 완료되었습니다.');
-          router.replace({ name: 'Home' });
+        );
+        alert('글 수정이 완료되었습니다.');
+        router.replace({ name: 'Home' });
+      } catch (error) {
+        console.error(error);
+        alert('글 수정에 실패하였습니다.');
+      }
+    };
+
+    const addImageBlobHook = (
+      blob: Blob,
+      callback: (url: string, altText: string) => void
+    ) => {
+      const formData = new FormData();
+      formData.append('image', blob);
+      axios
+        .post('/api/upload/image', formData)
+        .then(response => {
+          const { imageUrl } = response.data;
+          callback(imageUrl, 'Image description');
         })
-        .catch(() => alert('글 수정에 실패하였습니다.'));
+        .catch(error => {
+          console.error(error);
+          alert('이미지 업로드에 실패하였습니다.');
+        });
     };
 
     return {
       updatePost,
       edit,
-      MdEditor,
+      Editor,
+      addImageBlobHook,
     };
   },
 });

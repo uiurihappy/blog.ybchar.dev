@@ -33,6 +33,7 @@
     "md-editor-v3": "^4.0.4",
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.32",
+    "pinia-plugin-persist": "^1.0.0",
     "vue": "^3.2.47",
     "vue-demi": "^0.14.0",
     "vue-router": "^4.1.6",

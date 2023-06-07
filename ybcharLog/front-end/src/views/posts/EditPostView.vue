@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { defineProps, ref, onMounted } from 'vue';
+import { defineProps, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-
+let editorInstance = null;
+const loadMdEditor = async () => {
+  const { MdEditor } = await import('md-editor-v3');
+  editorInstance = new MdEditor();
+  // 이후에 필요한 작업 수행
+};
 const props = defineProps({
   postId: {
     type: [Number, String],
@@ -58,40 +62,40 @@ const edit = async function () {
     .catch(() => alert('글 수정에 실패하였습니다.'));
 };
 
-const postThumbnailEdit = () => {
-  const formData = new FormData();
-  const image = $refs.dropzone.getAcceptedFiles()[0];
-  const path = `post/thumbnail/${props.postId}`;
-  formData.append('file', image);
-  formData.append('path', path);
-  formData.append('postId', props.postId);
-  console.log(formData);
+// const postThumbnailEdit = () => {
+//   const formData = new FormData();
+//   const image = $refs.dropzone.getAcceptedFiles()[0];
+//   const path = `post/thumbnail/${props.postId}`;
+//   formData.append('file', image);
+//   formData.append('path', path);
+//   formData.append('postId', props.postId);
+//   console.log(formData);
 
-  axios
-    .post(`/api/posts/thumbnail/image`, formData)
-    .then(() => {
-      alert('썸네일 이미지 등록이 완료되었습니다.');
-    })
-    .catch(() => {
-      alert('썸네일 이미지 등록 실패되었습니다.');
-    });
-};
+//   axios
+//     .post(`/api/posts/thumbnail/image`, formData)
+//     .then(() => {
+//       alert('썸네일 이미지 등록이 완료되었습니다.');
+//     })
+//     .catch(() => {
+//       alert('썸네일 이미지 등록 실패되었습니다.');
+//     });
+// };
 
 // postThumbnailEdit 함수 삭제
 
-const beforeUpload = (file: any) => {
-  const formData = new FormData();
-  const path = `post/thumbnail/${props.postId}`;
-  formData.append('file', file);
-  formData.append('path', '/' + path);
-  formData.append('postId', props.postId);
-  $refs.dropzone.uploadFiles(formData);
-  return false;
-};
+// const beforeUpload = (file: any) => {
+//   const formData = new FormData();
+//   const path = `post/thumbnail/${props.postId}`;
+//   formData.append('file', file);
+//   formData.append('path', '/' + path);
+//   formData.append('postId', props.postId);
+//   $refs.dropzone.uploadFiles(formData);
+//   return false;
+// };
 
-const onUploadSuccess = () => {
-  alert('썸네일 이미지 등록이 완료되었습니다.');
-};
+// const onUploadSuccess = () => {
+//   alert('썸네일 이미지 등록이 완료되었습니다.');
+// };
 </script>
 
 <template>
@@ -112,7 +116,7 @@ const onUploadSuccess = () => {
         </el-form-item>
 
         <el-form-item label="내용" class="form-item">
-          <MdEditor
+          <loadMdEditor
             v-model="updatePost.content"
             :editable="true"
             :subfield="false"
@@ -137,7 +141,7 @@ const onUploadSuccess = () => {
             :inactive-value="0"
           />
         </el-form-item>
-        <el-form-item label="썸네일 이미지 등록">
+        <!-- <el-form-item label="썸네일 이미지 등록">
           <el-upload
             ref="dropzone"
             action="/api/posts/thumbnail/image"
@@ -150,36 +154,12 @@ const onUploadSuccess = () => {
               <div class="el-upload__tip">썸네일 이미지를 업로드하세요</div>
             </template>
           </el-upload>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
     </div>
   </div>
 </template>
 
-<style scoped>
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-.edit-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.edit-title {
-  margin: 0;
-}
-
-.edit-divider {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-top: 1px solid #eee;
-}
-
-.edit-form {
-  margin-top: 2rem;
-}
+<style lang="scss" scoped>
+@import '@/assets/styles/edit-view.scss';
 </style>

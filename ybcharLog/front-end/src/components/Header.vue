@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts">
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
@@ -18,10 +19,9 @@ export default {
         this.isAccessTokenValid = false;
         return;
       }
-      const decodedToken = jwt_decode(this.accessToken);
-
+      const { exp } = jwt_decode(this.accessToken) as { exp: number };
       const currentTime = Date.now() / 1000; // in seconds
-      if (decodedToken.exp < currentTime) {
+      if (exp < currentTime) {
         this.isAccessTokenValid = false;
       } else {
         this.isAccessTokenValid = true;

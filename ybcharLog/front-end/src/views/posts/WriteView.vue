@@ -2,9 +2,15 @@
 import { defineProps, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import MdEditor from 'md-editor-v3';
+// import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 
+let editorInstance = null;
+const loadMdEditor = async () => {
+  const { MdEditor } = await import('md-editor-v3');
+  editorInstance = new MdEditor();
+  // 이후에 필요한 작업 수행
+};
 const props = defineProps({
   post: { type: Object },
 });
@@ -46,19 +52,19 @@ const submitForm = async function () {
   loading.value = false;
 };
 
-const beforeUpload = (file: any) => {
-  const formData = new FormData();
-  const path = `post/thumbnail/${props.postId}`;
-  formData.append('file', file);
-  formData.append('path', '/' + path);
-  formData.append('postId', props.postId);
-  $refs.dropzone.uploadFiles(formData);
-  return false;
-};
+// const beforeUpload = (file: any) => {
+//   const formData = new FormData();
+//   const path = `post/thumbnail/${props.postId}`;
+//   formData.append('file', file);
+//   formData.append('path', '/' + path);
+//   formData.append('postId', props.postId);
+//   $refs.dropzone.uploadFiles(formData);
+//   return false;
+// };
 
-const onUploadSuccess = () => {
-  alert('썸네일 이미지 등록이 완료되었습니다.');
-};
+// const onUploadSuccess = () => {
+//   alert('썸네일 이미지 등록이 완료되었습니다.');
+// };
 </script>
 
 <template>
@@ -69,7 +75,7 @@ const onUploadSuccess = () => {
       </el-form-item>
 
       <el-form-item label="내용" class="form-item">
-        <MdEditor
+        <loadMdEditor
           v-model="form.content"
           :editable="true"
           :subfield="false"
@@ -95,7 +101,7 @@ const onUploadSuccess = () => {
         ></el-switch>
       </el-form-item>
 
-      <el-form-item label="썸네일 이미지 등록">
+      <!-- <el-form-item label="썸네일 이미지 등록">
         <el-upload
           ref="dropzone"
           action="/api/posts/thumbnail/image"
@@ -108,7 +114,7 @@ const onUploadSuccess = () => {
             <div class="el-upload__tip">썸네일 이미지를 업로드하세요</div>
           </template>
         </el-upload>
-      </el-form-item>
+      </el-form-item> -->
 
       <el-form-item class="form-item form-item--submit">
         <el-button
@@ -125,78 +131,5 @@ const onUploadSuccess = () => {
 </template>
 
 <style lang="scss" scoped>
-.post-form-container {
-  margin: 20px;
-}
-
-.post-form {
-  max-width: 1200px;
-  margin: auto;
-}
-
-.form-input-container {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-.form-label {
-  font-size: 16px;
-  font-weight: bold;
-  width: 120px;
-  margin-right: 20px;
-}
-
-.form-input-wrapper {
-  flex: 1;
-
-  .form-input {
-    width: 100%;
-    margin-right: 20px;
-  }
-
-  .form-button {
-    width: 120px;
-    height: 40px;
-    font-size: 16px;
-    border-radius: 4px;
-    background-color: #13ce66;
-    border-color: #13ce66;
-
-    &:hover {
-      background-color: #0dbf5b;
-      border-color: #0dbf5b;
-    }
-
-    &:active,
-    &:focus {
-      background-color: #13ce66;
-      border-color: #13ce66;
-    }
-  }
-}
-
-.form-item {
-  margin-bottom: 20px;
-}
-
-.form-item > .el-form-item__label {
-  font-size: 16px;
-  font-weight: bold;
-  width: 120px;
-  margin-right: 20px;
-}
-
-.form-item > .el-form-item__content {
-  flex: 1;
-}
-
-.form-item--submit {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.preview-column {
-  flex: 1;
-}
+@import '@/assets/styles/write-view.scss';
 </style>

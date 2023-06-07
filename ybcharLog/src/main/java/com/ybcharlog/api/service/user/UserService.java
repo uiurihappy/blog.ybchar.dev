@@ -37,7 +37,7 @@ public class UserService {
         }
 
         User user = User.initEmailUser(req.getEmail(),
-                commonUserService.encryptPassword(req.getPassword()), req.getNickname());
+                commonUserService.encryptPassword(req.getPassword()), req.getNickname(), req.getRoles());
         commonUserService.add(user);
     }
 

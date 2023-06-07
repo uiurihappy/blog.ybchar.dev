@@ -1,65 +1,3 @@
-<template>
-  <div class="container">
-    <div class="edit-header">
-      <h2 class="edit-title">글 수정</h2>
-      <el-button type="warning" @click="edit()">수정 완료</el-button>
-    </div>
-    <hr class="edit-divider" />
-
-    <div class="edit-form">
-      <el-form label-width="80px">
-        <el-form-item label="제목">
-          <el-input
-            v-model="updatePost.title"
-            placeholder="제목을 입력해주세요"
-          />
-        </el-form-item>
-
-        <el-form-item label="내용">
-          <MdEditor
-            v-model="updatePost.content"
-            :editable="true"
-            :subfield="false"
-            :defaultOpen="true"
-            :toolbarsFlag="true"
-            :previewMode="true"
-            :scrollStyle="{
-              height: '800px',
-              'max-height': '800px',
-              'min-height': '400px',
-            }"
-            placeholder="마크다운 내용을 입력해주세요."
-            style="height: 800px"
-          />
-        </el-form-item>
-
-        <el-form-item label="노출 상태">
-          <el-switch
-            v-model="updatePost.display"
-            active-color="#13ce66"
-            :active-value="1"
-            :inactive-value="0"
-          />
-        </el-form-item>
-        <el-form-item label="썸네일 이미지 등록">
-          <el-upload
-            ref="dropzone"
-            action="/api/posts/thumbnail/image"
-            :show-file-list="false"
-            :before-upload="beforeUpload"
-            :on-success="onUploadSuccess"
-          >
-            <el-button size="small" type="primary">파일 선택</el-button>
-            <template v-slot:tip>
-              <div class="el-upload__tip">썸네일 이미지를 업로드하세요</div>
-            </template>
-          </el-upload>
-        </el-form-item>
-      </el-form>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { defineProps, ref, onMounted } from 'vue';
 import axios from 'axios';
@@ -155,6 +93,68 @@ const onUploadSuccess = () => {
   alert('썸네일 이미지 등록이 완료되었습니다.');
 };
 </script>
+
+<template>
+  <div class="container">
+    <div class="edit-header">
+      <h2 class="edit-title">글 수정</h2>
+      <el-button type="warning" @click="edit()">수정 완료</el-button>
+    </div>
+    <hr class="edit-divider" />
+
+    <div class="edit-form">
+      <el-form label-width="80px">
+        <el-form-item label="제목">
+          <el-input
+            v-model="updatePost.title"
+            placeholder="제목을 입력해주세요"
+          />
+        </el-form-item>
+
+        <el-form-item label="내용" class="form-item">
+          <MdEditor
+            v-model="updatePost.content"
+            :editable="true"
+            :subfield="false"
+            :defaultOpen="true"
+            :toolbarsFlag="true"
+            :previewMode="true"
+            :scrollStyle="{
+              height: '800px',
+              'max-height': '800px',
+              'min-height': '400px',
+            }"
+            placeholder="마크다운 내용을 입력해주세요."
+            style="height: 800px"
+          />
+        </el-form-item>
+
+        <el-form-item label="노출 상태">
+          <el-switch
+            v-model="updatePost.display"
+            active-color="#13ce66"
+            :active-value="1"
+            :inactive-value="0"
+          />
+        </el-form-item>
+        <el-form-item label="썸네일 이미지 등록">
+          <el-upload
+            ref="dropzone"
+            action="/api/posts/thumbnail/image"
+            :show-file-list="false"
+            :before-upload="beforeUpload"
+            :on-success="onUploadSuccess"
+          >
+            <el-button size="small" type="primary">파일 선택</el-button>
+            <template v-slot:tip>
+              <div class="el-upload__tip">썸네일 이미지를 업로드하세요</div>
+            </template>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .container {

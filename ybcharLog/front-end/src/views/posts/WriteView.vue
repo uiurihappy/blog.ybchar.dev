@@ -45,18 +45,27 @@ const submitForm = async function () {
 
   loading.value = false;
 };
+
+const beforeUpload = (file: any) => {
+  const formData = new FormData();
+  const path = `post/thumbnail/${props.postId}`;
+  formData.append('file', file);
+  formData.append('path', '/' + path);
+  formData.append('postId', props.postId);
+  $refs.dropzone.uploadFiles(formData);
+  return false;
+};
+
+const onUploadSuccess = () => {
+  alert('썸네일 이미지 등록이 완료되었습니다.');
+};
 </script>
 
 <template>
   <div class="post-form-container">
     <el-form :model="form" class="post-form" label-width="120px">
-      <el-form-item label="제목" class="form-item">
-        <el-input
-          v-model.trim="form.title"
-          placeholder="제목을 입력해주세요"
-          clearable
-          class="form-input"
-        />
+      <el-form-item label="제목">
+        <el-input v-model="form.title" placeholder="제목을 입력해주세요" />
       </el-form-item>
 
       <el-form-item label="내용" class="form-item">
@@ -84,6 +93,21 @@ const submitForm = async function () {
           :active-value="1"
           :inactive-value="0"
         ></el-switch>
+      </el-form-item>
+
+      <el-form-item label="썸네일 이미지 등록">
+        <el-upload
+          ref="dropzone"
+          action="/api/posts/thumbnail/image"
+          :show-file-list="false"
+          :before-upload="beforeUpload"
+          :on-success="onUploadSuccess"
+        >
+          <el-button size="small" type="primary">파일 선택</el-button>
+          <template v-slot:tip>
+            <div class="el-upload__tip">썸네일 이미지를 업로드하세요</div>
+          </template>
+        </el-upload>
       </el-form-item>
 
       <el-form-item class="form-item form-item--submit">

@@ -44,18 +44,17 @@ public class User extends BaseTimeEntity {
 		this.roles = roles;
 	}
 
-	public static User initEmailUser(String email, String password, String nickname) {
-//		String role = "ROLE_ADMIN";
-//		if (!role.equals(userRole)) {
-//			role = "ROLE_USER";
-//		}
+	public static User initEmailUser(String email, String password, String nickname, String roles) {
+		String role = "ROLE_ADMIN";
+		if (!role.equals(roles))
+			role = "ROLE_USER";
 
 		return User.builder()
 				.email(email)
 				.password(password)
 				.nickname(nickname)
-//				.roles(List.of(UserRole.valueOf(userRole)))
-				.roles(List.of(UserRole.ROLE_USER))
+				.roles(List.of(UserRole.valueOf(roles)))
+//				.roles(List.of(UserRole.ROLE_USER))
 				.build();
 	}
 

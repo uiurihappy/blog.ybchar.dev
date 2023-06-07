@@ -16,7 +16,7 @@
         </el-form-item>
 
         <el-form-item label="내용" class="form-item">
-          <editor
+          <Editor
             v-model="updatePost.content"
             :initialEditType="'wysiwyg'"
             :previewStyle="'vertical'"
@@ -44,7 +44,7 @@ import { defineComponent, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { Editor } from '@toast-ui/vue-editor';
-import 'md-editor-v3/lib/style.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
 
 export default defineComponent({
   props: {
@@ -54,7 +54,7 @@ export default defineComponent({
     },
   },
   components: {
-    editor: Editor,
+    Editor,
   },
   setup(props) {
     const router = useRouter();

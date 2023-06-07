@@ -2,14 +2,17 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-const { MdEditor } = require('md-editor-v3');
-import 'md-editor-v3/lib/style.css';
+import { Editor } from '@toast-ui/vue-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
 export default {
   props: {
     post: {
       type: Object,
       required: false,
     },
+  },
+  components: {
+    Editor,
   },
   setup(props) {
     const router = useRouter();
@@ -49,11 +52,29 @@ export default {
       loading.value = false;
     };
 
+    const addImageBlobHook = (
+      blob: Blob,
+      callback: (url: string, altText: string) => void
+    ) => {
+      const formData = new FormData();
+      formData.append('image', blob);
+      axios
+        .post('/api/upload/image', formData)
+        .then(response => {
+          const { imageUrl } = response.data;
+          callback(imageUrl, 'Image description');
+        })
+        .catch(error => {
+          console.error(error);
+          alert('이미지 업로드에 실패하였습니다.');
+        });
+    };
     return {
       form,
       loading,
       submitForm,
-      MdEditor,
+      Editor,
+      addImageBlobHook,
     };
   },
 };
@@ -67,20 +88,13 @@ export default {
       </el-form-item>
 
       <el-form-item label="내용" class="form-item">
-        <MdEditor
+        <Editor
           v-model="form.content"
-          :editable="true"
-          :subfield="false"
-          :defaultOpen="true"
-          :toolbarsFlag="true"
-          :previewMode="true"
-          :scrollStyle="{
-            height: '800px',
-            'max-height': '800px',
-            'min-height': '400px',
-          }"
-          placeholder="마크다운 내용을 입력해주세요."
-          style="height: 800px"
+          :initialEditType="'wysiwyg'"
+          :previewStyle="'vertical'"
+          :height="'500px'"
+          :initialValue="form.content"
+          :hooks="{ addImageBlobHook: addImageBlobHook }"
         />
       </el-form-item>
 

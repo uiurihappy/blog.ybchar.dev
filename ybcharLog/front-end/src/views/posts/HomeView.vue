@@ -35,7 +35,7 @@
             </div>
             <div v-else class="post-else-content">
               <router-link :to="{ name: 'Read', params: { postId: post.id } }">
-                <p v-html="truncateText(post.content, 450)"></p>
+                <p v-html="truncateText(post.content, 300)"></p>
               </router-link>
             </div>
           </div>
@@ -94,18 +94,29 @@ import type { PostList } from '../../common/posts/posts.interface';
 import { useRouter } from 'vue-router';
 import { getFormattedDate } from '../../common/tools/dateFormat.tool';
 import { truncateText } from '../../common/tools/truncateText.tool';
+import _ from 'lodash';
+import MarkdownIt from 'markdown-it';
 
 const router = useRouter();
 const PAGE_SIZE = 12;
 const currentPage = ref(1);
 const posts = ref<PostList>({ list: [], totalCount: 0, totalElements: 0 });
+const renderedContent = ref('');
 
 const loadPosts = async () => {
+  const md = new MarkdownIt();
   try {
     const result = await axios.get(
       `/api/posts/list?page=${currentPage.value}&size=${PAGE_SIZE}`
     );
-    posts.value = result.data;
+    posts.value = {
+      list: result.data.list.map((item: any) => ({
+        ...item,
+        content: md.render(item.content),
+      })),
+      totalCount: result.data.totalCount,
+      totalElements: result.data.totalElements,
+    };
   } catch {
     alert('글 조회에 실패하였습니다.');
   }

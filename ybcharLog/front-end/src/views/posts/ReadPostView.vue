@@ -9,6 +9,7 @@ import timezone from 'dayjs/plugin/timezone';
 import type { Posts } from '../../common/posts/posts.interface';
 import { getFormattedDate } from '../../common/tools/dateFormat.tool';
 import jwt_decode from 'jwt-decode';
+import MarkdownIt from 'markdown-it';
 interface AccessToken {
   userRoles: string;
   // 다른 프로퍼티가 있다면 추가 가능
@@ -20,6 +21,8 @@ const username = ref('');
 const password = ref('');
 const secretStatus = ref(0);
 const commentContent = ref('');
+const renderedContent = ref('');
+
 let userRole = ref('');
 const accessToken: string | null = sessionStorage.getItem('accessToken');
 
@@ -92,10 +95,12 @@ const writeComment = (post: Posts) => {
 };
 
 onMounted(() => {
+  const md = new MarkdownIt();
   axios
     .get(`/api/posts/${props.postId}`)
     .then(result => {
       post.value = result.data;
+      renderedContent.value = md.render(result.data.content);
     })
     .catch(() => {
       alert('글 조회에 실패하였습니다.');
@@ -135,7 +140,7 @@ onMounted(() => {
             <code class="code-block">{{ codeBlockContent }}</code>
           </pre>
           </div>
-          <div v-else v-html="post.content.replace(/\n/g, '<br>')"></div>
+          <div v-html="renderedContent"></div>
         </div>
       </el-col>
     </el-row>

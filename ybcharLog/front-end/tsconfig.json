@@ -10,5 +10,16 @@
     {
       "path": "./tsconfig.cypress-ct.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "module": "es2020",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "esModuleInterop": true,
+    "types": [
+      "jest",
+      "node",
+      "vite/client"
+    ]
+  }
 }

@@ -1,112 +1,3 @@
-<script setup lang="ts">
-import { defineProps, onMounted, ref } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
-import type { Comments } from '../../common/comments/comments.interface';
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-import type { Posts } from '../../common/posts/posts.interface';
-import { getFormattedDate } from '../../common/tools/dateFormat.tool';
-import jwt_decode from 'jwt-decode';
-import MarkdownIt from 'markdown-it';
-interface AccessToken {
-  userRoles: string;
-  // 다른 프로퍼티가 있다면 추가 가능
-}
-
-dayjs.extend(timezone);
-
-const username = ref('');
-const password = ref('');
-const secretStatus = ref(0);
-const commentContent = ref('');
-const renderedContent = ref('');
-
-let userRole = ref('');
-const accessToken: string | null = sessionStorage.getItem('accessToken');
-
-const isAccessTokenValid = () => {
-  if (accessToken) {
-    try {
-      const { userRoles }: AccessToken = jwt_decode(
-        accessToken,
-        import.meta.env.VITE_SECRET_KEY
-      );
-
-      userRole.value = userRoles === 'ROLE_ADMIN' ? userRoles : '';
-      return true;
-    } catch (error) {
-      console.error('Invalid access token:', error);
-      return false;
-    }
-  } else {
-    userRole.value = '';
-    return false;
-  }
-};
-
-let isCodeBlock = ref(false);
-let codeBlockContent = ref('');
-
-const props = defineProps({
-  postId: {
-    type: [Number, String],
-    required: true,
-  },
-});
-
-const post = ref({
-  id: 0,
-  title: '',
-  content: '',
-  viewCount: 0,
-  likeCount: 0,
-  isDeleted: 0,
-  display: 0,
-  lastModifiedDate: '',
-  createdAt: '',
-  thumbnailImage: '',
-  comments: [] as Comments[],
-});
-
-const router = useRouter();
-
-const moveToEdit = (postId: number) => {
-  router.push({ name: 'Edit', params: { postId } });
-};
-
-const writeComment = (post: Posts) => {
-  axios
-    .post(`/api/posts/${props.postId}/comments`, {
-      username: username.value,
-      password: password.value,
-      secretStatus: secretStatus.value,
-      commentContent: commentContent.value,
-      post,
-    })
-    .then(() => {
-      router.go(0);
-      alert('댓글이 성공적으로 작성되었습니다.');
-    })
-    .catch(() => {
-      alert('댓글 작성이 실패되었습니다.');
-    });
-};
-
-onMounted(() => {
-  const md = new MarkdownIt();
-  axios
-    .get(`/api/posts/${props.postId}`)
-    .then(result => {
-      post.value = result.data;
-      renderedContent.value = md.render(result.data.content);
-    })
-    .catch(() => {
-      alert('글 조회에 실패하였습니다.');
-    });
-});
-</script>
-
 <template>
   <div class="container">
     <el-row>
@@ -136,8 +27,8 @@ onMounted(() => {
         <div class="content">
           <div v-if="isCodeBlock">
             <pre>
-            <code class="code-block">{{ codeBlockContent }}</code>
-          </pre>
+              <code class="code-block">{{ codeBlockContent }}</code>
+            </pre>
           </div>
           <div v-html="renderedContent"></div>
         </div>
@@ -206,6 +97,138 @@ onMounted(() => {
     </template>
   </div>
 </template>
+
+<script lang="ts">
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import MarkdownIt from 'markdown-it';
+
+import type { Comments } from '../../common/comments/comments.interface';
+import type { Posts } from '../../common/posts/posts.interface';
+import { getFormattedDate } from '../../common/tools/dateFormat.tool';
+import jwt_decode from 'jwt-decode';
+
+dayjs.extend(timezone);
+
+interface AccessToken {
+  userRoles: string;
+  // Add more properties if needed
+}
+
+export default {
+  props: {
+    postId: {
+      type: [Number, String],
+      required: true,
+    },
+  },
+
+  setup(props) {
+    const username = ref('');
+    const password = ref('');
+    const secretStatus = ref(0);
+    const commentContent = ref('');
+    const renderedContent = ref('');
+
+    let userRole = ref('');
+    const accessToken: string | null = sessionStorage.getItem('accessToken');
+
+    const isAccessTokenValid = () => {
+      if (accessToken) {
+        try {
+          const { userRoles }: AccessToken = jwt_decode(
+            accessToken,
+            import.meta.env.VITE_SECRET_KEY
+          ) as { userRoles: string };
+
+          userRole.value = userRoles === 'ROLE_ADMIN' ? userRoles : '';
+          return true;
+        } catch (error) {
+          console.error('Invalid access token:', error);
+          return false;
+        }
+      } else {
+        userRole.value = '';
+        return false;
+      }
+    };
+
+    let isCodeBlock = ref(false);
+    let codeBlockContent = ref('');
+
+    const post = ref<Posts>({
+      id: 0,
+      title: '',
+      content: '',
+      viewCount: 0,
+      likeCount: 0,
+      isDeleted: 0,
+      display: 0,
+      lastModifiedDate: '',
+      createdAt: '',
+      thumbnailImage: '',
+      comments: [] as Comments[],
+    });
+
+    const router = useRouter();
+
+    const moveToEdit = (postId: number) => {
+      router.push({ name: 'Edit', params: { postId } });
+    };
+
+    const writeComment = (post: Posts) => {
+      axios
+        .post(`/api/posts/${props.postId}/comments`, {
+          username: username.value,
+          password: password.value,
+          secretStatus: secretStatus.value,
+          commentContent: commentContent.value,
+          post,
+        })
+        .then(() => {
+          router.go(0);
+          alert('댓글이 성공적으로 작성되었습니다.');
+        })
+        .catch(() => {
+          alert('댓글 작성이 실패되었습니다.');
+        });
+    };
+
+    onMounted(() => {
+      const md = new MarkdownIt();
+      axios
+        .get(`/api/posts/${props.postId}`)
+        .then(result => {
+          post.value = result.data;
+          renderedContent.value = md.render(result.data.content);
+        })
+        .catch(() => {
+          alert('글 조회에 실패하였습니다.');
+        });
+    });
+
+    return {
+      username,
+      password,
+      secretStatus,
+      commentContent,
+      renderedContent,
+      userRole,
+      isCodeBlock,
+      codeBlockContent,
+      post,
+      moveToEdit,
+      writeComment,
+      isAccessTokenValid,
+      getFormattedDate,
+      dayjs,
+    };
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 @import '@/assets/styles/read-view.scss';

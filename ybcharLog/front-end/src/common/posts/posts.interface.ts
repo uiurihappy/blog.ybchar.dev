@@ -11,6 +11,8 @@ export interface Posts {
   content: string;
   viewCount: number;
   likeCount: number;
+  isDeleted: number;
+  display: number;
   thumbnailImage: string;
   comments: Comments[];
   createdAt: string;

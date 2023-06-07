@@ -30,12 +30,18 @@
           <div class="post-content-box">
             <div v-if="post.thumbnailImage" class="post-content">
               <router-link :to="{ name: 'Read', params: { postId: post.id } }">
-                <p v-html="truncateText(post.content, 100)"></p>
+                <div
+                  style="padding-top: 0.4rem"
+                  v-html="truncateText(post.content, 100)"
+                ></div>
               </router-link>
             </div>
             <div v-else class="post-else-content">
               <router-link :to="{ name: 'Read', params: { postId: post.id } }">
-                <p v-html="truncateText(post.content, 300)"></p>
+                <div
+                  style="padding-top: 0.4rem"
+                  v-html="truncateText(post.content, 310)"
+                ></div>
               </router-link>
             </div>
           </div>
@@ -94,14 +100,12 @@ import type { PostList } from '../../common/posts/posts.interface';
 import { useRouter } from 'vue-router';
 import { getFormattedDate } from '../../common/tools/dateFormat.tool';
 import { truncateText } from '../../common/tools/truncateText.tool';
-import _ from 'lodash';
 import MarkdownIt from 'markdown-it';
 
 const router = useRouter();
 const PAGE_SIZE = 12;
 const currentPage = ref(1);
 const posts = ref<PostList>({ list: [], totalCount: 0, totalElements: 0 });
-const renderedContent = ref('');
 
 const loadPosts = async () => {
   const md = new MarkdownIt();

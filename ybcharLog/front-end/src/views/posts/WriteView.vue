@@ -1,98 +1,3 @@
-<script lang="ts">
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
-import Editor from '@toast-ui/editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
-export default {
-  props: {
-    post: {
-      type: Object,
-      required: false,
-    },
-  },
-
-
-  setup(props, { emit }) {
-    const router = useRouter();
-    const form = ref({
-      title: props.post ? props.post.title : '',
-      content: props.post ? props.post.content : '',
-      display: props.post ? Boolean(props.post.display) : true,
-    });
-    const loading = ref(false);
-
-    const submitForm = async function () {
-      loading.value = true;
-      const postData = { ...form.value, display: form.value.display ? 1 : 0 };
-
-      try {
-        if (props.post) {
-          await axios.patch(`/api/posts/${props.post.id}`, postData, {
-            headers: {
-              Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
-            },
-          });
-          alert('게시글이 수정되었습니다.');
-        } else {
-          await axios.post('/api/posts/save', postData, {
-            headers: {
-              Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
-            },
-          });
-          alert('게시글이 작성되었습니다.');
-        }
-        router.push({ name: 'Home' });
-      } catch (error) {
-        console.error(error);
-        alert('게시글 작성/수정에 실패하였습니다.');
-      }
-
-      loading.value = false;
-    };
-
-    const addImageBlobHook = (
-      blob: Blob,
-      callback: (url: string, altText: string) => void
-    ) => {
-      const formData = new FormData();
-      formData.append('image', blob);
-      axios
-        .post('/api/upload/image', formData)
-        .then(response => {
-          const { imageUrl } = response.data;
-          callback(imageUrl, 'Image description');
-        })
-        .catch(error => {
-          console.error(error);
-          alert('이미지 업로드에 실패하였습니다.');
-        });
-    };
-
-    onMounted(async () => {
-      const editor = new Editor({
-        el: document.querySelector('#editor') as HTMLElement,
-        height: '600px',
-        initialEditType: 'markdown',
-        previewStyle: 'vertical',
-        initialValue: '',
-        events: {
-          change: () => {
-            emit('update:modelValue', editor.getMarkdown());
-          },
-        },
-      });
-    });
-    return {
-      form,
-      loading,
-      submitForm,
-      addImageBlobHook,
-    };
-  },
-};
-</script>
-
 <template>
   <div class="post-form-container">
     <el-form :model="form" class="post-form" label-width="120px">
@@ -127,6 +32,90 @@ export default {
     </el-form>
   </div>
 </template>
+
+<script lang="ts">
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import Editor from '@toast-ui/editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+export default {
+  props: {
+    post: {
+      type: Object,
+      required: false,
+    },
+  },
+
+  setup(props, { emit }) {
+    const router = useRouter();
+    const form = ref({
+      title: props.post ? props.post.title : '',
+      content: props.post ? props.post.content : '',
+      display: props.post ? Boolean(props.post.display) : true,
+    });
+    const loading = ref(false);
+
+    const submitForm = async function () {
+      loading.value = true;
+      const editorInstance = editorRef.value;
+      const postData = {
+        ...form.value,
+        content: editorInstance.getMarkdown(),
+        display: form.value.display ? 1 : 0,
+      };
+
+      try {
+        if (props.post) {
+          await axios.patch(`/api/posts/${props.post.id}`, postData, {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+            },
+          });
+          alert('게시글이 수정되었습니다.');
+        } else {
+          await axios.post('/api/posts/save', postData, {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+            },
+          });
+          alert('게시글이 작성되었습니다.');
+        }
+        router.push({ name: 'Home' });
+      } catch (error) {
+        console.error(error);
+        alert('게시글 작성/수정에 실패하였습니다.');
+      }
+
+      loading.value = false;
+    };
+
+    const editorRef = ref<Editor>(null);
+
+    onMounted(async () => {
+      const editor = new Editor({
+        el: document.querySelector('#editor'),
+        height: '600px',
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        initialValue: '',
+        events: {
+          change: () => {
+            emit('update:modelValue', editor.getMarkdown());
+          },
+        },
+      });
+
+      editorRef.value = editor;
+    });
+    return {
+      form,
+      loading,
+      submitForm,
+    };
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 @import '@/assets/styles/write-view.scss';

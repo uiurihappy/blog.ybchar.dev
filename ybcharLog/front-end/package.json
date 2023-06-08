@@ -37,6 +37,7 @@
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.32",
     "pinia-plugin-persist": "^1.0.0",
+    "prismjs": "^1.29.0",
     "toast-ui-editor": "^1.0.0",
     "tui-editor": "^1.4.10",
     "vue": "^3.2.47",

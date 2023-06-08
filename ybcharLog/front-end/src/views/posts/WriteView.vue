@@ -1,8 +1,9 @@
 <script lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { Editor } from '@toast-ui/vue-editor';
+import Editor from '@toast-ui/editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
 export default {
   props: {
     post: {
@@ -10,10 +11,8 @@ export default {
       required: false,
     },
   },
-  components: {
-    editor: Editor,
-  },
-  setup(props) {
+
+  setup(props, { emit }) {
     const router = useRouter();
     const form = ref({
       title: props.post ? props.post.title : '',
@@ -68,6 +67,21 @@ export default {
           alert('이미지 업로드에 실패하였습니다.');
         });
     };
+
+    onMounted(async () => {
+      const editor = new Editor({
+        el: document.querySelector('#editor') as HTMLElement,
+        height: '600px',
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        initialValue: '',
+        events: {
+          change: () => {
+            emit('update:modelValue', editor.getMarkdown());
+          },
+        },
+      });
+    });
     return {
       form,
       loading,
@@ -86,14 +100,9 @@ export default {
       </el-form-item>
 
       <el-form-item label="내용" class="form-item">
-        <editor
-          v-model="form.content"
-          :initialEditType="'wysiwyg'"
-          :previewStyle="'vertical'"
-          :height="'500px'"
-          :initialValue="form.content"
-          :hooks="{ addImageBlobHook: addImageBlobHook }"
-        />
+        <div id="editor" ref="editor" class="row">
+          <editor v-model="form.content" />
+        </div>
       </el-form-item>
 
       <el-form-item label="노출 여부" class="form-item">

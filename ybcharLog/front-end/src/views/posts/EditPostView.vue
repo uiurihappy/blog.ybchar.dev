@@ -2,10 +2,8 @@
   <div class="container">
     <div class="edit-header">
       <h2 class="edit-title">글 수정</h2>
-      <el-button type="warning" @click="edit">수정 완료</el-button>
     </div>
     <hr class="edit-divider" />
-
     <div class="edit-form">
       <el-form label-width="80px">
         <el-form-item label="제목">
@@ -14,16 +12,10 @@
             placeholder="제목을 입력해주세요"
           />
         </el-form-item>
-
-        <el-form-item label="내용" class="form-item">
-          <editor
-            v-model="updatePost.content"
-            :initialValue="updatePost.content"
-            :options="editorOptions"
-            height="500px"
-            initialEditType="wysiwyg"
-            previewStyle="vertical"
-          />
+        <el-form-item label="내용">
+          <div id="editor" ref="editor" class="row">
+            <editor v-model="updatePost.content" />
+          </div>
         </el-form-item>
 
         <el-form-item label="노출 상태">
@@ -35,18 +27,22 @@
           />
         </el-form-item>
       </el-form>
+      <el-button
+        style="justify-content: end"
+        type="warning"
+        @click="edit(updatePost.content)"
+        >수정 완료</el-button
+      >
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import 'tui-editor/dist/tui-editor.css';
-import 'tui-editor/dist/tui-editor-contents.css';
-import 'codemirror/lib/codemirror.css';
-import { Editor } from '@toast-ui/vue-editor';
+import Editor from '@toast-ui/editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
 
 export default defineComponent({
   props: {
@@ -55,18 +51,8 @@ export default defineComponent({
       required: true,
     },
   },
-  components: {
-    Editor,
-  },
-  data() {
-    return {
-      editorText: 'This is initialValue.',
-      editorOptions: {
-        hideModeSwitch: true,
-      },
-    };
-  },
-  setup(props) {
+
+  setup(props, { emit }) {
     const router = useRouter();
     const checkDisplay = ref(0);
     const updatePost = ref({
@@ -76,42 +62,29 @@ export default defineComponent({
       display: checkDisplay.value,
     });
 
-    const defaultOptions = {
-      minHeight: '200px',
-      language: 'en-US',
-      useCommandShortcut: true,
-      usageStatistics: true,
-      hideModeSwitch: false,
-      toolbarItems: [
-        ['heading', 'bold', 'italic', 'strike'],
-        ['hr', 'quote'],
-        ['ul', 'ol', 'task', 'indent', 'outdent'],
-        ['table', 'image', 'link'],
-        ['code', 'codeblock'],
-        ['scrollSync'],
-      ],
-    };
-
-    axios
-      .get(`/api/posts/${props.postId}`)
-      .then(result => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get(`/api/posts/${props.postId}`);
         updatePost.value.id = result.data.id;
         updatePost.value.title = result.data.title;
         updatePost.value.content = result.data.content;
         checkDisplay.value = result.data.display;
         updatePost.value.display = result.data.display;
-      })
-      .catch(() => {
+      } catch (error) {
         alert('글 조회에 실패하였습니다.');
-      });
+        console.error(error);
+      }
+    };
 
-    const edit = async () => {
+    const edit = async (content: string) => {
+      console.log(content);
+
       try {
         await axios.patch(
           `/api/posts/update/${props.postId}`,
           {
             title: updatePost.value.title,
-            content: updatePost.value.content,
+            content,
             display: Number(updatePost.value.display),
           },
           {
@@ -145,12 +118,26 @@ export default defineComponent({
           alert('이미지 업로드에 실패하였습니다.');
         });
     };
+    onMounted(async () => {
+      await fetchData();
 
+      const editor = new Editor({
+        el: document.querySelector('#editor') as HTMLElement,
+        height: '600px',
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        initialValue: updatePost.value.content,
+        events: {
+          change: () => {
+            emit('update:modelValue', editor.getMarkdown());
+          },
+        },
+      });
+    });
     return {
       updatePost,
       edit,
       addImageBlobHook,
-      defaultOptions,
     };
   },
 });

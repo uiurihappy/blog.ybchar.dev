@@ -138,10 +138,9 @@ export default {
     const isAccessTokenValid = () => {
       if (accessToken) {
         try {
-          const { userRoles }: AccessToken = jwt_decode(
-            accessToken,
-            import.meta.env.VITE_SECRET_KEY
-          ) as { userRoles: string };
+          const { userRoles }: AccessToken = jwt_decode(accessToken) as {
+            userRoles: string;
+          };
 
           userRole.value = userRoles === 'ROLE_ADMIN' ? userRoles : '';
           return true;

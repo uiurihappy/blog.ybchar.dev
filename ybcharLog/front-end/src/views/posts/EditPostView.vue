@@ -33,7 +33,7 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { Editor } from '@toast-ui/editor';
+import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 export default defineComponent({

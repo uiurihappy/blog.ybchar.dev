@@ -65,10 +65,9 @@ router.beforeEach((to, from, next) => {
       next({ name: 'Login' });
     } else {
       // 로그인 되어있다면 권한 체크
-      const { userRoles }: AccessToken = jwt_decode(
-        accessToken,
-        import.meta.env.VITE_SECRET_KEY
-      ) as { userRoles: string };
+      const { userRoles }: AccessToken = jwt_decode(accessToken) as {
+        userRoles: string;
+      };
 
       if (requiredRoles === userRoles) {
         // 권한이 있으면 페이지 이동

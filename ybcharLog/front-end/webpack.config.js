@@ -1,19 +1,32 @@
-const webpack = require('webpack');
-const dotenv = require('dotenv');
-const env = dotenv.config().parsed;
-
-[
-  new webpack.DefinePlugin({
-    VUE_APP_LOCAL_URI: JSON.stringify(env.BASE_URL),
-  }),
-];
+const path = require('path');
 
 module.exports = {
-  plugins: [
-    require('@import-meta-env/unplugin').webpack({
-      env: '.env',
-      example: '.env.example',
-      transformMode: 'compile-time',
-    }),
-  ],
+  mode: 'production',
+  entry: './src/main.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        use: 'vue-loader',
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: 'babel-loader',
+      },
+    ],
+  },
+  resolve: {
+    alias: {
+      vue$: 'vue/dist/vue.runtime.esm.js',
+    },
+    extensions: ['*', '.js', '.vue', '.json'],
+  },
+  performance: {
+    hints: false,
+  },
 };

@@ -47,7 +47,16 @@ export default {
           >ybchar blog</router-link
         >
       </div>
+
       <el-menu class="menu" mode="horizontal" router>
+        <div>
+          <el-menu-item
+            class="about-me"
+            index="/about"
+            active-text-color="transparent"
+            >About me</el-menu-item
+          >
+        </div>
         <div>
           <el-menu-item
             class="menu-item"
@@ -107,7 +116,6 @@ export default {
     opacity: 0.2;
   }
 }
-
 .header {
   z-index: 2;
   background-color: #fff;
@@ -137,12 +145,10 @@ export default {
   text-shadow: none;
   text-decoration: none;
 }
-
 .menu {
   height: 100%;
   text-decoration: none;
 }
-
 .menu-item {
   font-size: 16px;
   font-family: 'dohyeon';
@@ -163,6 +169,18 @@ export default {
 .menu-item.router-link-active {
   color: black;
   background-color: #f5f5f5;
+}
+.about-me {
+  font-size: 16px;
+  font-family: 'dohyeon';
+  color: #666;
+  padding: 0 16px;
+  text-decoration: none;
+  opacity: 100%;
+  border-top: transparent;
+  border-bottom: transparent;
+  transition: all ease-out;
+  justify-content: left;
 }
 
 .main {

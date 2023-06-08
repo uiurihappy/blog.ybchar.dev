@@ -4,6 +4,7 @@ import WriteView from '../views/posts/WriteView.vue';
 import ReadPostView from '../views/posts/ReadPostView.vue';
 import EditPostView from '../views/posts/EditPostView.vue';
 import LoginView from '../views/LoginView.vue';
+import AboutView from '../views/about/AboutView.vue';
 import jwt_decode from 'jwt-decode';
 interface AccessToken {
   userRoles: string;
@@ -43,11 +44,11 @@ const router = createRouter({
       component: LoginView,
       meta: { unauthorize: true },
     },
-    //   {
-    //     path: '/about',
-    //     name: 'about',
-    //     component: () => import('../views/AboutView.vue')
-    //   }
+    {
+      path: '/about',
+      name: 'about',
+      component: AboutView,
+    },
   ],
 });
 

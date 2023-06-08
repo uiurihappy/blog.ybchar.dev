@@ -13,11 +13,8 @@
           />
         </el-form-item>
         <el-form-item label="내용">
-          <div id="editor" ref="editor" class="row">
-            <editor v-model="updatePost.content" />
-          </div>
+          <div id="editor" ref="editor" class="row"></div>
         </el-form-item>
-
         <el-form-item label="노출 상태">
           <el-switch
             v-model="updatePost.display"
@@ -27,12 +24,7 @@
           />
         </el-form-item>
       </el-form>
-      <el-button
-        style="justify-content: end"
-        type="warning"
-        @click="edit(updatePost.content)"
-        >수정 완료</el-button
-      >
+      <el-button type="warning" @click="edit">수정 완료</el-button>
     </div>
   </div>
 </template>
@@ -54,37 +46,36 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const router = useRouter();
-    const checkDisplay = ref(0);
     const updatePost = ref({
       id: 0,
       title: '',
       content: '',
-      display: checkDisplay.value,
+      display: 0,
     });
 
     const fetchData = async () => {
       try {
         const result = await axios.get(`/api/posts/${props.postId}`);
-        updatePost.value.id = result.data.id;
-        updatePost.value.title = result.data.title;
-        updatePost.value.content = result.data.content;
-        checkDisplay.value = result.data.display;
-        updatePost.value.display = result.data.display;
+        updatePost.value = {
+          id: result.data.id,
+          title: result.data.title,
+          content: result.data.content,
+          display: result.data.display,
+        };
       } catch (error) {
         alert('글 조회에 실패하였습니다.');
         console.error(error);
       }
     };
 
-    const edit = async (content: string) => {
-      console.log(content);
-
+    const edit = async () => {
       try {
+        const editorInstance = editorRef.value;
         await axios.patch(
           `/api/posts/update/${props.postId}`,
           {
             title: updatePost.value.title,
-            content,
+            content: editorInstance.getMarkdown(),
             display: Number(updatePost.value.display),
           },
           {
@@ -101,28 +92,13 @@ export default defineComponent({
       }
     };
 
-    const addImageBlobHook = (
-      blob: Blob,
-      callback: (url: string, altText: string) => void
-    ) => {
-      const formData = new FormData();
-      formData.append('image', blob);
-      axios
-        .post('/api/upload/image', formData)
-        .then(response => {
-          const { imageUrl } = response.data;
-          callback(imageUrl, 'Image description');
-        })
-        .catch(error => {
-          console.error(error);
-          alert('이미지 업로드에 실패하였습니다.');
-        });
-    };
+    const editorRef = ref<Editor>(null);
+
     onMounted(async () => {
       await fetchData();
 
       const editor = new Editor({
-        el: document.querySelector('#editor') as HTMLElement,
+        el: document.querySelector('#editor'),
         height: '600px',
         initialEditType: 'markdown',
         previewStyle: 'vertical',
@@ -133,11 +109,14 @@ export default defineComponent({
           },
         },
       });
+
+      editorRef.value = editor;
     });
+
     return {
       updatePost,
       edit,
-      addImageBlobHook,
+      editorRef,
     };
   },
 });

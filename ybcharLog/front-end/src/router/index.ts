@@ -68,9 +68,9 @@ router.beforeEach((to, from, next) => {
       const { userRoles }: AccessToken = jwt_decode(
         accessToken,
         import.meta.env.VITE_SECRET_KEY
-      ).userRoles;
+      ) as { userRoles: string };
 
-      if (requiredRoles !== userRoles) {
+      if (requiredRoles === userRoles) {
         // 권한이 있으면 페이지 이동
         next();
       } else {

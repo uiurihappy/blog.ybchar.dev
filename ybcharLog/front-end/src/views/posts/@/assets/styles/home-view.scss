@@ -136,7 +136,6 @@ $tertiary-color: #2d2d2d;
           justify-content: flex-end;
           display: flex;
           font-size: 0.7rem;
-          padding-bottom: 10px;
           margin-right: 8px;
           margin-left: 0.3rem;
           --tw-border-opacity: 0.5;
@@ -163,6 +162,7 @@ $tertiary-color: #2d2d2d;
           --tw-border-opacity: 0.5;
           border-color: rgb(229 231 235 / var(--tw-border-opacity));
           border-top: 1.2px solid #ccc;
+          padding-bottom: 10px;
           padding-top: 10px;
 
           .post-category {
@@ -192,7 +192,6 @@ $tertiary-color: #2d2d2d;
 
           padding-top: 3px;
           justify-content: center;
-          margin-bottom: 96px;
           a {
             text-decoration: none;
             color: var(--primary-color);
@@ -215,7 +214,7 @@ $tertiary-color: #2d2d2d;
 
           padding-top: 3px;
           margin-bottom: 30px;
-          height: 300px;
+          height: 350px;
           a {
             text-decoration: none;
             color: var(--primary-color);

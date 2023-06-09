@@ -43,9 +43,4 @@ public class InitBeanConfig {
         return new JwtUtil(jwtSecretKey, jwtReFreshKey);
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 }

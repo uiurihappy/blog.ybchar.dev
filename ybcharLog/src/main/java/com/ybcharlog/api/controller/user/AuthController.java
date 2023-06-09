@@ -1,16 +1,10 @@
 package com.ybcharlog.api.controller.user;
 
 import com.ybcharlog.api.RequestDto.auth.SignUpDto;
-import com.ybcharlog.api.config.AppConfig;
-import com.ybcharlog.api.repository.user.UserRepository;
-import com.ybcharlog.api.service.auth.AuthService;
 import com.ybcharlog.api.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

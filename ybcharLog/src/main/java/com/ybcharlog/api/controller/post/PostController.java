@@ -98,7 +98,10 @@ public class PostController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("path") String path,
             @RequestParam("postId") Long postId) throws IOException {
+        log.info("{}, {}", file, path);
+
         String uploadImagePath = s3UploaderService.upload(file, path);
+        log.info("{}", uploadImagePath);
         postService.updatePostThumbnailImage(uploadImagePath, postId);
         return ResponseEntity.ok().body("SUCCESS");
     }

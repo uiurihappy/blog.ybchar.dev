@@ -44,6 +44,26 @@
                 ></div>
               </router-link>
             </div>
+            <!-- <div v-if="post.thumbnailImage" class="post-content">
+              <router-link :to="{ name: 'Read', params: { postId: post.id } }">
+                <div
+                  class="post-content"
+                  :key="post.id"
+                  :id="`viewer-${post.id}`"
+                  :ref="`viewer-${post.id}`"
+                ></div>
+              </router-link>
+            </div>
+            <div v-else class="post-else-content">
+              <router-link :to="{ name: 'Read', params: { postId: post.id } }">
+                <div
+                  class="post-content"
+                  :key="post.id"
+                  :id="`viewer-${post.id}`"
+                  :ref="`viewer-${post.id}`"
+                ></div>
+              </router-link>
+            </div> -->
           </div>
           <div class="post-sub">
             <div v-if="post.thumbnailImage" class="post-if-sub">
@@ -151,8 +171,100 @@ onMounted(() => {
   setCurrentPage(currentPage.value);
 });
 </script>
-
 <style scoped lang="scss">
 @import '@/assets/styles/home-view.scss';
 /* 홈 화면에만 적용될 스타일 코드 */
 </style>
+<!-- <script setup lang="ts">
+import { ref, computed, onMounted, watch } from 'vue';
+import axios from 'axios';
+import type { PostList } from '../../common/posts/posts.interface';
+import { useRouter } from 'vue-router';
+import { getFormattedDate } from '../../common/tools/dateFormat.tool';
+import { truncateText } from '../../common/tools/truncateText.tool';
+import Editor from '@toast-ui/editor';
+// Import prismjs
+import Prism from 'prismjs';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import type Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+import 'prismjs/themes/prism.css';
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import _ from 'lodash';
+const router = useRouter();
+const PAGE_SIZE = 12;
+const currentPage = ref(1);
+const posts = ref<PostList>({ list: [], totalCount: 0, totalElements: 0 });
+const viewers = ref<{ [key: number]: Viewer }>({});
+
+const loadPosts = async () => {
+  try {
+    const result = await axios.get(
+      `/api/posts/list?page=${currentPage.value}&size=${PAGE_SIZE}`
+    );
+    posts.value = {
+      list: result.data.list.map((item: any) => ({
+        ...item,
+      })),
+      totalCount: result.data.totalCount,
+      totalElements: result.data.totalElements,
+    };
+    await updateViewerContent();
+  } catch {
+    alert('글 조회에 실패하였습니다.');
+  }
+};
+
+const totalPages = computed(() =>
+  Math.ceil(posts.value.totalElements / PAGE_SIZE)
+);
+
+const pageNumbers = computed(() => {
+  const numbers: number[] = [];
+  for (let i = 1; i <= totalPages.value; i++) {
+    numbers.push(i);
+  }
+  return numbers;
+});
+
+const setCurrentPage = async (page: number) => {
+  currentPage.value = page;
+  await loadPosts();
+};
+
+const moveToRead = (postId: number) => {
+  router.push({ name: 'Read', params: { postId } });
+};
+
+const updateViewerContent = async () => {
+  const postList = posts.value.list;
+
+  for (let i = 0; i < postList.length; i++) {
+    const post = postList[i];
+    const viewer = viewers.value[post.id];
+    if (post.thumbnailImage) {
+      await viewer?.setMarkdown(truncateText(post.content, 45));
+    } else {
+      await viewer?.setMarkdown(truncateText(post.content, 50));
+    }
+  }
+};
+
+onMounted(async () => {
+  await loadPosts();
+  const postList = posts.value.list;
+
+  for (let i = 0; i < postList.length; i++) {
+    const post = postList[i];
+
+    const viewer = Editor.factory({
+      el: document.querySelector(`#viewer-${post.id}`),
+      viewer: true,
+      initialValue: '',
+      plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+    });
+    viewers.value[post.id] = viewer;
+  }
+  await updateViewerContent();
+});
+</script> -->

@@ -16,6 +16,7 @@
 }
 
 .sub {
+  // justify-content: end;
   margin-top: 12px;
   margin-bottom: 25px;
   font-size: 0.98rem;
@@ -94,21 +95,4 @@
   max-width: 100%;
   box-sizing: border-box;
   word-wrap: break-word;
-}
-
-.code-block {
-  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-  font-size: 14px;
-  line-height: 1.5;
-  background-color: #1e1e1e;
-  color: #d4d4d4;
-  padding: 8px;
-  overflow-x: auto;
-}
-.code-block > code {
-  font-family: Consolas, 'Courier New', monospace;
-}
-.code-block > pre {
-  margin: 0;
-  white-space: pre-wrap;
 }

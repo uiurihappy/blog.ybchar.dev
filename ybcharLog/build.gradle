@@ -38,7 +38,7 @@ node {
      * 사용할 npm 버전을 지정하면 npmWorkDir에 설치됨
      * npm 버전을 지정하지 않으면 Node.js에 번들로 제공되는 npm 버전으로 사용됨
      */
-    npmVersion = "9.5.1"
+    npmVersion = "8.5.1"
 
     /**
      * download가 true일 경우에만 사용

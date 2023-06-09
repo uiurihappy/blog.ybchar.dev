@@ -46,5 +46,5 @@ out/
 
 ## ybchar log
 nodeenv-16
-/src/main/resources/static/docs
+/src/main/resources/static
 nohup.out

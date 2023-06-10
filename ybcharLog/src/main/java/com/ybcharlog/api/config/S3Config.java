@@ -3,7 +3,10 @@ package com.ybcharlog.api.config;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import jakarta.annotation.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +28,10 @@ public class S3Config {
 	private String region;
 
 	@Bean
-	public AmazonS3 amazonS3Client() {
+	public AmazonS3Client amazonS3Client() {
 		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-
-		return AmazonS3ClientBuilder
-				.standard()
-				.withRegion(region)
-				.withCredentials(new AWSStaticCredentialsProvider(credentials))
-				.build();
+		AmazonS3Client amazonS3Client = new AmazonS3Client(credentials);
+		amazonS3Client.setRegion(Region.getRegion(Regions.fromName(region)));
+		return amazonS3Client;
 	}
 }

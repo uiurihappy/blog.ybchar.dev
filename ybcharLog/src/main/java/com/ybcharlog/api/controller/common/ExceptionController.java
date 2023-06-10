@@ -2,15 +2,16 @@ package com.ybcharlog.api.controller.common;
 
 
 import com.ybcharlog.api.ResponseDto.common.ErrorResponse;
-import com.ybcharlog.api.exception.InvalidRequest;
-import com.ybcharlog.api.exception.PostNotFound;
 import com.ybcharlog.api.exception.YbcharLogException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice

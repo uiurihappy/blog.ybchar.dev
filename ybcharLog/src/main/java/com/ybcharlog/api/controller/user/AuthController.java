@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.ybcharlog.api.RequestDto.UserDto.SignInReq;
-import static com.ybcharlog.api.RequestDto.UserDto.SignInRes;
+import com.ybcharlog.api.RequestDto.UserDto.SignInReq;
+import com.ybcharlog.api.RequestDto.UserDto.SignInRes;
 
 @Slf4j
 @RestController
@@ -25,7 +25,6 @@ public class AuthController {
 	 * 따라서 로그인 페이지에서 실제로 로그인 되는 사람은 나 혼자이다.
 	 * 만약 누군가 회원가입 로직을 타서 사용해도 ROLE_ADMIN 권한이 없기에 함부로 글 삭제 및 수정이 안됨
 	 */
-
 	private final UserService userService;
 
 	@PostMapping("/join")

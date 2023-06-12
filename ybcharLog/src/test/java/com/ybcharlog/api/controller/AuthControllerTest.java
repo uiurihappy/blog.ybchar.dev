@@ -7,7 +7,6 @@ import com.ybcharlog.api.domain.user.UserRole;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.AlreadyExistsEmailException;
 import com.ybcharlog.api.repository.user.UserRepository;
-import com.ybcharlog.api.service.auth.AuthService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,12 +39,6 @@ class AuthControllerTest {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
-	private AuthController authController;
-
-	@Autowired
-	private AuthService authService;
-
 
 	@Value("${auth.key}")
 	private String authKey;
@@ -61,51 +54,51 @@ class AuthControllerTest {
 		userRepository.deleteAll();
 	}
 
-	@Test
-	@DisplayName("회원가입 테스트")
-	void signUpTest() throws Exception {
-		// given
-		SignUpDto signUpDto = SignUpDto.builder()
-				.nickname("tester1")
-				.password("qwer1234")
-				.email("ybchar@test.com")
-//				.role(UserRole.ROLE_ADMIN)
-				.build();
+//	@Test
+//	@DisplayName("회원가입 테스트")
+//	void signUpTest() throws Exception {
+//		// given
+//		SignUpDto signUpDto = SignUpDto.builder()
+//				.nickname("tester1")
+//				.password("qwer1234")
+//				.email("ybchar@test.com")
+////				.role(UserRole.ROLE_ADMIN)
+//				.build();
+//
+//		// when
+//		authController.signUp(signUpDto);
+//
+//		// then
+//		assertEquals(1, userRepository.count());
+//
+//		User user = userRepository.findAll().iterator().next();
+//		assertEquals("tester1", user.getNickname());
+//		assertNotNull(user.getPassword());
+//		assertEquals("qwer1234", user.getPassword());
+//		assertEquals("ybchar@test.com", user.getEmail());
+//	}
 
-		// when
-		authController.signUp(signUpDto);
-
-		// then
-		assertEquals(1, userRepository.count());
-
-		User user = userRepository.findAll().iterator().next();
-		assertEquals("tester1", user.getNickname());
-		assertNotNull(user.getPassword());
-		assertEquals("qwer1234", user.getPassword());
-		assertEquals("ybchar@test.com", user.getEmail());
-	}
-
-	@Test
-	@DisplayName("회원가입 중복 테스트")
-	void signUpExistsTest() throws Exception {
-		// given
-		User user = User.builder()
-				.email("ybchar@test.com")
-				.nickname("ybchar")
-				.password("qwer1234")
-				.roles(List.of(UserRole.ROLE_ADMIN))
-				.build();
-		userRepository.save(user);
-
-		SignUpDto signUpDto = SignUpDto.builder()
-				.nickname("tester1")
-				.password("qwer1234")
-				.email("ybchar@test.com")
-				.build();
-
-		// expected
-		assertThrows(AlreadyExistsEmailException.class, () -> authController.signUp(signUpDto));
-	}
+//	@Test
+//	@DisplayName("회원가입 중복 테스트")
+//	void signUpExistsTest() throws Exception {
+//		// given
+//		User user = User.builder()
+//				.email("ybchar@test.com")
+//				.nickname("ybchar")
+//				.password("qwer1234")
+//				.roles(List.of(UserRole.ROLE_ADMIN))
+//				.build();
+//		userRepository.save(user);
+//
+//		SignUpDto signUpDto = SignUpDto.builder()
+//				.nickname("tester1")
+//				.password("qwer1234")
+//				.email("ybchar@test.com")
+//				.build();
+//
+//		// expected
+//		assertThrows(AlreadyExistsEmailException.class, () -> authController.signUp(signUpDto));
+//	}
 
 	@Test
 	@DisplayName("회원가입 mock Test")

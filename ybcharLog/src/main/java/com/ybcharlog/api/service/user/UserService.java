@@ -6,15 +6,19 @@ import com.ybcharlog.api.RequestDto.UserDto.SignInRes;
 import com.ybcharlog.api.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.CustomException;
+import com.ybcharlog.api.exception.UnauthorizedRequest;
+import com.ybcharlog.api.repository.user.UserRepository;
 import com.ybcharlog.api.security.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -29,29 +33,38 @@ public class UserService {
     @Value("${util.jwt.defaultRefreshTokenMinutes}")
     private Long refreshTokenExpirationMinutes;
 
-    private final CommonUserService commonUserService;
+//    private final CommonUserService commonUserService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public void signUp(SignUpDto req) {
-        boolean exists = commonUserService.existsEmail(req.getEmail());
+//        boolean exists = commonUserService.existsEmail(req.getEmail());
+        boolean exists = userRepository.findByEmail(req.getEmail()).isPresent();
         if (exists) {
             throw new CustomException(ResultCode.EXISTS_EMAIL);
         }
 
         User user = User.initEmailUser(req.getEmail(),
-                commonUserService.encryptPassword(req.getPassword()), req.getNickname(), req.getRoles());
-        commonUserService.add(user);
+                passwordEncoder.encode(req.getPassword()), req.getNickname(), req.getRoles());
+        userRepository.save(user);
     }
 
     @Transactional
     public SignInRes signIn(SignInReq req) {
-        boolean exists = commonUserService.existsEmail(req.getEmail());
+        boolean exists = userRepository.findByEmail(req.getEmail()).isPresent();
         if (!exists) {
             throw new CustomException(ResultCode.NOT_EXISTS_EMAIL);
         }
 
-        User user = commonUserService.getUser(req.getEmail(), req.getPassword());
+        User user = userRepository.findByEmail(req.getEmail())
+                .orElseThrow(() -> new EntityNotFoundException("Not exists user. email: " + req.getEmail()));
 
+        if (!passwordEncoder.matches(req.getPassword(), user.getPassword())) {
+            throw new UnauthorizedRequest(
+                    String.format("Not Authorized.(email: %s)", req.getEmail()));
+        }
+        log.info(user.getEmail(), user.getRoles(), user.getPassword());
 
         return this.generateToken(user);
     }

@@ -118,9 +118,10 @@ aws:
 
 ```
 # env
+BASE_URL=/
 VITE_ENVIRONMENT=development
-VITE_SERVER_PORT=9000
-VITE_API_URL=http://localhost:9000
+VITE_SERVER_PORT={백엔드 서버 URL port번호}
+VITE_API_URL={백엔드 API 서버 URL}
 VITE_SECRET_KEY={jwt decode용 비밀키}
 ```
 

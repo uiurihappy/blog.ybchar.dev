@@ -1,14 +1,14 @@
-const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  build: {
-    // Template for index.html
-    index: path.resolve(__dirname, '../src/main/resources/static/index.html'), // 변경 후 - Vue 프로젝트의 빌드 결과물 위치 변경 설정
-
-    // Paths
-    assetsRoot: path.resolve(__dirname, '../src/main/resources/static'), // 변경 후 - Vue 프로젝트의 빌드 결과물 위치 변경 설정
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+  configureWebpack: {
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env': {
+          VUE_API_URL: JSON.stringify(process.env.VUE_API_URL),
+        },
+      }),
+    ],
   },
   css: {
     loaderOptions: {

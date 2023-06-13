@@ -22,7 +22,7 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 public class PostController {
     /* HTTP methods
      * GET, POST, PATCH, DELETE, OPTIONS, HEAD, TRACE, CONNECT

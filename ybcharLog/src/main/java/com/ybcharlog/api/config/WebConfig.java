@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry corsRegistry) {
 		corsRegistry.addMapping("/**")
-				.allowedOrigins("http://localhost:" + portNumber, "http://localhost:8081");
+				.allowedOrigins("http://localhost:" + portNumber, "http://localhost:8081",
+						"http://localhost:3002", "http://localhost:9000");
 	}
 }

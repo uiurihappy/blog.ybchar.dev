@@ -12,6 +12,7 @@ import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -39,22 +40,34 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
 
     private static final String[] permitAllUrl = {
-            "/favicon.ico", "/robots.txt", "/fonts/**", "/css/**", "/images/**", "/js/**",
-            //"/test/**",
-            "/enums/**", "/auth/join", "/join/verification-url",
-            "/auth/login",
-//            "/posts/list", "/posts/{postId}", "/posts/{postId}/comments",
-            "/posts/**", "/comments/**",
+            "/",
+            "/index.html",
+            "/favicon.ico",
+            "/robots.txt",
+            "/posts/**",
+            "/api/posts/**",
+            "/assets/**", // static 경로 추가
+            "/public/**",
+            "/public/fonts/**",
+            "/fonts/**",
+            "/css/**",
+            "/images/**",
+            "/js/**",
+            "/enums/**",
+            "/join/verification-url",
             "/view/users/change-password",
+            "/gProfile.jpeg", // static 경로 추가
+//            "/api/**",
+//            "/static/**", // static 경로 추가
     };
 
     @Bean
     public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring().requestMatchers(
-                permitAllUrl
-        );
+        return (web) -> web.ignoring().requestMatchers(String.valueOf(PathRequest.toStaticResources().atCommonLocations()))
+                .requestMatchers(
+                    permitAllUrl
+                );
     }
-
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
@@ -88,7 +101,7 @@ public class SecurityConfig {
                                 .requestMatchers(permitAllUrl).permitAll()
                                 .requestMatchers("/posts/save", "/posts/update/{postId}", "/posts/delete/{postId}",
                                         "/posts/thumbnail/image", "/files/images", "/category/save", "/category/delete/**").hasRole("ROLE_ADMIN")
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .formLogin()
                 .failureHandler(new LoginFailHandler(objectMapper))
@@ -98,7 +111,7 @@ public class SecurityConfig {
                     .sameOrigin()
                 .and()
                 .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/api/auth/logout"))
                     .logoutSuccessUrl("/api/posts/list?page=1&size=12")
                     .invalidateHttpSession(true)
                 .and()

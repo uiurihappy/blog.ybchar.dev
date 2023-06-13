@@ -17,7 +17,7 @@ import com.ybcharlog.api.RequestDto.UserDto.SignInRes;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
 	/** 관리자 전용으로 사용할 controller

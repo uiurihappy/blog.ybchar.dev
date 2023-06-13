@@ -9,16 +9,14 @@ import com.ybcharlog.api.exception.CustomException;
 import com.ybcharlog.api.exception.UnauthorizedRequest;
 import com.ybcharlog.api.repository.user.UserRepository;
 import com.ybcharlog.api.security.TokenService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -33,7 +31,6 @@ public class UserService {
     @Value("${util.jwt.defaultRefreshTokenMinutes}")
     private Long refreshTokenExpirationMinutes;
 
-//    private final CommonUserService commonUserService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 

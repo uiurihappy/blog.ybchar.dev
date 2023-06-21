@@ -159,8 +159,9 @@ VITE_SECRET_KEY={jwt decode용 비밀키}
 <br/>
 <h3> TODO </h3>
 <ul>
+  <li> SEO를 위해 기존 vue를 Nuxt.js로 migration </li>
   <li> AWS EC2 생성은 했으나 빌드가 안되서 mariadb 설치 및 빌드하도록 구현 </li>
   <li> 현재 백엔드 프로젝트 내에 하위 디렉토리로 프론트엔드 프로젝트가 존재하므로 고려해서 Route 53 활용하여 도메인 연결할 것 </li>
-  <li> 배포 자동화 사용할 것 </li>
+  <li> 배포 자동화 해볼 것 </li>
 </ul>
 

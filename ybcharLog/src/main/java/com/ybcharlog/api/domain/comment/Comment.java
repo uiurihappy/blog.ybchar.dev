@@ -39,7 +39,7 @@ public class Comment extends BaseEntity {
     @Column(columnDefinition = "tinyint(3) not null default 0 COMMENT '비밀 댓글 상태'")
     private Integer secretStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postId")
     @JsonIgnore
     private Post post;

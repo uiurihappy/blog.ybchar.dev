@@ -123,7 +123,7 @@ public class PostControllerDocTest {
 //                                fieldWithPath("comments.[].id").description("댓글 ID"),
 //                                fieldWithPath("comments.[].username").description("댓글 사용자 이름"),
 //                                fieldWithPath("comments.[].password").description("댓글 비밀번호").optional(),
-//                                fieldWithPath("comments.[].commentContent").description("댓글 내용"),
+//                                fieldWithPath("comments.[].content").description("댓글 내용"),
 //                                fieldWithPath("comments.[].secretStatus").description("댓글 비밀번호 상태"),
 //                                fieldWithPath("comments.[].display").description("게시글 viewStatus"),
 //                                fieldWithPath("comments.[].isDeleted").description("게시글 삭제 상태"),

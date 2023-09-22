@@ -14,7 +14,7 @@ public class CommentResponse {
     private final Long id;
     private final String username;
     private final String password;
-    private final String commentContent;
+    private final String content;
     private final Integer secretStatus;
     private final Integer display;
     private final Integer isDeleted;
@@ -24,18 +24,18 @@ public class CommentResponse {
         this.id = comment.getId();
         this.username = comment.getUsername();
         this.password = comment.getPassword();
-        this.commentContent = comment.getCommentContent();
+        this.content = comment.getContent();
         this.secretStatus = comment.getSecretStatus();
         this.display = comment.getDisplay();
         this.isDeleted = comment.getIsDeleted();
     }
 
     @Builder
-    public CommentResponse(Long id, String username, String password, String commentContent, Integer secretStatus, Integer display, Integer isDeleted, Post post) {
+    public CommentResponse(Long id, String username, String password, String content, Integer secretStatus, Integer display, Integer isDeleted, Post post) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.commentContent = commentContent;
+        this.content = content;
         this.secretStatus = secretStatus == null ? 0 : secretStatus;
         this.isDeleted = isDeleted == null ? 0 : isDeleted;
         this.display = display == null ? 0 : display;

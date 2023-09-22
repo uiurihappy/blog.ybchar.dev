@@ -61,7 +61,7 @@
               getFormattedDate(comment.createdAt)
             }}</span>
           </div>
-          <div class="comment-content">{{ comment.commentContent }}</div>
+          <div class="comment-content">{{ comment.content }}</div>
         </div>
       </div>
     </div>
@@ -74,7 +74,7 @@
         </div>
         <div class="comment-write__input mt-2">
           <el-input
-            v-model="commentContent"
+            v-model="content"
             placeholder="무분별한 댓글은 운영자에게 상처입니다.🥲"
             type="textarea"
             rows="7"
@@ -130,7 +130,7 @@ export default {
     const username = ref('');
     const password = ref('');
     const secretStatus = ref(0);
-    const commentContent = ref('');
+    const content = ref('');
 
     let userRole = ref('');
     const accessToken: string | null = sessionStorage.getItem('accessToken');
@@ -180,7 +180,7 @@ export default {
           username: username.value,
           password: password.value,
           secretStatus: secretStatus.value,
-          commentContent: commentContent.value,
+          content: content.value,
           post,
         })
         .then(() => {
@@ -229,7 +229,7 @@ export default {
       username,
       password,
       secretStatus,
-      commentContent,
+      content,
       userRole,
       post,
       moveToEdit,

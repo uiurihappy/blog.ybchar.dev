@@ -28,7 +28,7 @@ public class CommentService {
                 .id(comment.getId())
                 .username(comment.getUsername())
                 .password(comment.getPassword())
-                .commentContent(comment.getCommentContent())
+                .content(comment.getContent())
                 .secretStatus(comment.getSecretStatus())
 		        .display(comment.getDisplay())
 		        .isDeleted(comment.getIsDeleted())
@@ -39,7 +39,7 @@ public class CommentService {
 	    Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
 
         return GetCommentResDtoMapper.INSTANCE.toDto(commentRepository.save(Comment.initComment(commentCreateDto.getUsername(), commentCreateDto.getPassword()
-		        , commentCreateDto.getCommentContent(), commentCreateDto.getSecretStatus(), commentCreateDto.getDisplay(), commentCreateDto.getIsDeleted(), post)));
+		        , commentCreateDto.getContent(), commentCreateDto.getSecretStatus(), commentCreateDto.getDisplay(), commentCreateDto.getIsDeleted(), post)));
     }
 
 	public void deleteOneComment(Long commentId) {

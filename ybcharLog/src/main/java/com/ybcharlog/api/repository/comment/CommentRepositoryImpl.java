@@ -34,7 +34,7 @@ public class CommentRepositoryImpl extends BasicRepoSupport implements CommentRe
     @Override
     public void editComment(Long commentId, CommentEditDto commentEditDto) {
         jpaQueryFactory.update(comment)
-                .set(comment.commentContent, commentEditDto.getCommentContent())
+                .set(comment.content, commentEditDto.getContent())
                 .where(comment.isDeleted.eq(0))
                 .where(comment.display.eq(1))
                 .where(comment.id.eq(commentId))

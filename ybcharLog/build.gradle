@@ -107,7 +107,7 @@ dependencies {
 apply plugin: 'com.github.node-gradle.node'
 
 task deleteVueBuildFiles(type: Delete) {
-    delete "src/main/resources/static", "src/main/resources/static/index.html", "${project.projectDir}/front-end/node_modules"
+    delete "src/main/resources/static", "src/main/resources/static/index.html"
 }
 
 task npmBuild(type: NpmTask, dependsOn: ['deleteVueBuildFiles', 'npmInstall']) {

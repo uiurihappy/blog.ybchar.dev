@@ -1,4 +1,4 @@
-package com.ybcharlog.api.Common.util.valid;
+package com.ybcharlog.api.common.util.valid;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

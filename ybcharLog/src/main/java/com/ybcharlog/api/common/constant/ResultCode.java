@@ -1,4 +1,4 @@
-package com.ybcharlog.api.Common.constant;
+package com.ybcharlog.api.common.constant;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

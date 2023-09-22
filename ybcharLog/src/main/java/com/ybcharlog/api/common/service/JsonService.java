@@ -1,4 +1,4 @@
-package com.ybcharlog.api.Common.service;
+package com.ybcharlog.api.common.service;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;

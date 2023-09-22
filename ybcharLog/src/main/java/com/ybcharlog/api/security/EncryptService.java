@@ -1,6 +1,6 @@
 package com.ybcharlog.api.security;
 
-import com.ybcharlog.api.Common.util.EncryptUtil;
+import com.ybcharlog.api.common.util.EncryptUtil;
 import com.ybcharlog.api.exception.FailEncryptException;
 
 public class EncryptService {

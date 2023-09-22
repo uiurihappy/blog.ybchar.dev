@@ -1,6 +1,6 @@
 package com.ybcharlog.api.exception;
 
-import com.ybcharlog.api.Common.constant.ResultCode;
+import com.ybcharlog.api.common.constant.ResultCode;
 import lombok.Getter;
 
 @Getter

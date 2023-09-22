@@ -2,7 +2,7 @@ package com.ybcharlog.api.repository.post;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ybcharlog.api.Common.repository.BasicRepoSupport;
+import com.ybcharlog.api.common.repository.BasicRepoSupport;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;

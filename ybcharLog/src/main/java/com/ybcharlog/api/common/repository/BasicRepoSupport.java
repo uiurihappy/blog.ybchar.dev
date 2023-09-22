@@ -1,4 +1,4 @@
-package com.ybcharlog.api.Common.repository;
+package com.ybcharlog.api.common.repository;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;

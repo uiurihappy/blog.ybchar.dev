@@ -1,6 +1,6 @@
 package com.ybcharlog.api.mapper.post;
 
-import com.ybcharlog.api.Common.mapper.GenericMapper;
+import com.ybcharlog.api.common.mapper.GenericMapper;
 import com.ybcharlog.api.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.domain.post.Post;
 import org.mapstruct.Mapper;

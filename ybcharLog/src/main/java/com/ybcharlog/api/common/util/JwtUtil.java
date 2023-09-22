@@ -1,4 +1,4 @@
-package com.ybcharlog.api.Common.util;
+package com.ybcharlog.api.common.util;
 
 import com.google.common.base.Strings;
 import io.jsonwebtoken.Claims;

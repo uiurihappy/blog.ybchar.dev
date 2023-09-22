@@ -1,7 +1,7 @@
 package com.ybcharlog.api.RequestDto;
 
-import com.ybcharlog.api.Common.util.valid.UserNicknameValid;
-import com.ybcharlog.api.Common.util.valid.UserPasswordValid;
+import com.ybcharlog.api.common.util.valid.UserNicknameValid;
+import com.ybcharlog.api.common.util.valid.UserPasswordValid;
 import com.ybcharlog.api.domain.user.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;

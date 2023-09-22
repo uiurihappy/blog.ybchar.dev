@@ -1,6 +1,6 @@
 package com.ybcharlog.api.service.user;
 
-import com.ybcharlog.api.Common.constant.ResultCode;
+import com.ybcharlog.api.common.constant.ResultCode;
 import com.ybcharlog.api.RequestDto.UserDto.SignInReq;
 import com.ybcharlog.api.RequestDto.UserDto.SignInRes;
 import com.ybcharlog.api.RequestDto.auth.SignUpDto;

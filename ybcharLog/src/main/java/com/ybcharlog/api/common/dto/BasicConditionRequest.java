@@ -1,4 +1,4 @@
-package com.ybcharlog.api.Common.dto;
+package com.ybcharlog.api.common.dto;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

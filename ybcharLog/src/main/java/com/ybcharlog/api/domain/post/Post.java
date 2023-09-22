@@ -1,7 +1,7 @@
 package com.ybcharlog.api.domain.post;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ybcharlog.api.Common.BaseEntity;
+import com.ybcharlog.api.common.BaseEntity;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.domain.category.Category;
 import com.ybcharlog.api.domain.comment.Comment;

@@ -1,4 +1,4 @@
-package com.ybcharlog.api.Common.mapper;
+package com.ybcharlog.api.common.mapper;
 
 import java.util.Collection;
 import java.util.List;

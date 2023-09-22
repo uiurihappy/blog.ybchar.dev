@@ -1,6 +1,6 @@
 package com.ybcharlog.api.domain.category;
 
-import com.ybcharlog.api.Common.BaseEntity;
+import com.ybcharlog.api.common.BaseEntity;
 import com.ybcharlog.api.domain.post.Post;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.ybcharlog.api.Common.util.valid;
+package com.ybcharlog.api.common.util.valid;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -9,9 +9,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UserEmailValidator.class)
-@Repeatable(UserEmailValid.List.class)
-public @interface UserEmailValid {
+@Constraint(validatedBy = UserNicknameValidator.class)
+@Repeatable(UserNicknameValid.List.class)
+public @interface UserNicknameValid {
 
     String message() default "Invalid parameter (${validatedValue})";
 
@@ -24,6 +24,6 @@ public @interface UserEmailValid {
     @Documented
     @interface List {
 
-        UserEmailValid[] value();
+        UserNicknameValid[] value();
     }
 }

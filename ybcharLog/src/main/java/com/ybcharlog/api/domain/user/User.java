@@ -1,7 +1,7 @@
 package com.ybcharlog.api.domain.user;
 
-import com.ybcharlog.api.Common.BaseTimeEntity;
-import com.ybcharlog.api.Common.converter.UserRoleConverter;
+import com.ybcharlog.api.common.BaseTimeEntity;
+import com.ybcharlog.api.common.converter.UserRoleConverter;
 import lombok.*;
 
 import jakarta.persistence.*;

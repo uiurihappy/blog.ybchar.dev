@@ -1,6 +1,6 @@
 package com.ybcharlog.api.service.post;
 
-import com.ybcharlog.api.Common.dto.CustomPage;
+import com.ybcharlog.api.common.dto.CustomPage;
 import com.ybcharlog.api.RequestDto.post.PostCreateDto;
 import com.ybcharlog.api.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.RequestDto.post.PostSearchDto;

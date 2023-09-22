@@ -1,8 +1,8 @@
 package com.ybcharlog.api.config;
 
-import com.ybcharlog.api.Common.util.EncryptUtil;
-import com.ybcharlog.api.Common.util.JwtUtil;
-import com.ybcharlog.api.Common.util.ProfileUtil;
+import com.ybcharlog.api.common.util.EncryptUtil;
+import com.ybcharlog.api.common.util.JwtUtil;
+import com.ybcharlog.api.common.util.ProfileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

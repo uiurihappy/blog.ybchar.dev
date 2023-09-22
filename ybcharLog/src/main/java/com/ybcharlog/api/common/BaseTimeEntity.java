@@ -1,4 +1,4 @@
-package com.ybcharlog.api.Common;
+package com.ybcharlog.api.common;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

@@ -1,7 +1,7 @@
-package com.ybcharlog.api.Common.converter;
+package com.ybcharlog.api.common.converter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.ybcharlog.api.Common.service.JsonService;
+import com.ybcharlog.api.common.service.JsonService;
 import com.ybcharlog.api.domain.user.UserRole;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

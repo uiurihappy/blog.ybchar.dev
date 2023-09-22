@@ -1,4 +1,4 @@
-package com.ybcharlog.api.Common.util;
+package com.ybcharlog.api.common.util;
 
 import java.util.Base64;
 

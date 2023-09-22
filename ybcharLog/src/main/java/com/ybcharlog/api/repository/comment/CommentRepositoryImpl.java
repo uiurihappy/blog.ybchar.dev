@@ -1,7 +1,7 @@
 package com.ybcharlog.api.repository.comment;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ybcharlog.api.Common.repository.BasicRepoSupport;
+import com.ybcharlog.api.common.repository.BasicRepoSupport;
 import com.ybcharlog.api.RequestDto.comment.CommentEditDto;
 import com.ybcharlog.api.RequestDto.comment.CommentSearchDto;
 import com.ybcharlog.api.domain.comment.Comment;

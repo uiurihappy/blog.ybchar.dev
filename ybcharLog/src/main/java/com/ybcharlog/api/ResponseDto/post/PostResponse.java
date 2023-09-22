@@ -1,6 +1,6 @@
 package com.ybcharlog.api.ResponseDto.post;
 
-import com.ybcharlog.api.Common.dto.BasicConditionRequest;
+import com.ybcharlog.api.common.dto.BasicConditionRequest;
 import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.domain.post.Post;
 import lombok.Builder;

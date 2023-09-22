@@ -1,7 +1,7 @@
 package com.ybcharlog.api.security;
 
-import com.ybcharlog.api.Common.constant.ResultCode;
-import com.ybcharlog.api.Common.util.JwtUtil;
+import com.ybcharlog.api.common.constant.ResultCode;
+import com.ybcharlog.api.common.util.JwtUtil;
 import com.ybcharlog.api.domain.user.User;
 import com.ybcharlog.api.exception.NotAuthorizedException;
 import com.ybcharlog.api.exception.SignInException;

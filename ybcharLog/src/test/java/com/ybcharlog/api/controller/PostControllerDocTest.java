@@ -50,7 +50,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@AutoConfigureRestDocs(uriScheme = "https", uriHost = "api.ybchar.dev", uriPort = 3002)
+@AutoConfigureRestDocs(uriScheme = "https", uriHost = "api.ybchar.dev", uriPort = 8080)
 @ExtendWith(RestDocumentationExtension.class)
 public class PostControllerDocTest {
 

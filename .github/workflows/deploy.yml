@@ -77,9 +77,9 @@ jobs:
       - name: Deploy
         run: |
           aws deploy create-deployment \
-          --application-name ybchar-dev \
+          --application-name ybchar.dev \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
           --deployment-group-name ybchar-dev-deploy \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=ybchar-dev,bundleType=zip,key=ybchar.dev/$GITHUB_SHA.zip \
+          --s3-location bucket=ybchar-dev,bundleType=zip,key=ybchar-dev/$GITHUB_SHA.zip \
           --region ap-northeast-2 \

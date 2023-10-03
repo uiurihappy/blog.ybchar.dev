@@ -48,6 +48,11 @@ out/
 
 ## ybchar log
 nodeenv-16
-/src/main/resources/static
+/src/main/resources/static/assets
+/src/main/resources/static/fonts
+/src/main/resources/static/favicon.ico
+/src/main/resources/static/gProfile.jpeg
+/src/main/resources/static/index.html
+
 nohup.out
 

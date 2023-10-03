@@ -77,7 +77,7 @@ jobs:
       - name: Deploy
         run: |
           aws deploy create-deployment \
-          --application-name ybchar.dev \
+          --application-name ybchar-dev \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
           --deployment-group-name ybchar-dev-deploy \
           --file-exists-behavior OVERWRITE \

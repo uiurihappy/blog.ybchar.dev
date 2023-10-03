@@ -24,6 +24,25 @@ jobs:
           java-version: '19'
           distribution: 'zulu'
 
+      # Gradle 캐싱-> 빌드 속도 UP
+      - name: Gradle caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-    
+
+      # application.yml 파일 생성
+      - name: make application.yaml
+        run: |
+          cd ./src/main/resources
+          touch ./application.yml
+          echo "${{ secrets.APPLICATION }}" > ./application.yml
+        shell: bash
+
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
         shell: bash

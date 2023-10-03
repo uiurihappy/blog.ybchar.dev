@@ -11,25 +11,25 @@ group = 'ybcharLog'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
-//node {
-//    download = true
-//
-//    version = "18.16.0"
-//
-//    npmVersion = "8.5.1"
-//
-//    distBaseUrl = "https://nodejs.org/dist"
-//
-//    npmInstallCommand = "install"
-//
-//    workDir = file("${project.projectDir}/.gradle/nodejs")
-//
-//    npmWorkDir = file("${project.projectDir}/.gradle/npm")
-//
-//    nodeProjectDir = file("${project.projectDir}/front-end")
-//
-//    nodeProxySettings = ProxySettings.SMART
-//}
+node {
+    download = true
+
+    version = "16.20.2"
+
+    npmVersion = "8.5.1"
+
+    distBaseUrl = "https://nodejs.org/dist"
+
+    npmInstallCommand = "install"
+
+    workDir = file("${project.projectDir}/.gradle/nodejs")
+
+    npmWorkDir = file("${project.projectDir}/.gradle/npm")
+
+    nodeProjectDir = file("${project.projectDir}/front-end")
+
+    nodeProxySettings = ProxySettings.SMART
+}
 
 configurations {
     compileOnly {
@@ -104,17 +104,17 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 }
 
-//apply plugin: 'com.github.node-gradle.node'
-//
-//task deleteVueBuildFiles(type: Delete) {
-//    delete "src/main/resources/static", "src/main/resources/static/index.html"
-//}
-//
-//task npmBuild(type: NpmTask, dependsOn: ['deleteVueBuildFiles', 'npmInstall']) {
-//    args = ["run", "build"]
-//}
+apply plugin: 'com.github.node-gradle.node'
 
-//processResources.dependsOn 'npmBuild'
+task deleteVueBuildFiles(type: Delete) {
+    delete "src/main/resources/static", "src/main/resources/static/index.html"
+}
+
+task npmBuild(type: NpmTask, dependsOn: ['deleteVueBuildFiles', 'npmInstall']) {
+    args = ["run", "build"]
+}
+
+processResources.dependsOn 'npmBuild'
 
 test {
     outputs.dir snippetsDir

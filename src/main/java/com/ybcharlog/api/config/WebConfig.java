@@ -14,6 +14,12 @@ public class WebConfig implements WebMvcConfigurer {
 	@Value("${cors.s3-url}")
 	private String s3Url;
 
+	@Value("${cors.sub-prod-url}")
+	private String subProdUrl;
+
+	@Value("${cors.sub-api-url}")
+	private String subApiUrl;
+
 	@Value("${cors.prod-url}")
 	private String prodUrl;
 
@@ -24,7 +30,9 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry corsRegistry) {
 		corsRegistry.addMapping("/**")
 				.allowedOrigins("http://localhost:" + portNumber, "http://localhost:8081",
-						"http://localhost:8080", "http://localhost:9000", s3Url, prodUrl, apiUrl)
+						"http://localhost:8080", "http://localhost:9000", s3Url,
+						prodUrl, apiUrl,
+						subProdUrl, subApiUrl)
 				.maxAge(3600L);
 	}
 }

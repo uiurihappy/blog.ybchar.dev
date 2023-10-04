@@ -24,6 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry corsRegistry) {
 		corsRegistry.addMapping("/**")
 				.allowedOrigins("http://localhost:" + portNumber, "http://localhost:8081",
-						"http://localhost:8080", "http://localhost:9000", s3Url, prodUrl, apiUrl);
+						"http://localhost:8080", "http://localhost:9000", s3Url, prodUrl, apiUrl)
+				.maxAge(3600L);
 	}
 }

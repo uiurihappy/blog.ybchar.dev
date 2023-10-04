@@ -112,6 +112,11 @@ public class SecurityConfig {
                 .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/api/auth/logout"))
+                    .logoutSuccessHandler(
+                        (httpServletRequest, httpServletResponse, authentication) -> {
+                            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                            httpServletResponse.setHeader("Access-Control-Allow-Origin" , "*");
+                        })
                     .logoutSuccessUrl("/api/posts/list?page=1&size=12")
                     .invalidateHttpSession(true)
                 .and()

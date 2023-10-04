@@ -7,6 +7,8 @@ echo "> build 파일 복사" >> /home/ec2-user/action/deploy.log
 DEPLOY_PATH=/home/ec2-user/action/
 cp $BUILD_JAR $DEPLOY_PATH
 
+rm -rf .git
+
 echo "> 현재 실행중인 애플리케이션 pid 확인" >> /home/ec2-user/action/deploy.log
 CURRENT_PID=$(pgrep -f $JAR_NAME)
 

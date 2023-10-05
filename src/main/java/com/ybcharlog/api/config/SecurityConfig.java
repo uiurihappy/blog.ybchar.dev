@@ -27,6 +27,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsUtils;
 
 @Slf4j
 @Configuration
@@ -101,6 +102,7 @@ public class SecurityConfig {
                                 .requestMatchers(permitAllUrl).permitAll()
                                 .requestMatchers("/posts/save", "/posts/update/{postId}", "/posts/delete/{postId}",
                                         "/posts/thumbnail/image", "/files/images", "/category/save", "/category/delete/**").hasRole("ROLE_ADMIN")
+                                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                                 .anyRequest().permitAll()
                 )
                 .formLogin()

@@ -34,9 +34,8 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addMapping("/**")
 				.allowedOrigins("http://localhost:" + portNumber, "http://localhost:8081",
 						"http://localhost:8080", "http://localhost:9000", s3Url,
-						prodUrl, apiUrl,
-						subProdUrl, subApiUrl)
-				.allowedOriginPatterns(subProdUrl, prodUrl)
+						 apiUrl)
+				.allowedOriginPatterns(subProdUrl, prodUrl, subApiUrl)
 				.allowedMethods(Arrays.stream(HttpMethod.values())
 						.map(HttpMethod::name)
 						.toArray(String[]::new))

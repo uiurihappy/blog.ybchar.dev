@@ -32,10 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
-				.allowedOrigins("http://localhost:" + portNumber, "http://localhost:8081",
-						"http://localhost:8080", "http://localhost:9000", s3Url,
-						 apiUrl)
-				.allowedOriginPatterns(subProdUrl, prodUrl, subApiUrl)
+				.allowedOriginPatterns("*")
 				.allowedMethods(Arrays.stream(HttpMethod.values())
 						.map(HttpMethod::name)
 						.toArray(String[]::new))

@@ -36,11 +36,11 @@ public class S3UploaderService {
 	public String upload(MultipartFile multipartFile, String dirName) throws IOException {
 		File uploadFile = convert(multipartFile)
 				.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
-		return upload(uploadFile, dirName, multipartFile.getOriginalFilename());
+		return upload(uploadFile, dirName);
 	}
 
-	private String upload(File uploadFile, String dirName, String originName) {
-		String fileName = env + "/" + dirName + "/" + UUID.randomUUID() + originName;
+	private String upload(File uploadFile, String dirName) {
+		String fileName = env + "/" + dirName + "/" + UUID.randomUUID();
 		String uploadImageUrl = putS3(uploadFile, fileName);
 
 		removeNewFile(uploadFile);  // 로컬에 생성된 File 삭제 (MultipartFile -> File 전환 하며 로컬에 파일 생성됨)
@@ -75,7 +75,7 @@ public class S3UploaderService {
 	}
 
 	private Optional<File> convert(MultipartFile file) throws IOException {
-		File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()) + "/" + UUID.randomUUID());
+		File convertFile = new File(System.getProperty("user.dir") + "/" + UUID.randomUUID());
 		if(convertFile.createNewFile()) {
 			try (FileOutputStream fos = new FileOutputStream(convertFile)) {
 				fos.write(file.getBytes());

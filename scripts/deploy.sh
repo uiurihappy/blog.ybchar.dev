@@ -18,7 +18,6 @@ then
 else
   echo "> kill -15 $CURRENT_PID"
   kill -15 $CURRENT_PID
-  rm -rf /home/ec2-user/action/nohup.out
   sleep 5
 fi
 

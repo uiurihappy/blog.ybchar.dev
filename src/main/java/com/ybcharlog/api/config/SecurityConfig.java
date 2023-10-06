@@ -100,8 +100,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> req
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                                 .requestMatchers(permitAllUrl).permitAll()
-                                .requestMatchers("/posts/save", "/posts/update/{postId}", "/posts/delete/{postId}",
-                                        "/posts/thumbnail/image", "/files/images", "/category/save", "/category/delete/**").hasRole("ROLE_ADMIN")
+                                .requestMatchers("/api/posts/save", "/api/posts/update/{postId}", "/api/posts/delete/{postId}",
+                                        "/api/posts/thumbnail/image", "/api/files/images", "/api/category/save", "/api/category/delete/**").hasRole("ROLE_ADMIN")
                                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                                 .anyRequest().permitAll()
                 )

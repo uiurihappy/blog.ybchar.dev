@@ -1,30 +1,30 @@
 package com.ybcharlog.api.service.AWS;
 
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
-@RequiredArgsConstructor
+@RequiredArgsConstructor    // final 멤버변수가 있으면 생성자 항목에 포함시킴
+@Component
 @Service
-@ComponentScan
 public class S3UploaderService {
 
-	private final AmazonS3Client amazonS3Client;
+	private final AmazonS3 amazonS3Client;
 
-	@Value("${aws.s3.bucketName}")
+	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
 	// MultipartFile을 전달받아 File로 전환한 후 S3에 업로드
@@ -34,7 +34,7 @@ public class S3UploaderService {
 		return upload(uploadFile, dirName);
 	}
 
-	public String upload(File uploadFile, String dirName) {
+	private String upload(File uploadFile, String dirName) {
 		String fileName = dirName + "/" + uploadFile.getName();
 		String uploadImageUrl = putS3(uploadFile, fileName);
 
@@ -43,8 +43,17 @@ public class S3UploaderService {
 		return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
 	}
 
-	public String putS3(File uploadFile, String fileName) {
-		log.info("{}",bucket);
+	// S3 스토리지에 있는 파일 삭제
+	public void deleteS3Object(String objectKey) {
+		try {
+			amazonS3Client.deleteObject(new DeleteObjectRequest(bucket, objectKey));
+			log.info("S3 스토리지에서 파일을 삭제했습니다. ObjectKey: {}", objectKey);
+		} catch (Exception e) {
+			log.error("S3 스토리지 파일 삭제 중 오류가 발생했습니다. ObjectKey: {}", objectKey, e);
+		}
+	}
+
+	private String putS3(File uploadFile, String fileName) {
 		amazonS3Client.putObject(
 				new PutObjectRequest(bucket, fileName, uploadFile)
 						.withCannedAcl(CannedAccessControlList.PublicRead)	// PublicRead 권한으로 업로드 됨
@@ -52,7 +61,7 @@ public class S3UploaderService {
 		return amazonS3Client.getUrl(bucket, fileName).toString();
 	}
 
-	public void removeNewFile(File targetFile) {
+	private void removeNewFile(File targetFile) {
 		if(targetFile.delete()) {
 			log.info("파일이 삭제되었습니다.");
 		}else {
@@ -60,8 +69,8 @@ public class S3UploaderService {
 		}
 	}
 
-	public Optional<File> convert(MultipartFile file) throws  IOException {
-		File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
+	private Optional<File> convert(MultipartFile file) throws  IOException {
+		File convertFile = new File(file.getOriginalFilename());
 		if(convertFile.createNewFile()) {
 			try (FileOutputStream fos = new FileOutputStream(convertFile)) {
 				fos.write(file.getBytes());
@@ -70,4 +79,5 @@ public class S3UploaderService {
 		}
 		return Optional.empty();
 	}
+
 }

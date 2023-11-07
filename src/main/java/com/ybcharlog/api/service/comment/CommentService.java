@@ -1,10 +1,10 @@
 package com.ybcharlog.api.service.comment;
 
-import com.ybcharlog.api.RequestDto.comment.CommentCreateDto;
-import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
+import com.ybcharlog.api.dto.RequestDto.comment.CommentCreateDto;
+import com.ybcharlog.api.dto.ResponseDto.comment.CommentResponse;
 import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.domain.post.Post;
-import com.ybcharlog.api.exception.PostNotFound;
+import com.ybcharlog.exception.PostNotFound;
 import com.ybcharlog.api.mapper.comment.GetCommentResDtoMapper;
 import com.ybcharlog.api.repository.comment.CommentRepository;
 import com.ybcharlog.api.repository.post.PostRepository;

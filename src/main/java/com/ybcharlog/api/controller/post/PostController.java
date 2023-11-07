@@ -1,10 +1,10 @@
 package com.ybcharlog.api.controller.post;
 
-import com.ybcharlog.api.common.dto.CustomPage;
-import com.ybcharlog.api.RequestDto.post.PostCreateDto;
-import com.ybcharlog.api.RequestDto.post.PostEditDto;
-import com.ybcharlog.api.ResponseDto.post.PostResponse;
-import com.ybcharlog.api.ResponseDto.post.PostResponse.GetPostPageReq;
+import com.ybcharlog.common.dto.CustomPage;
+import com.ybcharlog.api.dto.RequestDto.post.PostCreateDto;
+import com.ybcharlog.api.dto.RequestDto.post.PostEditDto;
+import com.ybcharlog.api.dto.ResponseDto.post.PostResponse;
+import com.ybcharlog.api.dto.ResponseDto.post.PostResponse.GetPostPageReq;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.service.AWS.S3UploaderService;
 import com.ybcharlog.api.service.post.PostService;

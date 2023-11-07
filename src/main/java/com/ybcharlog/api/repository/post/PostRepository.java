@@ -1,6 +1,6 @@
 package com.ybcharlog.api.repository.post;
 
-import com.ybcharlog.api.ResponseDto.post.PostResponse.GetPostPageReq;
+import com.ybcharlog.api.dto.ResponseDto.post.PostResponse.GetPostPageReq;
 import com.ybcharlog.api.domain.post.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

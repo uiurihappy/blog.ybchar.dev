@@ -1,6 +1,6 @@
 package com.ybcharlog.api.controller.user;
 
-import com.ybcharlog.api.RequestDto.auth.SignUpDto;
+import com.ybcharlog.api.dto.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ybcharlog.api.RequestDto.UserDto.SignInReq;
-import com.ybcharlog.api.RequestDto.UserDto.SignInRes;
+import com.ybcharlog.api.dto.RequestDto.UserDto.SignInReq;
+import com.ybcharlog.api.dto.RequestDto.UserDto.SignInRes;
 
 @Slf4j
 @RestController

@@ -1,14 +1,14 @@
 package com.ybcharlog.api.service.post;
 
-import com.ybcharlog.api.common.dto.CustomPage;
-import com.ybcharlog.api.RequestDto.post.PostCreateDto;
-import com.ybcharlog.api.RequestDto.post.PostEditDto;
-import com.ybcharlog.api.RequestDto.post.PostSearchDto;
-import com.ybcharlog.api.ResponseDto.post.PostResponse;
-import com.ybcharlog.api.ResponseDto.post.PostResponse.GetPostPageReq;
+import com.ybcharlog.common.dto.CustomPage;
+import com.ybcharlog.api.dto.RequestDto.post.PostCreateDto;
+import com.ybcharlog.api.dto.RequestDto.post.PostEditDto;
+import com.ybcharlog.api.dto.RequestDto.post.PostSearchDto;
+import com.ybcharlog.api.dto.ResponseDto.post.PostResponse;
+import com.ybcharlog.api.dto.ResponseDto.post.PostResponse.GetPostPageReq;
 import com.ybcharlog.api.domain.comment.Comment;
 import com.ybcharlog.api.domain.post.Post;
-import com.ybcharlog.api.exception.PostNotFound;
+import com.ybcharlog.exception.PostNotFound;
 import com.ybcharlog.api.mapper.post.GetPostResDtoMapper;
 import com.ybcharlog.api.repository.comment.CommentRepository;
 import com.ybcharlog.api.repository.post.PostRepository;

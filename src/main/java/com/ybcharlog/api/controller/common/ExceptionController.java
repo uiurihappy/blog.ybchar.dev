@@ -1,8 +1,8 @@
 package com.ybcharlog.api.controller.common;
 
 
-import com.ybcharlog.api.ResponseDto.common.ErrorResponse;
-import com.ybcharlog.api.exception.YbcharLogException;
+import com.ybcharlog.api.dto.ResponseDto.common.ErrorResponse;
+import com.ybcharlog.exception.YbcharLogException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

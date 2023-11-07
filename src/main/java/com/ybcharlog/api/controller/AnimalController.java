@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 /*
     1. component list 주입
@@ -32,7 +31,7 @@ public class AnimalController {
     private final AnimalServiceFinder animalServiceFinder;
 
     // HashMap 주입
-    private final Map<String, AnimalService> animalServiceMap;
+//    private final Map<String, AnimalService> animalServiceMap;
 
 
     @GetMapping("/sound")

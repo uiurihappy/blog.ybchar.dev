@@ -1,11 +1,7 @@
 package com.ybcharlog.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ybcharlog.api.RequestDto.auth.SignUpDto;
-import com.ybcharlog.api.controller.user.AuthController;
-import com.ybcharlog.api.domain.user.UserRole;
-import com.ybcharlog.api.domain.user.User;
-import com.ybcharlog.api.exception.AlreadyExistsEmailException;
+import com.ybcharlog.api.dto.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.repository.user.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,9 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

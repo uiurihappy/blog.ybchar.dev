@@ -1,6 +1,6 @@
 package com.ybcharlog.api.controller.category;
 
-import com.ybcharlog.api.RequestDto.category.CategoryCreateDto;
+import com.ybcharlog.api.dto.RequestDto.category.CategoryCreateDto;
 import com.ybcharlog.api.domain.category.Category;
 import com.ybcharlog.api.service.category.CategoryService;
 import lombok.RequiredArgsConstructor;

@@ -1,14 +1,14 @@
 package com.ybcharlog.api.service.user;
 
-import com.ybcharlog.api.common.constant.ResultCode;
-import com.ybcharlog.api.RequestDto.UserDto.SignInReq;
-import com.ybcharlog.api.RequestDto.UserDto.SignInRes;
-import com.ybcharlog.api.RequestDto.auth.SignUpDto;
+import com.ybcharlog.common.constant.ResultCode;
+import com.ybcharlog.api.dto.RequestDto.UserDto.SignInReq;
+import com.ybcharlog.api.dto.RequestDto.UserDto.SignInRes;
+import com.ybcharlog.api.dto.RequestDto.auth.SignUpDto;
 import com.ybcharlog.api.domain.user.User;
-import com.ybcharlog.api.exception.CustomException;
-import com.ybcharlog.api.exception.UnauthorizedRequest;
+import com.ybcharlog.exception.CustomException;
+import com.ybcharlog.exception.UnauthorizedRequest;
 import com.ybcharlog.api.repository.user.UserRepository;
-import com.ybcharlog.api.security.TokenService;
+import com.ybcharlog.security.TokenService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

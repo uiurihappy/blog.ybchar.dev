@@ -1,6 +1,6 @@
 package com.ybcharlog.api.service.category;
 
-import com.ybcharlog.api.RequestDto.category.CategoryCreateDto;
+import com.ybcharlog.api.dto.RequestDto.category.CategoryCreateDto;
 import com.ybcharlog.api.domain.category.Category;
 import com.ybcharlog.api.repository.category.CategoryRepository;
 import com.ybcharlog.api.repository.post.PostRepository;
@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import java.util.List;
 
 @Slf4j
 @Service

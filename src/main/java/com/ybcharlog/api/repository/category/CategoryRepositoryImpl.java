@@ -1,7 +1,7 @@
 package com.ybcharlog.api.repository.category;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ybcharlog.api.common.repository.BasicRepoSupport;
+import com.ybcharlog.common.repository.BasicRepoSupport;
 import com.ybcharlog.api.domain.category.QCategory;
 import org.springframework.stereotype.Repository;
 

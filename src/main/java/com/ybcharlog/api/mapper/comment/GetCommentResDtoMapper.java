@@ -1,8 +1,8 @@
 package com.ybcharlog.api.mapper.comment;
 
 
-import com.ybcharlog.api.common.mapper.GenericMapper;
-import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
+import com.ybcharlog.common.mapper.GenericMapper;
+import com.ybcharlog.api.dto.ResponseDto.comment.CommentResponse;
 import com.ybcharlog.api.domain.comment.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;

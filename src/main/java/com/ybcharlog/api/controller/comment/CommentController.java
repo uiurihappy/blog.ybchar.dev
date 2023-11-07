@@ -1,7 +1,7 @@
 package com.ybcharlog.api.controller.comment;
 
-import com.ybcharlog.api.RequestDto.comment.CommentCreateDto;
-import com.ybcharlog.api.ResponseDto.comment.CommentResponse;
+import com.ybcharlog.api.dto.RequestDto.comment.CommentCreateDto;
+import com.ybcharlog.api.dto.ResponseDto.comment.CommentResponse;
 import com.ybcharlog.api.service.comment.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

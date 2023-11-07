@@ -1,8 +1,8 @@
 package com.ybcharlog.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ybcharlog.api.RequestDto.post.PostCreateDto;
-import com.ybcharlog.api.RequestDto.post.PostEditDto;
+import com.ybcharlog.api.dto.RequestDto.post.PostCreateDto;
+import com.ybcharlog.api.dto.RequestDto.post.PostEditDto;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.repository.post.PostRepository;
 import org.hamcrest.Matchers;

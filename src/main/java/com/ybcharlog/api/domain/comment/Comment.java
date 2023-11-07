@@ -1,7 +1,7 @@
 package com.ybcharlog.api.domain.comment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ybcharlog.api.common.BaseEntity;
+import com.ybcharlog.common.BaseEntity;
 import com.ybcharlog.api.domain.post.Post;
 import lombok.AccessLevel;
 import lombok.Builder;

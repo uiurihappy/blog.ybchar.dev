@@ -1,6 +1,5 @@
 package com.ybcharlog.api.service.animal;
 
-import com.ybcharlog.api.domain.AnimalType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

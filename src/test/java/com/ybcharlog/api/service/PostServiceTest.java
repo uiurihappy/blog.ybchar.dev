@@ -1,13 +1,12 @@
 package com.ybcharlog.api.service;
 
-import com.ybcharlog.api.RequestDto.post.PostCreateDto;
-import com.ybcharlog.api.RequestDto.post.PostEditDto;
-import com.ybcharlog.api.RequestDto.post.PostSearchDto;
-import com.ybcharlog.api.ResponseDto.post.PostResponse;
+import com.ybcharlog.api.dto.RequestDto.post.PostCreateDto;
+import com.ybcharlog.api.dto.RequestDto.post.PostEditDto;
+import com.ybcharlog.api.dto.RequestDto.post.PostSearchDto;
+import com.ybcharlog.api.dto.ResponseDto.post.PostResponse;
 import com.ybcharlog.api.domain.post.Post;
 import com.ybcharlog.api.repository.post.PostRepository;
 import com.ybcharlog.api.service.post.PostService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
